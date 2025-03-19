@@ -52,10 +52,9 @@ header {
 }
 
 .logo {
-    height: 80px;
-    width: auto;
+    height: auto;
+    width: 200px;
     object-fit: contain;
-    max-width: 300px;
 }
 
 .logo-text {
@@ -330,10 +329,9 @@ footer {
 }
 
 .footer-logo {
-    height: 70px;
-    width: auto;
+    height: auto;
+    width: 180px;
     object-fit: contain;
-    max-width: 250px;
     filter: brightness(0) invert(1);
 }
 
