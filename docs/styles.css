@@ -335,15 +335,112 @@ footer {
 
 /* Responsive Adjustments */
 @media screen and (max-width: 768px) {
+    .hero {
+        padding: 120px 0 60px;
+    }
+    
     .hero h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        margin-bottom: 15px;
     }
     
     .hero p {
         font-size: 1rem;
+        margin-bottom: 30px;
+        padding: 0 15px;
     }
-    
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.95rem;
+        width: 90%;
+        max-width: 300px;
+        margin: 0 auto;
+        display: block;
+    }
+
     .section-title {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+        margin-bottom: 30px;
+    }
+
+    .benefits {
+        padding: 40px 0;
+    }
+
+    .benefits-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 15px;
+    }
+
+    .benefit-card {
+        padding: 20px;
+    }
+
+    .services {
+        padding: 40px 0;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 15px;
+    }
+
+    .service-card:last-child {
+        grid-column: auto;
+        max-width: none;
+    }
+
+    .transparency {
+        padding: 40px 0;
+    }
+
+    .transparency p {
+        padding: 0 15px;
+        font-size: 1rem;
+    }
+
+    .contact {
+        padding: 40px 0;
+    }
+
+    .form-container {
+        padding: 20px;
+        margin: 0 15px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+    }
+
+    .footer-contact {
+        text-align: center;
+        order: 0;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    .logo {
+        height: 40px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .hero h1 {
+        font-size: 1.5rem;
+    }
+
+    .btn {
+        width: 95%;
+    }
+
+    .section-title {
+        font-size: 1.4rem;
     }
 } 
