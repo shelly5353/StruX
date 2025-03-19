@@ -311,7 +311,7 @@ footer {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 30px;
     gap: 50px;
     text-align: center;
@@ -321,12 +321,13 @@ footer {
     flex: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     order: -1;
+    padding-top: 15px;
 }
 
 .footer-logo {
-    height: 180px;
+    height: 200px;
     width: auto;
     object-fit: contain;
     filter: brightness(0) invert(1);
@@ -462,11 +463,13 @@ footer {
         flex-direction: column;
         gap: 30px;
         text-align: center;
+        align-items: center;
     }
 
     .footer-info {
         width: 100%;
         justify-content: center;
+        padding-top: 0;
     }
 
     .footer-logo {
@@ -487,6 +490,10 @@ footer {
 
     .social-links {
         justify-content: center;
+        margin: 20px auto 0;
+        width: 100%;
+        display: flex;
+        gap: 20px;
     }
 
     .logo-container {
