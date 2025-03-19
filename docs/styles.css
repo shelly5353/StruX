@@ -45,10 +45,33 @@ header {
     align-items: center;
 }
 
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
 .logo {
     height: 60px;
     width: auto;
     object-fit: contain;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.company-name {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--primary-color);
+}
+
+.company-tagline {
+    font-size: 1rem;
+    color: var(--text-color);
 }
 
 /* Hero Section */
@@ -462,6 +485,18 @@ footer {
     .footer-logo {
         margin: 0 auto 15px;
         display: block;
+    }
+
+    .logo-container {
+        gap: 10px;
+    }
+
+    .company-name {
+        font-size: 1.4rem;
+    }
+
+    .company-tagline {
+        font-size: 0.9rem;
     }
 
     .logo {
