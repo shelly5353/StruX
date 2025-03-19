@@ -235,6 +235,7 @@ header {
 .contact {
     background-color: var(--light-bg);
     padding: 80px 0;
+    scroll-margin-top: 100px;
 }
 
 .form-container {
