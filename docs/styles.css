@@ -435,10 +435,33 @@ footer {
     .footer-contact {
         text-align: center;
         order: 0;
+        min-width: unset;
+        width: 100%;
+    }
+
+    .footer-contact p {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .footer-contact i {
+        width: 20px;
     }
 
     .social-links {
         justify-content: center;
+        margin-top: 25px;
+    }
+
+    .footer-info {
+        text-align: center;
+    }
+
+    .footer-logo {
+        margin: 0 auto 15px;
+        display: block;
     }
 
     .logo {
