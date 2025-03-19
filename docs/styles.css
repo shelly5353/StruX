@@ -475,6 +475,20 @@ footer {
         display: block;
     }
 
+    .footer-contact {
+        text-align: center;
+        width: 100%;
+    }
+
+    .footer-contact h3,
+    .footer-contact p {
+        text-align: center;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
     .logo-container {
         gap: 10px;
     }
