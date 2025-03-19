@@ -88,7 +88,7 @@ header {
 .hero h1 {
     font-size: 2.5rem;
     margin-bottom: 20px;
-    font-weight: 900;
+    font-weight: 700;
 }
 
 .hero p {
@@ -228,6 +228,7 @@ header {
 .service-card h3 {
     font-size: 1.4rem;
     margin-bottom: 15px;
+    font-weight: 700;
 }
 
 /* Contact Form Section */
@@ -349,6 +350,7 @@ footer {
 .footer-contact h3 {
     margin-bottom: 15px;
     font-size: 1.3rem;
+    font-weight: 700;
 }
 
 .footer-contact p {
@@ -384,6 +386,7 @@ footer {
     .hero h1 {
         font-size: 1.8rem;
         margin-bottom: 15px;
+        font-weight: 700;
     }
     
     .hero p {
@@ -404,6 +407,7 @@ footer {
     .section-title {
         font-size: 1.6rem;
         margin-bottom: 30px;
+        font-weight: 700;
     }
 
     .benefits {
@@ -426,6 +430,7 @@ footer {
         margin: 0 15px 15px 0;
         font-size: 1.2rem;
         vertical-align: middle;
+        font-weight: 700;
     }
 
     .benefit-icon {
