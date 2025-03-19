@@ -310,18 +310,18 @@ footer {
 .footer-content {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     margin-bottom: 30px;
     gap: 50px;
 }
 
 .footer-info {
-    flex: 1;
+    flex: 0;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    order: 1;
+    order: -1;
 }
 
 .footer-logo {
@@ -335,7 +335,7 @@ footer {
 .footer-contact {
     text-align: right;
     min-width: 250px;
-    order: -1;
+    order: 0;
 }
 
 .footer-contact h3 {
