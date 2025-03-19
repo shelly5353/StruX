@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap');
 
+@font-face {
+    font-family: 'Alef';
+    src: url('/Users/shellysmac/Library/Group Containers/UBF8T346G9.Office/FontCache/4/CloudFonts/Alef/TTF/Alef-Regular.ttf') format('truetype');
+}
+
 @viewport {
     width: device-width;
     zoom: 1.0;
@@ -26,6 +31,10 @@ body {
     color: var(--text-color);
     line-height: 1.6;
     direction: rtl;
+}
+
+h1, h2, h3, .section-title, .company-name {
+    font-family: 'Alef', sans-serif;
 }
 
 .container {
