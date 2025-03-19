@@ -355,7 +355,7 @@ footer {
 .social-links {
     display: flex;
     gap: 15px;
-    margin-top: 20px;
+    margin-top: 10px;
     justify-content: center;
     width: 100%;
 }
@@ -495,7 +495,7 @@ footer {
 
     .social-links {
         justify-content: center;
-        margin: 20px auto 0;
+        margin: 10px auto 0;
         width: 100%;
         display: flex;
         gap: 20px;
