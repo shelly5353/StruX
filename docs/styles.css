@@ -343,6 +343,7 @@ footer {
     align-items: center;
     height: 250px;
     justify-content: center;
+    margin-top: -25px;
 }
 
 .footer-contact h3 {
@@ -489,6 +490,7 @@ footer {
     .footer-contact {
         height: auto;
         min-height: 200px;
+        margin-top: 0;
     }
 
     .social-links {
