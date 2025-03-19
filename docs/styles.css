@@ -59,10 +59,7 @@ header {
 }
 
 .logo-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    text-align: left;
+    display: none;
 }
 
 .company-name {
