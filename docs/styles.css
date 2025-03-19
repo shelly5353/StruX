@@ -60,19 +60,21 @@ header {
 .logo-text {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 4px;
+    text-align: right;
 }
 
 .company-name {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 900;
     color: var(--primary-color);
     line-height: 1;
 }
 
 .company-tagline {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: var(--text-color);
+    line-height: 1;
 }
 
 /* Hero Section */
@@ -492,12 +494,16 @@ footer {
         gap: 10px;
     }
 
+    .logo-text {
+        gap: 3px;
+    }
+
     .company-name {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
     }
 
     .company-tagline {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
     }
 
     .logo {
