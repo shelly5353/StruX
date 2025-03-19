@@ -317,14 +317,15 @@ footer {
 }
 
 .footer-info {
-    flex: 2;
+    flex: 1;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    order: 1;
 }
 
 .footer-logo {
-    height: 120px;
+    height: 180px;
     width: auto;
     object-fit: contain;
     filter: brightness(0) invert(1);
@@ -464,10 +465,11 @@ footer {
 
     .footer-info {
         width: 100%;
+        justify-content: center;
     }
 
     .footer-logo {
-        height: 100px;
+        height: 150px;
         margin: 0 auto;
         display: block;
     }
