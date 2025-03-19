@@ -231,6 +231,7 @@ header {
 /* Services Section */
 .services {
     padding: 80px 0;
+    background-color: var(--light-bg);
 }
 
 .services-grid {
