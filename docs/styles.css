@@ -405,6 +405,7 @@ footer {
         font-size: 1.8rem;
         margin-bottom: 15px;
         font-weight: 700;
+        font-family: 'Alef', sans-serif;
     }
     
     .hero p {
@@ -426,6 +427,7 @@ footer {
         font-size: 1.6rem;
         margin-bottom: 30px;
         font-weight: 700;
+        font-family: 'Alef', sans-serif;
     }
 
     .benefits {
@@ -449,6 +451,7 @@ footer {
         font-size: 1.2rem;
         vertical-align: middle;
         font-weight: 700;
+        font-family: 'Alef', sans-serif;
     }
 
     .benefit-icon {
@@ -535,6 +538,7 @@ footer {
 
     .company-name {
         font-size: 1.6rem;
+        font-family: 'Alef', sans-serif;
     }
 
     .company-tagline {
