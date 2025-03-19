@@ -269,10 +269,21 @@ footer {
 }
 
 .footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: flex-start;
     margin-bottom: 30px;
+}
+
+.footer-info {
+    flex: 1;
+    margin-right: 50px;
+}
+
+.footer-contact {
+    text-align: right;
+    min-width: 250px;
 }
 
 .footer-logo {
