@@ -40,4 +40,15 @@ window.addEventListener('scroll', function() {
     } else {
         header.style.boxShadow = 'none';
     }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Phone input validation
+    const phoneInput = document.getElementById('phone');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function(e) {
+            // Remove any non-numeric characters
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+    }
 }); 
