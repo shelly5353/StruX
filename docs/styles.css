@@ -328,12 +328,12 @@ footer {
 }
 
 .footer-logo {
-    height: 250px;
+    height: 180px;
     width: auto;
     object-fit: contain;
     filter: brightness(0) invert(1);
     max-width: none;
-    margin-top: -25px;
+    margin-top: -15px;
 }
 
 .footer-contact {
@@ -343,9 +343,9 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 250px;
+    height: 180px;
     justify-content: center;
-    margin-top: -25px;
+    margin-top: -15px;
 }
 
 .footer-contact h3 {
