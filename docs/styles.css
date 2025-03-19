@@ -95,7 +95,7 @@ header {
 
 /* Hero Section */
 .hero {
-    background: #1F3A93;
+    background: var(--primary-color);
     color: var(--white);
     padding: 150px 0 100px;
     text-align: center;
