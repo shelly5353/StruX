@@ -168,10 +168,19 @@ header {
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     transition: transform 0.3s ease;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.benefit-card:hover {
+.benefit-card:hover,
+.benefit-card:active {
     transform: translateY(-10px);
+}
+
+@media (hover: none) {
+    .benefit-card:active {
+        transform: translateY(-10px);
+    }
 }
 
 .benefit-icon {
