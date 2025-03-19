@@ -270,20 +270,26 @@ footer {
 
 .footer-content {
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content: flex-start;
     align-items: flex-start;
     margin-bottom: 30px;
+    gap: 50px;
 }
 
 .footer-info {
     flex: 1;
-    margin-right: 50px;
 }
 
 .footer-contact {
     text-align: right;
     min-width: 250px;
+    order: -1;
+}
+
+.footer-contact h3 {
+    margin-bottom: 15px;
+    font-size: 1.3rem;
 }
 
 .footer-logo {
