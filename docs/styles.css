@@ -149,6 +149,21 @@ header {
     transform: translateY(-2px);
 }
 
+@media (hover: none) {
+    .btn:active,
+    .btn:focus {
+        background-color: var(--primary-color);
+        transform: none;
+    }
+    
+    .btn-hero:active,
+    .btn-hero:focus {
+        background-color: var(--white);
+        color: var(--primary-color);
+        transform: none;
+    }
+}
+
 /* Benefits Section */
 .benefits {
     padding: 80px 0;
