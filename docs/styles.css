@@ -136,6 +136,17 @@ header {
     margin: 0 auto 40px;
 }
 
+/* Button Styles */
+.btn, .cta-button, .submit-button {
+    font-family: 'Heebo', sans-serif !important;
+    font-weight: 700 !important;
+    letter-spacing: 2px;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 .btn {
     display: inline-block;
     padding: 12px 30px;
@@ -143,11 +154,9 @@ header {
     color: var(--white);
     text-decoration: none;
     border-radius: 5px;
-    font-weight: 700;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border: none;
     cursor: pointer;
-    font-size: 1rem;
     -webkit-tap-highlight-color: transparent;
 }
 
@@ -181,6 +190,10 @@ header {
     .btn-hero:focus {
         transform: none;
     }
+}
+
+.btn.btn-hero, .btn.btn-light, .btn.btn-block {
+    font-weight: 900 !important;
 }
 
 /* Benefits Section */
@@ -400,7 +413,7 @@ header {
 
 /* Contact Form Section */
 .contact {
-    background-color: #f5f7fa;
+    background-color: #eef0f5;
     padding: 80px 0;
     scroll-margin-top: 60px;
 }
@@ -411,7 +424,7 @@ header {
     background-color: var(--white);
     padding: 40px;
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
 
 .form-group {
@@ -474,78 +487,77 @@ textarea.form-control {
 footer {
     background-color: var(--text-color);
     color: var(--white);
-    padding: 50px 0 20px;
+    padding: 4px 0 3px;
 }
 
 .footer-content {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    max-width: 1200px;
+    justify-content: center;
+    align-items: center;
+    padding: 3px 0;
+    gap: 80px;
+    max-width: 800px;
     margin: 0 auto;
-    padding: 0 20px;
-    gap: 40px;
 }
 
 .footer-info {
     flex: 0 0 auto;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    order: -1;
-    width: 200px;
+    padding-top: 0;
+    height: 270px;
+    justify-content: center;
 }
 
 .footer-logo {
-    height: 120px;
+    height: 270px;
     width: auto;
     object-fit: contain;
-    filter: brightness(0) invert(1);
-    max-width: none;
     margin: 0;
-    display: block;
 }
 
 .footer-contact {
-    text-align: center;
-    min-width: 250px;
-    order: 0;
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 120px;
+    padding-top: 0;
+    height: 270px;
+    text-align: center;
     justify-content: center;
-    margin-top: 0;
 }
 
 .footer-contact h3 {
     margin-bottom: 15px;
-    font-size: 1.3rem;
+    font-size: 1.6rem;
     font-weight: 700;
 }
 
 .footer-contact p {
     margin-bottom: 10px;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
 
 .social-links {
     display: flex;
     gap: 15px;
-    margin-top: 10px;
+    margin-top: 15px;
     justify-content: center;
     width: 100%;
 }
 
 .social-links a {
     color: var(--white);
-    font-size: 1.5rem;
+    font-size: 2rem;
 }
 
 .footer-bottom {
     text-align: center;
     padding-top: 20px;
     border-top: 1px solid rgba(255,255,255,0.1);
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 /* Responsive Adjustments */
@@ -569,7 +581,7 @@ footer {
 
     .btn {
         padding: 10px 20px;
-        font-size: 0.95rem;
+        font-size: 1.2rem;
         width: 90%;
         max-width: 300px;
         margin: 0 auto;
@@ -653,6 +665,7 @@ footer {
         gap: 30px;
         text-align: center;
         align-items: center;
+        padding: 2px 0;
     }
 
     .footer-info {
@@ -663,23 +676,33 @@ footer {
     }
 
     .footer-logo {
-        height: 100px;
+        height: 210px;
         margin: 0 auto;
         display: block;
     }
 
     .footer-contact {
         height: auto;
-        min-height: 150px;
-        margin-top: 0;
+        min-height: 210px;
+    }
+
+    .footer-contact h3 {
+        font-size: 1.4rem;
+        margin-bottom: 12px;
+    }
+
+    .footer-contact p {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
     }
 
     .social-links {
-        justify-content: center;
-        margin: 10px auto 0;
-        width: 100%;
-        display: flex;
-        gap: 20px;
+        gap: 12px;
+        margin-top: 12px;
+    }
+
+    .social-links a {
+        font-size: 1.8rem;
     }
 
     .logo-container {
@@ -770,10 +793,6 @@ html {
 .service-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-}
-
-.btn {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn:hover {
@@ -985,12 +1004,8 @@ html {
     padding: 15px 30px;
     border: none;
     border-radius: 5px;
-    font-size: 1.1rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
 .cta-button:hover {
@@ -1009,12 +1024,8 @@ html {
     padding: 15px 30px;
     border: none;
     border-radius: 5px;
-    font-size: 1.1rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
     width: 100%;
     max-width: 300px;
     margin: 20px auto;
@@ -1094,17 +1105,22 @@ html {
     width: 200px;
     height: 200px;
     background: rgba(31, 58, 147, 0.9);
-    border: 2px solid #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2em;
-    color: white;
     text-align: center;
     padding: 20px;
     box-sizing: border-box;
     transition: transform 0.5s ease;
     backface-visibility: visible;
+    overflow: hidden;
+}
+
+.cube-face img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 10px;
 }
 
 .front { transform: translateZ(100px); }
@@ -1123,7 +1139,6 @@ html {
     .cube-face {
         width: 150px;
         height: 150px;
-        font-size: 1.5em;
     }
 
     .front { transform: translateZ(75px); }
