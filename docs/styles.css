@@ -1030,3 +1030,41 @@ html {
 .submit-button:active {
     transform: translateY(0);
 }
+
+.btn.btn-hero {
+    background-color: var(--white);
+    color: var(--primary-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn.btn-hero:hover,
+.btn.btn-hero:active,
+.btn.btn-hero:focus {
+    background-color: var(--white);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.btn.btn-light {
+    background-color: var(--white);
+    color: var(--primary-color);
+}
+
+.btn.btn-light:hover {
+    background-color: #f0f0f0;
+}
+
+.btn.btn-block {
+    background-color: var(--primary-color);
+    color: var(--white);
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto;
+    display: block;
+}
+
+.btn.btn-block:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+}
