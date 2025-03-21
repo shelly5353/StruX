@@ -8,42 +8,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Cube Animation
-const cube = document.querySelector('.cube');
-const container = document.querySelector('.cube-container');
-
-function rotateCube() {
-    if (cube && container) {
-        const containerRect = container.getBoundingClientRect();
-        const containerCenterX = containerRect.left + containerRect.width / 2;
-        const containerCenterY = containerRect.top + containerRect.height / 2;
-
-        container.addEventListener('mousemove', (e) => {
-            if (window.innerWidth > 768) {
-                const deltaX = (e.clientX - containerCenterX) / containerRect.width;
-                const deltaY = (e.clientY - containerCenterY) / containerRect.height;
-
-                const rotateX = deltaY * 30;
-                const rotateY = deltaX * 30;
-
-                cube.style.transform = `rotateX(${-rotateX}deg) rotateY(${rotateY}deg)`;
-            }
-        });
-
-        container.addEventListener('mouseleave', () => {
-            if (window.innerWidth > 768) {
-                cube.style.transform = 'rotateX(0) rotateY(0)';
-            }
-        });
-    }
-}
-
-// Initialize cube animation when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    rotateCube();
-    console.log('Cube initialized');
-});
-
 // Form submission handling
 document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -170,61 +134,3 @@ document.querySelectorAll('.service-card').forEach(card => {
         }, 300);
     });
 }); 
-// Initialize Bootstrap carousel
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize the carousel with custom options
-    const whyUsCarousel = new bootstrap.Carousel(document.getElementById('whyUsCarousel'), {
-        interval: 5000, // Change slides every 5 seconds
-        pause: 'hover', // Pause on mouse hover
-        wrap: true,     // Loop through slides
-        keyboard: true  // Allow keyboard navigation
-    });
-
-    // Add hover pause functionality
-    const carousel = document.getElementById('whyUsCarousel');
-    
-    carousel.addEventListener('mouseenter', function() {
-        whyUsCarousel.pause();
-    });
-    
-    carousel.addEventListener('mouseleave', function() {
-        whyUsCarousel.cycle();
-    });
-
-    // Add swipe support for mobile
-    let touchStartX = 0;
-    let touchEndX = 0;
-    
-    carousel.addEventListener('touchstart', function(e) {
-        touchStartX = e.changedTouches[0].screenX;
-    }, false);
-    
-    carousel.addEventListener('touchend', function(e) {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    }, false);
-    
-    function handleSwipe() {
-        if (touchEndX < touchStartX - 50) {
-            // Swipe left - next slide
-            whyUsCarousel.next();
-        } else if (touchEndX > touchStartX + 50) {
-            // Swipe right - previous slide
-            whyUsCarousel.prev();
-        }
-    }
-    
-    // Apply AOS animations to carousel elements
-    // This ensures AOS animations work properly with carousel
-    carousel.addEventListener('slide.bs.carousel', function (e) {
-        const nextSlide = e.relatedTarget;
-        const elements = nextSlide.querySelectorAll('[data-aos]');
-        
-        elements.forEach(element => {
-            element.classList.remove('aos-animate');
-            setTimeout(function() {
-                element.classList.add('aos-animate');
-            }, 10);
-        });
-    });
-});
