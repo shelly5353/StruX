@@ -1003,7 +1003,7 @@ html {
 
 .carousel-item {
     padding: 20px;
-    min-height: 300px;
+    height: 350px;
 }
 
 .carousel-card {
@@ -1011,6 +1011,7 @@ html {
     border-radius: 10px;
     padding: 25px 30px;
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1037,7 +1038,6 @@ html {
     text-align: center;
     color: var(--text-color);
     line-height: 1.6;
-    max-width: 550px;
     margin: 0 auto;
 }
 
@@ -1079,7 +1079,7 @@ html {
     }
     
     .carousel-item {
-        min-height: 320px;
+        height: 400px;
         padding: 10px;
     }
     
