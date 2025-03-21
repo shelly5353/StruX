@@ -1015,6 +1015,7 @@ html {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -1039,6 +1040,8 @@ html {
     color: var(--text-color);
     line-height: 1.6;
     margin: 0 auto;
+    max-width: 400px;
+    width: 100%;
 }
 
 /* Customize carousel indicators */
@@ -1094,6 +1097,8 @@ html {
     
     .carousel-text {
         font-size: 1rem;
+        max-width: 300px;
+        width: 100%;
     }
     
     .carousel-indicators {
