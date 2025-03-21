@@ -610,4 +610,32 @@ footer {
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 60px;
+}
+
+/* Animation Enhancements */
+[data-aos] {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.benefit-card, .service-card {
+    transition: transform 0.3s ease;
+}
+
+.benefit-card:hover, .service-card:hover {
+    transform: translateY(-5px);
+}
+
+@media (max-width: 768px) {
+    [data-aos] {
+        transition-duration: 600ms !important;
+    }
+    
+    .benefit-card, .service-card {
+        transition: transform 0.2s ease;
+    }
+}
+
+/* Smooth Scroll */
+html {
+    scroll-behavior: smooth;
 } 
