@@ -96,6 +96,7 @@ header {
     width: 100%;
     top: 0;
     z-index: 1000;
+    transition: all 0.3s ease;
 }
 
 .header-container {
@@ -140,6 +141,22 @@ header {
     font-size: 0.85rem;
     color: var(--text-color);
     line-height: 1;
+}
+
+.section-title-header {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+}
+
+.section-title-header.visible {
+    opacity: 1;
 }
 
 /* Hero Section */

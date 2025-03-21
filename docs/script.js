@@ -228,3 +228,41 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// טיפול בכותרת הדינמית בסרגל העליון
+document.addEventListener('DOMContentLoaded', function() {
+    const headerTitle = document.querySelector('.section-title-header');
+    const sections = document.querySelectorAll('section');
+    const sectionTitles = {
+        'hero': 'פתרון מהפכני בניהול הבניין שלכם',
+        'services': 'השירותים שלנו',
+        'why-us': 'למה דווקא איתנו?',
+        'benefits': 'יתרונות המערכת',
+        'contact': 'לקבלת הצעת מחיר מותאמת לבניין שלך'
+    };
+
+    function updateHeaderTitle() {
+        const scrollPosition = window.scrollY;
+        let currentSection = 'hero';
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            const sectionHeight = section.offsetHeight;
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                currentSection = section.id;
+            }
+        });
+
+        const title = sectionTitles[currentSection];
+        if (title) {
+            headerTitle.textContent = title;
+            headerTitle.classList.add('visible');
+        } else {
+            headerTitle.classList.remove('visible');
+        }
+    }
+
+    window.addEventListener('scroll', updateHeaderTitle);
+    updateHeaderTitle(); // עדכון ראשוני
+});
