@@ -39,8 +39,17 @@ body {
     background-color: var(--text-color);
     direction: rtl;
     width: 100%;
+    min-height: 100%;
     position: relative;
     overflow-x: hidden;
+    overscroll-behavior-y: contain;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+    background-color: var(--white);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -525,6 +534,8 @@ footer {
     background-color: var(--text-color);
     color: var(--white);
     padding: 0;
+    flex-shrink: 0;
+    margin-top: auto;
 }
 
 .footer-content {
@@ -567,8 +578,9 @@ footer {
 
 .footer-contact h3 {
     margin-bottom: 15px;
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     font-weight: 700;
+    line-height: 1.2;
 }
 
 .footer-contact p {
@@ -595,6 +607,7 @@ footer {
     border-top: 1px solid rgba(255,255,255,0.1);
     max-width: 800px;
     margin: 0 auto;
+    padding-bottom: 10px;
 }
 
 /* Responsive Adjustments */
@@ -720,8 +733,9 @@ footer {
     }
 
     .footer-contact h3 {
-        font-size: 1.4rem;
+        font-size: 1.1rem;
         margin-bottom: 12px;
+        line-height: 1.2;
     }
 
     .footer-contact p {
@@ -773,6 +787,7 @@ footer {
 
     html {
         scroll-padding-top: 30px;
+        overscroll-behavior-y: contain;
     }
 
     .services {
@@ -814,6 +829,9 @@ footer {
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 60px;
+    height: 100%;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
 }
 
 /* Animation Enhancements */
