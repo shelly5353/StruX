@@ -508,10 +508,10 @@ header {
 }
 
 .form-container {
-    max-width: 600px;
+    max-width: 500px;
     margin: 0 auto;
     background-color: var(--white);
-    padding: 40px;
+    padding: 30px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
@@ -634,15 +634,15 @@ footer {
 
 .social-links {
     display: flex;
-    gap: 15px;
-    margin-top: 15px;
+    gap: 12px;
+    margin-top: 12px;
     justify-content: center;
     width: 100%;
 }
 
 .social-links a {
     color: var(--white);
-    font-size: 2rem;
+    font-size: 1.6rem;
 }
 
 .footer-bottom {
@@ -763,6 +763,7 @@ footer {
     .form-container {
         padding: 20px;
         margin: 0 15px;
+        max-width: 400px;
     }
 
     .footer-logo {
@@ -788,12 +789,12 @@ footer {
     }
 
     .social-links {
-        gap: 12px;
-        margin-top: 12px;
+        gap: 10px;
+        margin-top: 10px;
     }
 
     .social-links a {
-        font-size: 1.8rem;
+        font-size: 1.4rem;
     }
 
     .logo-container {
