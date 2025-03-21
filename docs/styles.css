@@ -1026,21 +1026,22 @@ html {
 }
 
 .carousel-title {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
+    font-size: 1.6rem;
+    margin-bottom: 20px;
     color: var(--text-color);
     font-family: 'Alef', sans-serif;
     font-weight: 700;
     text-align: center;
+    max-width: 200px;
 }
 
 .carousel-text {
-    font-size: 1.1rem;
+    font-size: 1rem;
     text-align: center;
     color: var(--text-color);
-    line-height: 1.6;
+    line-height: 1.5;
     margin: 0 auto;
-    max-width: 250px;
+    max-width: 180px;
     width: 100%;
 }
 
@@ -1091,14 +1092,15 @@ html {
     }
     
     .carousel-title {
-        font-size: 1.5rem;
-        margin-bottom: 10px;
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+        max-width: 180px;
     }
     
     .carousel-text {
-        font-size: 1rem;
-        max-width: 200px;
-        width: 100%;
+        font-size: 0.95rem;
+        max-width: 160px;
+        line-height: 1.4;
     }
     
     .carousel-indicators {
