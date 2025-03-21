@@ -65,8 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const tocModal = document.getElementById('tocModal');
 
     // פתיחת המודל
-    tocButton.addEventListener('click', function(e) {
-        e.stopPropagation();
+    tocButton.addEventListener('click', function() {
         tocModal.classList.add('active');
         document.body.style.overflow = 'hidden';
     });
