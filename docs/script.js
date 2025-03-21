@@ -51,4 +51,14 @@ document.addEventListener('DOMContentLoaded', function() {
             this.value = this.value.replace(/[^0-9]/g, '');
         });
     }
+});
+
+// Benefit cards hover animation
+document.querySelectorAll('.benefit-card').forEach(card => {
+    card.addEventListener('mouseleave', function() {
+        this.classList.add('float-back');
+        this.addEventListener('animationend', function() {
+            this.classList.remove('float-back');
+        }, { once: true });
+    });
 }); 
