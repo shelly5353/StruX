@@ -129,8 +129,25 @@ header {
 .hero {
     background: var(--primary-color);
     color: var(--white);
-    padding: 100px 0 100px;
+    padding: 80px 0 100px;
     text-align: center;
+    position: relative;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: var(--white);
+    z-index: 1;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 2;
 }
 
 .hero h1 {
@@ -576,7 +593,7 @@ footer {
     }
     
     .hero {
-        padding: 80px 0 60px;
+        padding: 60px 0 80px;
         width: 100%;
     }
     
