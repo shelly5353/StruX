@@ -1,9 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap');
 
-@font-face {
-    font-family: 'Alef';
-    src: url('/Users/shellysmac/Library/Group Containers/UBF8T346G9.Office/FontCache/4/CloudFonts/Alef/TTF/Alef-Regular.ttf') format('truetype');
-}
+@import url('https://fonts.googleapis.com/css2?family=Alef:wght@400;700&display=swap');
 
 @viewport {
     width: device-width;
@@ -832,3 +829,123 @@ html {
 html {
     scroll-behavior: smooth;
 } 
+/* Carousel Styling */
+.carousel {
+    margin: 30px auto;
+    max-width: 850px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-inner {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.carousel-item {
+    padding: 20px;
+    min-height: 300px;
+}
+
+.carousel-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 25px 30px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.carousel-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-title {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+    font-family: 'Alef', sans-serif;
+    font-weight: 700;
+    text-align: center;
+}
+
+.carousel-text {
+    font-size: 1.1rem;
+    text-align: center;
+    color: var(--text-color);
+    line-height: 1.6;
+    max-width: 550px;
+        max-width: 550px !important;
+    margin: 0 auto;
+}
+
+/* Customize carousel indicators */
+.carousel-indicators {
+    bottom: -40px;
+}
+
+.carousel-indicators [data-bs-target] {
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin: 0 5px;
+}
+
+.carousel-indicators .active {
+    background-color: #fff;
+}
+
+/* Customize carousel controls */
+.carousel-control-prev,
+.carousel-control-next {
+    width: 10%;
+    color: #fff;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    padding: 10px;
+}
+
+@media (max-width: 768px) {
+    .carousel {
+        margin: 20px auto;
+        padding: 15px;
+    }
+    
+    .carousel-item {
+        min-height: 320px;
+        padding: 10px;
+    }
+    
+    .carousel-card {
+        padding: 20px;
+    }
+    
+    .carousel-title {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+    
+    .carousel-text {
+        font-size: 1rem;
+    }
+    
+    .carousel-indicators {
+        bottom: -30px;
+    }
+    
+    .carousel-indicators [data-bs-target] {
+        width: 10px;
+        height: 10px;
+    }
+}
