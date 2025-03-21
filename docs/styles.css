@@ -1040,7 +1040,7 @@ html {
     color: var(--text-color);
     line-height: 1.6;
     margin: 0 auto;
-    max-width: 400px;
+    max-width: 300px;
     width: 100%;
 }
 
@@ -1097,7 +1097,7 @@ html {
     
     .carousel-text {
         font-size: 1rem;
-        max-width: 300px;
+        max-width: 250px;
         width: 100%;
     }
     
