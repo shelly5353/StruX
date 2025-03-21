@@ -101,4 +101,18 @@ document.querySelectorAll('.benefit-card').forEach(card => {
             }, { once: true });
         }, 200);
     });
+});
+
+// Service Cards Touch Effect
+document.querySelectorAll('.service-card').forEach(card => {
+    card.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        this.classList.add('active');
+    });
+
+    card.addEventListener('touchend', function() {
+        setTimeout(() => {
+            this.classList.remove('active');
+        }, 500);
+    });
 }); 
