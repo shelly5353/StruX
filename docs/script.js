@@ -8,6 +8,42 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+// Cube Animation
+const cube = document.querySelector('.cube');
+const container = document.querySelector('.cube-container');
+
+function rotateCube() {
+    if (cube && container) {
+        const containerRect = container.getBoundingClientRect();
+        const containerCenterX = containerRect.left + containerRect.width / 2;
+        const containerCenterY = containerRect.top + containerRect.height / 2;
+
+        container.addEventListener('mousemove', (e) => {
+            if (window.innerWidth > 768) {
+                const deltaX = (e.clientX - containerCenterX) / containerRect.width;
+                const deltaY = (e.clientY - containerCenterY) / containerRect.height;
+
+                const rotateX = deltaY * 30;
+                const rotateY = deltaX * 30;
+
+                cube.style.transform = `rotateX(${-rotateX}deg) rotateY(${rotateY}deg)`;
+            }
+        });
+
+        container.addEventListener('mouseleave', () => {
+            if (window.innerWidth > 768) {
+                cube.style.transform = 'rotateX(0) rotateY(0)';
+            }
+        });
+    }
+}
+
+// Initialize cube animation when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    rotateCube();
+    console.log('Cube initialized');
+});
+
 // Form submission handling
 document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
