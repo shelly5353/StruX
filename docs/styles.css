@@ -397,9 +397,9 @@ header {
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 30px;
-    max-width: 500px;
+    max-width: 1000px;
     margin: 0 auto;
 }
 
@@ -415,7 +415,7 @@ header {
 }
 
 .service-card:last-child {
-    grid-column: auto;
+    grid-column: 1 / span 2;
     max-width: 500px;
     margin: 0 auto;
 }
