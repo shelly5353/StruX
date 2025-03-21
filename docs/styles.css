@@ -10,8 +10,8 @@
 }
 
 :root {
-    --primary-color: #007bff;
-    --secondary-color: #6c757d;
+    --primary-color: #1F3A93;
+    --secondary-color: #B0B0B0;
     --background-color: #ffffff;
     --text-color: #333333;
     --heading-font: 'Heebo', sans-serif;
@@ -994,9 +994,9 @@ html {
 }
 
 .cta-button:hover {
-    background-color: #0056b3;
+    background-color: #162C70;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+    box-shadow: 0 5px 15px rgba(31, 58, 147, 0.3);
 }
 
 .cta-button:active {
@@ -1022,9 +1022,9 @@ html {
 }
 
 .submit-button:hover {
-    background-color: #0056b3;
+    background-color: #162C70;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+    box-shadow: 0 5px 15px rgba(31, 58, 147, 0.3);
 }
 
 .submit-button:active {
@@ -1064,7 +1064,7 @@ html {
 }
 
 .btn.btn-block:hover {
-    background-color: #0056b3;
+    background-color: #162C70;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+    box-shadow: 0 5px 15px rgba(31, 58, 147, 0.3);
 }
