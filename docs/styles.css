@@ -111,6 +111,9 @@ header {
     display: flex;
     align-items: center;
     gap: 15px;
+    position: relative;
+    z-index: 1002;
+    flex: 0 0 auto;
 }
 
 .logo {
@@ -119,12 +122,17 @@ header {
     object-fit: contain;
     max-width: none;
     filter: none;
-    display: block;
+    display: block !important;
     margin: 0;
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative;
+    z-index: 1002;
+    flex: 0 0 auto;
 }
 
 .logo-text {
@@ -136,14 +144,12 @@ header {
     font-weight: 900;
     color: var(--primary-color);
     line-height: 1;
-    font-family: var(--heading-font);
 }
 
 .company-tagline {
     font-size: 0.85rem;
     color: var(--text-color);
     line-height: 1;
-    font-family: var(--body-font);
 }
 
 .toc-button {
@@ -260,6 +266,9 @@ header {
     
     .logo-container {
         gap: 10px;
+        position: relative;
+        z-index: 1002;
+        flex: 0 0 auto;
     }
     
     .toc-button {
@@ -286,11 +295,47 @@ header {
         font-size: 1rem;
         padding: 10px 0;
     }
+
+    .logo {
+        height: 45px;
+        width: auto;
+        max-width: none;
+        display: block !important;
+        margin: 0;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative;
+        z-index: 1002;
+        flex: 0 0 auto;
+    }
 }
 
-@media (max-width: 480px) {
-    .company-tagline {
-        display: none;
+@media screen and (max-width: 480px) {
+    .logo-container {
+        position: relative;
+        z-index: 1002;
+        flex: 0 0 auto;
+    }
+    
+    .logo {
+        height: 40px;
+        width: auto;
+        max-width: none;
+        display: block !important;
+        margin: 0;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative;
+        z-index: 1002;
+        flex: 0 0 auto;
     }
 }
 
@@ -323,12 +368,14 @@ header {
     font-size: 2.5rem;
     margin-bottom: 40px;
     font-weight: 700;
+    font-family: var(--heading-font);
 }
 
 .hero p {
     font-size: 1.2rem;
     max-width: 800px;
     margin: 0 auto 40px;
+    font-family: var(--body-font);
 }
 
 /* Button Styles */
@@ -402,6 +449,7 @@ header {
     font-size: 2rem;
     margin-bottom: 50px;
     font-weight: 700;
+    font-family: var(--heading-font);
 }
 
 .benefits-grid {
@@ -503,6 +551,7 @@ header {
     font-size: 1.4rem;
     margin-bottom: 15px;
     font-weight: 700;
+    font-family: var(--heading-font);
 }
 
 /* Transparency Section */
@@ -517,10 +566,66 @@ header {
     margin-bottom: 20px;
 }
 
-.transparency p {
-    max-width: 800px;
-    margin: 0 auto 40px;
-    font-size: 1.1rem;
+.transparency-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.transparency-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.transparency-card:hover {
+    transform: translateY(-5px);
+}
+
+.transparency-icon {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: var(--white);
+}
+
+.transparency-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: var(--white);
+}
+
+.transparency-card p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--white);
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .transparency-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 15px;
+    }
+    
+    .transparency-card {
+        padding: 20px;
+    }
+    
+    .transparency-icon {
+        font-size: 2rem;
+    }
+    
+    .transparency-card h3 {
+        font-size: 1.2rem;
+    }
+    
+    .transparency-card p {
+        font-size: 0.95rem;
+    }
 }
 
 .btn-light {
@@ -557,9 +662,15 @@ header {
     position: relative;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+    width: 100%;
     max-width: 500px;
     margin: 0 auto;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .service-card:hover {
@@ -591,14 +702,10 @@ header {
     max-width: 500px;
     margin: 0 auto;
     width: 50%;
+    height: 300px;
 }
 
 @media (max-width: 768px) {
-    .service-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12), 0 3px 6px rgba(0, 0, 0, 0.15);
-    }
-
     .services-grid {
         grid-template-columns: 1fr;
         gap: 20px;
@@ -609,13 +716,34 @@ header {
     }
 
     .service-card {
-        max-width: 100%;
+        width: 100%;
+        max-width: 500px;
+        height: 300px;
+        margin: 0 auto;
     }
 
     .service-card:last-child {
         grid-column: auto;
         width: 100%;
-        max-width: 100%;
+        max-width: 500px;
+        height: 300px;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .service-card {
+        width: 100%;
+        max-width: 500px;
+        height: 300px;
+        margin: 0 auto;
+    }
+
+    .service-card:last-child {
+        width: 100%;
+        max-width: 500px;
+        height: 300px;
+        margin: 0 auto;
     }
 }
 
@@ -844,23 +972,24 @@ footer {
     }
 
     .section-title {
-        font-size: 1.6rem;
+        font-size: 2rem;
         margin-bottom: 30px;
         font-weight: 700;
-        font-family: 'Fredoka', sans-serif;
+        font-family: var(--heading-font);
     }
 
     .hero h1 {
-        font-size: 1.8rem;
+        font-size: 2.5rem;
         margin-bottom: 30px;
         font-weight: 700;
-        font-family: 'Fredoka', sans-serif;
+        font-family: var(--heading-font);
     }
     
     .hero p {
-        font-size: 1rem;
+        font-size: 1.2rem;
         margin-bottom: 30px;
         padding: 0 15px;
+        font-family: var(--body-font);
     }
 
     .btn {
@@ -878,12 +1007,13 @@ footer {
     }
 
     .benefit-card h3 {
-        display: inline-block;
-        margin: 0 15px 15px 0;
-        font-size: 1.2rem;
-        vertical-align: middle;
+        font-size: 1.4rem;
+        margin-bottom: 15px;
         font-weight: 700;
-        font-family: 'Fredoka', sans-serif;
+        font-family: var(--heading-font);
+        display: block;
+        margin: 0 0 15px 0;
+        text-align: right;
     }
 
     .benefit-icon {
@@ -956,6 +1086,15 @@ footer {
         gap: 3px;
     }
 
+    .company-name {
+        font-size: 1.6rem;
+        font-family: 'Fredoka', sans-serif;
+    }
+
+    .company-tagline {
+        font-size: 0.75rem;
+    }
+
     .logo {
         height: 45px;
         width: auto;
@@ -966,6 +1105,8 @@ footer {
         transform: translateZ(0);
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
 
     .hero::after {
@@ -994,7 +1135,7 @@ footer {
 
 @media screen and (max-width: 480px) {
     .hero h1 {
-        font-size: 1.5rem;
+        font-size: 2.5rem;
     }
 
     .btn {
@@ -1002,7 +1143,11 @@ footer {
     }
 
     .section-title {
-        font-size: 1.4rem;
+        font-size: 2rem;
+    }
+
+    .company-tagline {
+        display: none;
     }
 
     .logo {
@@ -1015,6 +1160,15 @@ footer {
         transform: translateZ(0);
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .benefit-card h3 {
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+        font-weight: 700;
+        font-family: var(--heading-font);
     }
 }
 
@@ -1161,7 +1315,7 @@ html {
 }
 
 .carousel-card {
-    background-color: #f5f5f5;
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     padding: 25px 30px;
     height: 100%;
@@ -1180,22 +1334,25 @@ html {
 }
 
 .carousel-title {
-    font-size: 1.6rem;
+    font-size: 2rem;
     margin-bottom: 20px;
-    color: var(--text-color);
-    font-family: 'Heebo', sans-serif;
+    color: var(--white);
+    font-family: var(--heading-font);
     font-weight: 700;
     text-align: center;
+    width: 100%;
 }
 
 .carousel-text {
-    font-size: 1rem;
+    font-size: 1.3rem;
     text-align: center;
-    color: var(--text-color);
-    line-height: 1.5;
+    color: var(--white);
+    line-height: 1.6;
     margin: 0 auto;
-    max-width: 140px;
+    max-width: 400px;
     width: 100%;
+    padding: 0 20px;
+    font-family: var(--body-font);
 }
 
 /* Customize carousel indicators */
@@ -1247,14 +1404,11 @@ html {
     }
     
     .carousel-title {
-        font-size: 1.4rem;
-        margin-bottom: 15px;
+        font-family: var(--heading-font);
     }
     
     .carousel-text {
-        font-size: 0.95rem;
-        max-width: 120px;
-        line-height: 1.4;
+        font-family: var(--body-font);
     }
     
     .carousel-indicators {
@@ -1265,6 +1419,30 @@ html {
         width: 15px;
         height: 1px;
         margin: 0 2px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .carousel {
+        margin: 15px auto;
+        padding: 10px;
+    }
+    
+    .carousel-item {
+        height: 350px;
+        padding: 8px;
+    }
+    
+    .carousel-card {
+        padding: 15px;
+    }
+    
+    .carousel-title {
+        font-family: var(--heading-font);
+    }
+    
+    .carousel-text {
+        font-family: var(--body-font);
     }
 }
 
