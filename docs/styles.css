@@ -179,7 +179,7 @@ header {
 
 /* Button Styles */
 .btn, .cta-button, .submit-button {
-    font-family: 'Heebo', sans-serif !important;
+    font-family: 'Fredoka', sans-serif !important;
     font-weight: 700 !important;
     letter-spacing: 2px;
     font-size: 1.3rem;
@@ -532,7 +532,7 @@ header {
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    font-family: 'Heebo', sans-serif;
+    font-family: 'Fredoka', sans-serif;
     font-size: 16px;
 }
 
