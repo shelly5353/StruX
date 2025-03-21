@@ -27,7 +27,6 @@
 }
 
 html, body {
-    overflow-x: hidden;
     width: 100%;
     position: relative;
 }
@@ -38,7 +37,6 @@ body {
     color: var(--text-color);
     background-color: var(--background-color);
     direction: rtl;
-    overflow-x: hidden;
     width: 100%;
     position: relative;
 }
@@ -74,7 +72,6 @@ p {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
-    overflow-x: hidden;
     position: relative;
 }
 
@@ -574,10 +571,45 @@ footer {
 
 /* Responsive Adjustments */
 @media screen and (max-width: 768px) {
-    .hero {
-        padding: 120px 0 60px;
+    .container {
+        padding: 0 15px;
     }
     
+    .hero {
+        padding: 120px 0 60px;
+        width: 100%;
+    }
+    
+    .benefits-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 15px;
+        width: 100%;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 15px;
+        width: 100%;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+        align-items: center;
+        padding: 2px 0;
+        width: 100%;
+    }
+
+    .section-title {
+        font-size: 1.6rem;
+        margin-bottom: 30px;
+        font-weight: 700;
+        font-family: 'Alef', sans-serif;
+    }
+
     .hero h1 {
         font-size: 1.8rem;
         margin-bottom: 15px;
@@ -600,23 +632,6 @@ footer {
         display: block;
     }
 
-    .section-title {
-        font-size: 1.6rem;
-        margin-bottom: 30px;
-        font-weight: 700;
-        font-family: 'Alef', sans-serif;
-    }
-
-    .benefits {
-        padding: 40px 0;
-    }
-
-    .benefits-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-        padding: 0 15px;
-    }
-
     .benefit-card {
         padding: 20px;
         text-align: right;
@@ -636,16 +651,6 @@ footer {
         font-size: 1.8rem;
         margin-bottom: 15px;
         vertical-align: middle;
-    }
-
-    .services {
-        padding: 40px 0;
-    }
-
-    .services-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-        padding: 0 15px;
     }
 
     .service-card:last-child {
@@ -670,21 +675,6 @@ footer {
     .form-container {
         padding: 20px;
         margin: 0 15px;
-    }
-
-    .footer-content {
-        flex-direction: column;
-        gap: 30px;
-        text-align: center;
-        align-items: center;
-        padding: 2px 0;
-    }
-
-    .footer-info {
-        width: 100%;
-        justify-content: center;
-        padding-top: 0;
-        height: auto;
     }
 
     .footer-logo {
@@ -744,11 +734,6 @@ footer {
 
     html {
         scroll-padding-top: 30px;
-    }
-
-    .container {
-        padding: 0 15px;
-        overflow-x: hidden;
     }
 }
 
