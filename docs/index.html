@@ -9,6 +9,69 @@
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&family=Alef:wght@400;700&display=swap" rel="stylesheet">
+        <style>
+            .carousel-text {
+                padding-left: 50px !important;
+                padding-right: 50px !important;
+            }
+        </style>
+     <style>
+        /* קוד קודם שהוספת... */
+        
+        /* איזון הרווחים בחלק צור קשר */
+        .footer-contact h3 {
+            font-size: 1rem;
+            margin-bottom: 10px; /* רווח קבוע מתחת לכותרת */
+        }
+        
+        .footer-contact p {
+            font-size: 1rem;
+            line-height: 1.2; /* מצמצם רווח בתוך השורות */
+            margin-bottom: 8px; /* רווח קבוע ושווה בין כל פסקה */
+        }
+        
+        .social-links {
+            margin-top: 3px; /* רווח זהה מעל האייקונים */
+        }
+    </style>
+    <style>
+        /* פתרון בעיית גלילה בסוף הדף */
+        html, body {
+            overscroll-behavior-y: auto; /* במקום contain */
+            -webkit-overflow-scrolling: touch; /* משפר גלילה בiOS */
+        }
+        
+        /* תוספת מרווח קטן בסוף הדף למניעת "היתקעות" */
+        body::after {
+            content: '';
+            display: block;
+            height: 1px;
+            margin-bottom: 10px;
+        }
+    </style>
+<script>
+    // מנע בעיות גלילה בקצוות הדף
+    document.addEventListener('DOMContentLoaded', function() {
+        // טיפול בגלילה במכשירים ניידים
+        if ('ontouchstart' in window) {
+            // מנע את האפקט של "bounce" בגלילה
+            document.body.addEventListener('touchmove', function(e) {
+                // אפשר גלילה רגילה
+            }, { passive: true });
+            
+            // הוסף מרווח קטן בסוף הגלילה
+            window.addEventListener('scroll', function() {
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 10) {
+                    // כשמגיעים לסוף העמוד, מונע את ה"היתקעות"
+                    document.body.style.paddingBottom = '1px';
+                    setTimeout(function() {
+                        document.body.style.paddingBottom = '0';
+                    }, 300);
+                }
+            });
+        }
+    });
+</script>
     </head>
     <body>
         <!-- Header -->
@@ -20,13 +83,14 @@
                         <img src="./logo/strux_logo_new.png" alt="Strux Logo" class="logo">
                     </picture>
                     <div class="logo-text">
-</div>
+                    </div>
                 </div>
                 <nav>
                     <!-- Navigation links if needed -->
                 </nav>
             </div>
         </header>
+
         <!-- Hero Section -->
         <section class="hero">
             <div class="container">
@@ -46,7 +110,8 @@
                 </div>
             </div>
         </section>
-        <!-- Benefits Section -->
+
+        <!-- Services Section -->
         <section class="services">
             <div class="container">
                 <h2 class="section-title" data-aos="fade-up">השירותים שלנו</h2>
@@ -65,184 +130,189 @@
                     </div>
                 </div>
             </div>
-            <!-- Update the Transparency Section to a Carousel -->
-            <section class="transparency" id="why-us">
-                <div class="container">
-                    <h2 class="section-title" data-aos="fade-up">למה דווקא איתנו?</h2>
-                    <!-- Carousel Container -->
-                    <div id="whyUsCarousel" class="carousel slide" data-bs-ride="carousel" data-aos="fade-up" data-aos-delay="100">
-                        <!-- Carousel Indicators -->
-                        <div class="carousel-indicators">
-                            <button type="button" data-bs-target="#whyUsCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                            <button type="button" data-bs-target="#whyUsCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                            <button type="button" data-bs-target="#whyUsCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                            <button type="button" data-bs-target="#whyUsCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
-                        </div>
-                        <!-- Carousel Items -->
-                        <div class="carousel-inner">
-                            <!-- First Slide - Transparency -->
-                            <div class="carousel-item active">
-                                <div class="carousel-card">
-                                    <h3 class="carousel-title">שקיפות מלאה</h3>
-                                    <p class="carousel-text" data-empty-placeholder>כל דייר יכול לצפות בנתוני הניהול, התקציב והתחזוקה בכל רגע נתון. אין הפתעות, אין מידע חסר – הכול גלוי וברור לכל בעלי העניין, כדי להבטיח אמון מלא בין ועד הבית לדיירים. הצטרפו למהפכת ניהול הבניינים וקבלו שליטה מלאה, נוחות ושקט נפשי.</p>
-                                </div>
-                            </div>
-                            <!-- Second Slide - Professional Services -->
-                            <div class="carousel-item">
-                                <div class="carousel-card">
-                                    <h3 class="carousel-title">שירות מקצועי</h3>
-                                    <p class="carousel-text">צוות המומחים שלנו מביא עמו ניסיון רב בניהול נכסים ואחזקת מבנים. אנו מתחייבים לתת מענה מהיר, יעיל ומקצועי לכל פנייה. העבודה שלנו מיועדת להבטיח את איכות החיים של הדיירים ולשמור על ערך הנכס לאורך זמן.</p>
-                                </div>
-                            </div>
-                            <!-- Third Slide - Technology -->
-                            <div class="carousel-item">
-                                <div class="carousel-card">
-                                    <h3 class="carousel-title">טכנולוגיה מתקדמת</h3>
-                                    <p class="carousel-text">אנו משלבים טכנולוגיות חדשניות בניהול הבניין – מאפליקציית ניהול ידידותית ועד מערכות בית חכם. הטכנולוגיה מאפשרת לנו לספק שירות יעיל יותר, תקשורת טובה יותר וניהול חכם יותר של משאבי הבניין.</p>
-                                </div>
-                            </div>
-                            <!-- Fourth Slide - Support -->
-                            <div class="carousel-item">
-                                <div class="carousel-card">
-                                    <h3 class="carousel-title">תמיכה 24/7</h3>
-                                    <p class="carousel-text">אנחנו כאן בשבילכם בכל עת. מערך התמיכה שלנו זמין 24 שעות ביממה, 7 ימים בשבוע לטיפול בתקלות דחופות ומענה לשאלות. אתם לעולם לא לבד כשאתם עובדים עם StruX.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Carousel Controls -->
-                        <button class="carousel-control-prev" type="button" data-bs-target="#whyUsCarousel" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#whyUsCarousel" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
+        </section>
+
+        <!-- Transparency Section -->
+        <section class="transparency" id="why-us">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">למה דווקא איתנו?</h2>
+                <!-- Carousel Container -->
+                <div id="whyUsCarousel" class="carousel slide" data-bs-ride="carousel" data-aos="fade-up" data-aos-delay="100">
+                    <!-- Carousel Indicators -->
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#whyUsCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#whyUsCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#whyUsCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        <button type="button" data-bs-target="#whyUsCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
                     </div>
-                    <div class="text-center mt-4" data-aos="fade-up" data-aos-delay="200">
-                        <a href="#contact" class="btn btn-light">צרו קשר וקבלו ייעוץ ללא התחייבות</a>
+                    <!-- Carousel Items -->
+                    <div class="carousel-inner">
+                        <!-- First Slide - Transparency -->
+                        <div class="carousel-item active">
+                            <div class="carousel-card">
+                                <h3 class="carousel-title">שקיפות מלאה</h3>
+                                <p class="carousel-text" data-empty-placeholder>כל דייר יכול לצפות בנתוני הניהול, התקציב והתחזוקה בכל רגע נתון. אין הפתעות, אין מידע חסר – הכול גלוי וברור לכל בעלי העניין, כדי להבטיח אמון מלא בין ועד הבית לדיירים. הצטרפו למהפכת ניהול הבניינים וקבלו שליטה מלאה, נוחות ושקט נפשי.</p>
+                            </div>
+                        </div>
+                        <!-- Second Slide - Professional Services -->
+                        <div class="carousel-item">
+                            <div class="carousel-card">
+                                <h3 class="carousel-title">שירות מקצועי</h3>
+                                <p class="carousel-text">צוות המומחים שלנו מביא עמו ניסיון רב בניהול נכסים ואחזקת מבנים. אנו מתחייבים לתת מענה מהיר, יעיל ומקצועי לכל פנייה. העבודה שלנו מיועדת להבטיח את איכות החיים של הדיירים ולשמור על ערך הנכס לאורך זמן.</p>
+                            </div>
+                        </div>
+                        <!-- Third Slide - Technology -->
+                        <div class="carousel-item">
+                            <div class="carousel-card">
+                                <h3 class="carousel-title">טכנולוגיה מתקדמת</h3>
+                                <p class="carousel-text">אנו משלבים טכנולוגיות חדשניות בניהול הבניין – מאפליקציית ניהול ידידותית ועד מערכות בית חכם. הטכנולוגיה מאפשרת לנו לספק שירות יעיל יותר, תקשורת טובה יותר וניהול חכם יותר של משאבי הבניין.</p>
+                            </div>
+                        </div>
+                        <!-- Fourth Slide - Support -->
+                        <div class="carousel-item">
+                            <div class="carousel-card">
+                                <h3 class="carousel-title">תמיכה 24/7</h3>
+                                <p class="carousel-text">אנחנו כאן בשבילכם בכל עת. מערך התמיכה שלנו זמין 24 שעות ביממה, 7 ימים בשבוע לטיפול בתקלות דחופות ומענה לשאלות. אתם לעולם לא לבד כשאתם עובדים עם StruX.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Carousel Controls -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#whyUsCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#whyUsCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                <div class="text-center mt-4" data-aos="fade-up" data-aos-delay="200">
+                    <a href="#contact" class="btn btn-light">צרו קשר וקבלו ייעוץ ללא התחייבות</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="benefits">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">יתרונות המערכת</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card" data-aos="fade-right" data-aos-duration="600" data-aos-delay="50" data-aos-offset="200"><i class="fas fa-university benefit-icon"></i>
+                        <h3>קישוריות לבנקים</h3>
+                        <p>ניהול תקציב הבניין הופך לקל ושקוף יותר מאי פעם! המערכת שלנו מאפשרת חיבור ישיר לבנקים, כך שכל ההכנסות וההוצאות מעודכנות באופן אוטומטי.</p>
+                    </div>
+                    <div class="benefit-card" data-aos="fade-left" data-aos-duration="600" data-aos-delay="100" data-aos-offset="200"><i class="fas fa-credit-card benefit-icon"></i>
+                        <h3>אפשרויות תשלום נוחות</h3>
+                        <p>שכחו מהמרדף אחרי תשלומים! האפליקציה מאפשרת לדיירים לשלם בדרך שהכי נוחה להם – אשראי, העברה בנקאית, ביט ואפילו אפשרות לתשלומים.</p>
+                    </div>
+                    <div class="benefit-card" data-aos="fade-right" data-aos-duration="600" data-aos-delay="150" data-aos-offset="200"><i class="fas fa-hard-drive benefit-icon"></i>
+                        <h3>מאגר המידע של הבניין</h3>
+                        <p>כל הטיפולים, התקלות וההיסטוריה של הבניין מרוכזים במקום נוח ונגיש. אין צורך בחיפושים מיותרים – כל פרט מתועד ומעודכן בזמן אמת.</p>
+                    </div>
+                    <div class="benefit-card" data-aos="fade-left" data-aos-duration="600" data-aos-delay="200" data-aos-offset="200"><i class="fas fa-file-alt benefit-icon"></i>
+                        <h3>הפק דוחות</h3>
+                        <p>אין צורך לשבור את הראש עם ניהול חשבונות ודוחות מסובכים! המערכת מפיקה עבורכם דוחות מפורטים בזמן אמת, הכוללים נתונים פיננסיים ומצב גבייה.</p>
+                    </div>
+                    <div class="benefit-card" data-aos="fade-right" data-aos-duration="600" data-aos-delay="250" data-aos-offset="200"><i class="fas fa-exclamation-triangle benefit-icon"></i>
+                        <h3>דיווחים על תקלות</h3>
+                        <p>דיווח על תקלה? כולם מתעדכנים מיד! כל תקלה המדווחת באפליקציה נשלחת אוטומטית לגורמים הרלוונטיים, כולל אנשי התחזוקה וועד הבית.</p>
+                    </div>
+                    <div class="benefit-card" data-aos="fade-left" data-aos-duration="600" data-aos-delay="300" data-aos-offset="200"><i class="fas fa-tasks benefit-icon"></i>
+                        <h3>תכנון גאנט שנתי</h3>
+                        <p>תכנון שנתי מסודר לכל פעולות האחזקה והניהול בבניין! המערכת מאפשרת יצירה וניהול של גאנט שנתי שמרכז את כל הטיפולים התקופתיים.</p>
                     </div>
                 </div>
-            </section>
-            <section class="benefits">
-                <div class="container">
-                    <h2 class="section-title" data-aos="fade-up">יתרונות המערכת</h2>
-                    <div class="benefits-grid">
-                        <div class="benefit-card" data-aos="fade-right" data-aos-duration="600" data-aos-delay="50" data-aos-offset="200"><i class="fas fa-university benefit-icon"></i>
-                            <h3>קישוריות לבנקים</h3>
-                            <p>ניהול תקציב הבניין הופך לקל ושקוף יותר מאי פעם! המערכת שלנו מאפשרת חיבור ישיר לבנקים, כך שכל ההכנסות וההוצאות מעודכנות באופן אוטומטי.</p>
+            </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section class="contact" id="contact">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">לקבלת הצעת מחיר מותאמת לבניין שלך</h2>
+                <p style="text-align: center; margin-bottom: 30px;" data-aos="fade-up" data-aos-delay="100">הגעת עד לכאן כל מה שנשאר זה רק לבקש שנציג מטעמנו יחזור אלייך עם כל הפרטים</p>
+                <div class="form-container" data-aos="fade-up" data-aos-delay="200">
+                    <form id="contactForm" action="#" method="POST">
+                        <div class="form-group">
+                            <label for="name">שם מלא</label>
+                            <input type="text" id="name" class="form-control" required>
                         </div>
-                        <div class="benefit-card" data-aos="fade-left" data-aos-duration="600" data-aos-delay="100" data-aos-offset="200"><i class="fas fa-credit-card benefit-icon"></i>
-                            <h3>אפשרויות תשלום נוחות</h3>
-                            <p>שכחו מהמרדף אחרי תשלומים! האפליקציה מאפשרת לדיירים לשלם בדרך שהכי נוחה להם – אשראי, העברה בנקאית, ביט ואפילו אפשרות לתשלומים.</p>
+                        <div class="form-group">
+                            <label for="phone">טלפון</label>
+                            <input type="tel" id="phone" name="phone" class="form-control" pattern="[0-9]*" inputmode="numeric" maxlength="10" required>
                         </div>
-                        <div class="benefit-card" data-aos="fade-right" data-aos-duration="600" data-aos-delay="150" data-aos-offset="200"><i class="fas fa-hard-drive benefit-icon"></i>
-                            <h3>מאגר המידע של הבניין</h3>
-                            <p>כל הטיפולים, התקלות וההיסטוריה של הבניין מרוכזים במקום נוח ונגיש. אין צורך בחיפושים מיותרים – כל פרט מתועד ומעודכן בזמן אמת.</p>
+                        <div class="form-group">
+                            <label for="email">אימייל</label>
+                            <input type="email" id="email" class="form-control" required>
                         </div>
-                        <div class="benefit-card" data-aos="fade-left" data-aos-duration="600" data-aos-delay="200" data-aos-offset="200"><i class="fas fa-file-alt benefit-icon"></i>
-                            <h3>הפק דוחות</h3>
-                            <p>אין צורך לשבור את הראש עם ניהול חשבונות ודוחות מסובכים! המערכת מפיקה עבורכם דוחות מפורטים בזמן אמת, הכוללים נתונים פיננסיים ומצב גבייה.</p>
-                        </div>
-                        <div class="benefit-card" data-aos="fade-right" data-aos-duration="600" data-aos-delay="250" data-aos-offset="200"><i class="fas fa-exclamation-triangle benefit-icon"></i>
-                            <h3>דיווחים על תקלות</h3>
-                            <p>דיווח על תקלה? כולם מתעדכנים מיד! כל תקלה המדווחת באפליקציה נשלחת אוטומטית לגורמים הרלוונטיים, כולל אנשי התחזוקה וועד הבית.</p>
-                        </div>
-                        <div class="benefit-card" data-aos="fade-left" data-aos-duration="600" data-aos-delay="300" data-aos-offset="200"><i class="fas fa-tasks benefit-icon"></i>
-                            <h3>תכנון גאנט שנתי</h3>
-                            <p>תכנון שנתי מסודר לכל פעולות האחזקה והניהול בבניין! המערכת מאפשרת יצירה וניהול של גאנט שנתי שמרכז את כל הטיפולים התקופתיים.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- Transparency Section -->
-            <!-- Services Section -->
-            <!-- Contact Form Section -->
-            <section class="contact" id="contact">
-                <div class="container">
-                    <h2 class="section-title" data-aos="fade-up">לקבלת הצעת מחיר מותאמת לבניין שלך</h2>
-                    <p style="text-align: center; margin-bottom: 30px;" data-aos="fade-up" data-aos-delay="100">הגעת עד לכאן כל מה שנשאר זה רק לבקש שנציג מטעמנו יחזור אלייך עם כל הפרטים</p>
-                    <div class="form-container" data-aos="fade-up" data-aos-delay="200">
-                        <form id="contactForm" action="#" method="POST">
-                            <div class="form-group">
-                                <label for="name">שם מלא</label>
-                                <input type="text" id="name" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">טלפון</label>
-                                <input type="tel" id="phone" name="phone" class="form-control" pattern="[0-9]*" inputmode="numeric" maxlength="10" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">אימייל</label>
-                                <input type="email" id="email" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>מתי נוח לך שנתקשר?</label>
-                                <div class="checkbox-group">
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="time-1" name="call_time[]" value="08:00 - 11:00">
-                                        <label for="time-1">08:00 - 11:00</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="time-2" name="call_time[]" value="11:00 - 14:00">
-                                        <label for="time-2">11:00 - 14:00</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="time-3" name="call_time[]" value="14:00 - 17:00">
-                                        <label for="time-3">14:00 - 17:00</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" id="time-4" name="call_time[]" value="17:00 - 20:00">
-                                        <label for="time-4">17:00 - 20:00</label>
-                                    </div>
+                        <div class="form-group">
+                            <label>מתי נוח לך שנתקשר?</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="time-1" name="call_time[]" value="08:00 - 11:00">
+                                    <label for="time-1">08:00 - 11:00</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="time-2" name="call_time[]" value="11:00 - 14:00">
+                                    <label for="time-2">11:00 - 14:00</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="time-3" name="call_time[]" value="14:00 - 17:00">
+                                    <label for="time-3">14:00 - 17:00</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="time-4" name="call_time[]" value="17:00 - 20:00">
+                                    <label for="time-4">17:00 - 20:00</label>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="message">הערות נוספות</label>
-                                <textarea id="message" class="form-control"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-block">שלח פרטים</button>
-                        </form>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">הערות נוספות</label>
+                            <textarea id="message" class="form-control"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-block">שלח פרטים</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container" data-aos="fade-up">
+                <div class="footer-content">
+                    <div class="footer-info">
+                        <img src="./logo/strux_logo_design_pre_v4_export_8.png" alt="Strux Logo" class="footer-logo">
+                    </div>
+                    <div class="footer-contact">
+                        <h3>צור קשר</h3>
+                        <p><i class="fas fa-phone"></i> 03-123-4567</p>
+                        <p><i class="fas fa-envelope"></i> info@strux.co.il</p>
+                        <p><i class="fas fa-map-marker-alt"></i> רחוב הראשי 123, תל אביב</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                        </div>
                     </div>
                 </div>
-            </section>
-            <!-- Footer -->
-            <footer>
-                <div class="container" data-aos="fade-up">
-                    <div class="footer-content">
-                        <div class="footer-info">
-                            <img src="./logo/strux_logo_design_pre_v4_export_8.png" alt="Strux Logo" class="footer-logo">
-                        </div>
-                        <div class="footer-contact">
-                            <h3>צור קשר</h3>
-                            <p><i class="fas fa-phone"></i> 03-123-4567</p>
-                            <p><i class="fas fa-envelope"></i> info@strux.co.il</p>
-                            <p><i class="fas fa-map-marker-alt"></i> רחוב הראשי 123, תל אביב</p>
-                            <div class="social-links">
-                                <a href="#"><i class="fab fa-facebook"></i></a>
-                                <a href="#"><i class="fab fa-instagram"></i></a>
-                                <a href="#"><i class="fab fa-linkedin"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="footer-bottom">
-                        <p>© 2025 - כל הזכויות שמורות לStruX</p>
-                    </div>
+                <div class="footer-bottom">
+                    <p>© 2025 - כל הזכויות שמורות לStruX</p>
                 </div>
-            </footer>
-            <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-            <script src="./script.js"></script>
-            <script>
-        AOS.init({
-            duration: 600,
-            once: true,
-            mirror: false,
-            offset: 100,
-            disable: window.innerWidth < 768 ? false : false,
-            easing: 'ease-out'
-        });
-    </script>
-            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+            </div>
+        </footer>
+
+        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <script src="./script.js"></script>
+        <script>
+            AOS.init({
+                duration: 600,
+                once: true,
+                mirror: false,
+                offset: 100,
+                disable: window.innerWidth < 768 ? false : false,
+                easing: 'ease-out'
+            });
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
     </body>
 </html>
