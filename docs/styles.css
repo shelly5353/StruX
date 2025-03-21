@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap');
-
-@import url('https://fonts.googleapis.com/css2?family=Alef:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
 
 @viewport {
     width: device-width;
@@ -15,7 +14,7 @@
     --background-color: #333333;
     --text-color: #333333;
     --heading-font: 'Heebo', sans-serif;
-    --body-font: 'Alef', sans-serif;
+    --body-font: 'Fredoka', sans-serif;
     --light-bg: #f8f9fa;
     --white: #ffffff;
 }
@@ -508,10 +507,10 @@ header {
 }
 
 .form-container {
-    max-width: 500px;
+    max-width: 600px;
     margin: 0 auto;
     background-color: var(--white);
-    padding: 30px;
+    padding: 40px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
@@ -634,15 +633,15 @@ footer {
 
 .social-links {
     display: flex;
-    gap: 12px;
-    margin-top: 12px;
+    gap: 15px;
+    margin-top: 15px;
     justify-content: center;
     width: 100%;
 }
 
 .social-links a {
     color: var(--white);
-    font-size: 1.6rem;
+    font-size: 2rem;
 }
 
 .footer-bottom {
@@ -695,14 +694,14 @@ footer {
         font-size: 1.6rem;
         margin-bottom: 30px;
         font-weight: 700;
-        font-family: 'Alef', sans-serif;
+        font-family: 'Fredoka', sans-serif;
     }
 
     .hero h1 {
         font-size: 1.8rem;
         margin-bottom: 30px;
         font-weight: 700;
-        font-family: 'Alef', sans-serif;
+        font-family: 'Fredoka', sans-serif;
     }
     
     .hero p {
@@ -731,7 +730,7 @@ footer {
         font-size: 1.2rem;
         vertical-align: middle;
         font-weight: 700;
-        font-family: 'Alef', sans-serif;
+        font-family: 'Fredoka', sans-serif;
     }
 
     .benefit-icon {
@@ -763,7 +762,6 @@ footer {
     .form-container {
         padding: 20px;
         margin: 0 15px;
-        max-width: 400px;
     }
 
     .footer-logo {
@@ -789,12 +787,12 @@ footer {
     }
 
     .social-links {
-        gap: 10px;
-        margin-top: 10px;
+        gap: 12px;
+        margin-top: 12px;
     }
 
     .social-links a {
-        font-size: 1.4rem;
+        font-size: 1.8rem;
     }
 
     .logo-container {
@@ -807,7 +805,7 @@ footer {
 
     .company-name {
         font-size: 1.6rem;
-        font-family: 'Alef', sans-serif;
+        font-family: 'Fredoka', sans-serif;
     }
 
     .company-tagline {
@@ -1046,7 +1044,7 @@ html {
     font-size: 1.6rem;
     margin-bottom: 20px;
     color: var(--text-color);
-    font-family: 'Alef', sans-serif;
+    font-family: 'Fredoka', sans-serif;
     font-weight: 700;
     text-align: center;
 }
