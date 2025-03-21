@@ -76,7 +76,7 @@
     <body>
         <!-- Header -->
         <header>
-            <div class="container header-container" data-aos="fade-down" data-aos-duration="600">
+            <div class="container header-container">
                 <div class="logo-container">
                     <picture>
                         <source media="(max-width: 768px)" srcset="./logo/strux_logo_design_pre_v4_export_3.png">
@@ -85,11 +85,28 @@
                     <div class="logo-text">
                     </div>
                 </div>
+                <button id="tocButton" class="toc-button" aria-label="תוכן עניינים">
+                    <i class="fas fa-list"></i>
+                </button>
                 <nav>
                     <!-- Navigation links if needed -->
                 </nav>
             </div>
         </header>
+
+        <div id="tocModal" class="toc-modal">
+            <div class="toc-modal-content">
+                <div class="toc-modal-header">
+                    <button class="toc-close-button">&times;</button>
+                </div>
+                <div class="toc-list">
+                    <a href="#services">השירותים שלנו</a>
+                    <a href="#why-us">למה דווקא איתנו?</a>
+                    <a href="#benefits">יתרונות המערכת</a>
+                    <a href="#contact">צור קשר</a>
+                </div>
+            </div>
+        </div>
 
         <!-- Hero Section -->
         <section class="hero">
@@ -112,7 +129,7 @@
         </section>
 
         <!-- Services Section -->
-        <section class="services">
+        <section class="services" id="services">
             <div class="container">
                 <h2 class="section-title" data-aos="fade-up">השירותים שלנו</h2>
                 <div class="services-grid">
@@ -193,7 +210,7 @@
         </section>
 
         <!-- Benefits Section -->
-        <section class="benefits">
+        <section class="benefits" id="benefits">
             <div class="container">
                 <h2 class="section-title" data-aos="fade-up">יתרונות המערכת</h2>
                 <div class="benefits-grid">
