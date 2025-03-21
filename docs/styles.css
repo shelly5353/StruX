@@ -524,7 +524,7 @@ textarea.form-control {
 footer {
     background-color: var(--text-color);
     color: var(--white);
-    padding: 4px 0 3px;
+    padding: 4px 0 0;
 }
 
 .footer-content {
