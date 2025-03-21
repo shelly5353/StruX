@@ -102,6 +102,9 @@ header {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    transform: none !important;
+    transition: none !important;
+    position: relative;
 }
 
 .logo-container {
@@ -140,6 +143,25 @@ header {
     font-size: 0.85rem;
     color: var(--text-color);
     line-height: 1;
+}
+
+.toc-button {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    padding: 0;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 /* Hero Section */
