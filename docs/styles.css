@@ -490,8 +490,6 @@ header {
     color: var(--text-color);
     line-height: 1.5;
     margin: 0 auto;
-    max-width: 180px;
-    width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -1058,7 +1056,7 @@ html {
     color: var(--text-color);
     line-height: 1.5;
     margin: 0 auto;
-    max-width: 180px;
+    max-width: 140px;
     width: 100%;
 }
 
@@ -1117,7 +1115,7 @@ html {
     
     .carousel-text {
         font-size: 0.95rem;
-        max-width: 160px;
+        max-width: 120px;
         line-height: 1.4;
     }
     
