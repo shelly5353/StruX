@@ -432,6 +432,7 @@ header {
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
+    border-bottom-width: 4px;
 }
 
 .service-card.active::after {
@@ -444,7 +445,8 @@ header {
     }
     
     .service-card.active::after {
-        animation: fadeOut 0.5s ease forwards;
+        opacity: 1;
+        transition: opacity 0.2s ease-out;
     }
 
     .services-grid {
