@@ -36,6 +36,7 @@ html, body {
 
 body {
     font-family: var(--body-font);
+    font-size: 18px;
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--text-color);
@@ -45,6 +46,7 @@ body {
     flex-direction: column;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
 }
 
 main {
@@ -76,8 +78,9 @@ h3 {
 }
 
 p {
-    font-family: var(--body-font);
-    margin-bottom: 1rem;
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
 }
 
 .container {
@@ -614,10 +617,11 @@ header {
 }
 
 .transparency-card p {
-    font-size: 1rem;
-    line-height: 1.6;
+    font-size: 18px;
+    line-height: 1.8;
     color: var(--white);
     opacity: 0.9;
+    margin-bottom: 1.5rem;
 }
 
 @media (max-width: 768px) {
@@ -640,7 +644,8 @@ header {
     }
     
     .transparency-card p {
-        font-size: 0.95rem;
+        font-size: 16px;
+        line-height: 1.7;
     }
 }
 
@@ -767,18 +772,18 @@ header {
 }
 
 .service-card p {
-    font-size: 1rem;
+    font-size: 17px;
+    line-height: 1.7;
     text-align: center;
     color: var(--text-color);
-    line-height: 1.5;
     margin: 0 auto;
 }
 
 @media (max-width: 768px) {
     .service-card p {
-        font-size: 0.95rem;
+        font-size: 15px;
+        line-height: 1.6;
         max-width: 160px;
-        line-height: 1.4;
     }
 }
 
@@ -786,7 +791,6 @@ header {
 .contact {
     background-color: #eef0f5;
     padding: 80px 0;
-    scroll-margin-top: 60px;
 }
 
 .form-container {
@@ -847,6 +851,13 @@ header {
 textarea.form-control {
     min-height: 100px;
     resize: vertical;
+}
+
+@media (max-width: 768px) {
+    .form-container {
+        padding: 20px;
+        margin: 0 15px;
+    }
 }
 
 /* Footer */
@@ -981,9 +992,8 @@ footer {
     }
 
     .service-card p {
-        font-size: 0.95rem;
-        max-width: 160px;
-        line-height: 1.4;
+        font-size: 15px;
+        line-height: 1.6;
     }
 
     .transparency, .contact {
@@ -992,7 +1002,8 @@ footer {
 
     .transparency p {
         padding: 0 15px;
-        font-size: 1rem;
+        font-size: 16px;
+        line-height: 1.7;
     }
 
     .contact {
