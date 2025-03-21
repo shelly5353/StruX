@@ -129,7 +129,7 @@ header {
 .hero {
     background: var(--primary-color);
     color: var(--white);
-    padding: 80px 0 100px;
+    padding: 120px 0 100px;
     text-align: center;
     position: relative;
 }
@@ -369,6 +369,9 @@ header {
     padding: 80px 0;
     background-color: var(--light-bg);
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    margin-top: -100px;
+    position: relative;
+    z-index: 2;
 }
 
 .services-grid {
@@ -593,7 +596,7 @@ footer {
     }
     
     .hero {
-        padding: 60px 0 80px;
+        padding: 100px 0 80px;
         width: 100%;
     }
     
@@ -755,6 +758,10 @@ footer {
 
     html {
         scroll-padding-top: 30px;
+    }
+
+    .services {
+        margin-top: -80px;
     }
 }
 
