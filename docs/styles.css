@@ -29,6 +29,7 @@
 html, body {
     width: 100%;
     position: relative;
+    overflow-x: hidden;
 }
 
 body {
@@ -39,6 +40,7 @@ body {
     direction: rtl;
     width: 100%;
     position: relative;
+    overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -73,6 +75,7 @@ p {
     margin: 0 auto;
     padding: 0 20px;
     position: relative;
+    overflow-x: hidden;
 }
 
 /* Header Styles */
@@ -593,6 +596,7 @@ footer {
 @media screen and (max-width: 768px) {
     .container {
         padding: 0 15px;
+        overflow-x: hidden;
     }
     
     .hero {
@@ -605,6 +609,7 @@ footer {
         gap: 20px;
         padding: 0 15px;
         width: 100%;
+        overflow-x: hidden;
     }
 
     .services-grid {
@@ -612,6 +617,7 @@ footer {
         gap: 20px;
         padding: 0 15px;
         width: 100%;
+        overflow-x: hidden;
     }
 
     .footer-content {
