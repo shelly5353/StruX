@@ -140,7 +140,7 @@ header {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 100px;
+    height: 150px;
     background: var(--white);
     z-index: 1;
 }
@@ -747,6 +747,10 @@ footer {
         max-width: none;
         display: block;
         margin: 0;
+    }
+
+    .hero::after {
+        height: 120px;
     }
 
     html {
