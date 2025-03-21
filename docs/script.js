@@ -105,14 +105,32 @@ document.querySelectorAll('.benefit-card').forEach(card => {
 
 // Service Cards Touch Effect
 document.querySelectorAll('.service-card').forEach(card => {
+    let touchTimeout;
+    
     card.addEventListener('touchstart', function(e) {
         e.preventDefault();
+        clearTimeout(touchTimeout);
+        this.classList.remove('fade-out');
         this.classList.add('active');
     });
 
     card.addEventListener('touchend', function() {
-        setTimeout(() => {
-            this.classList.remove('active');
-        }, 500);
+        const self = this;
+        self.classList.remove('active');
+        self.classList.add('fade-out');
+        
+        touchTimeout = setTimeout(() => {
+            self.classList.remove('fade-out');
+        }, 300);
+    });
+
+    card.addEventListener('touchcancel', function() {
+        const self = this;
+        self.classList.remove('active');
+        self.classList.add('fade-out');
+        
+        touchTimeout = setTimeout(() => {
+            self.classList.remove('fade-out');
+        }, 300);
     });
 }); 

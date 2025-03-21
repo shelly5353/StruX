@@ -273,6 +273,7 @@ header {
     position: relative;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+    will-change: transform;
 }
 
 .service-card::after {
@@ -285,8 +286,10 @@ header {
     border: 2px solid var(--primary-color);
     border-radius: 10px;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.2s ease-in;
     pointer-events: none;
+    will-change: opacity;
+    transform: translateZ(0);
 }
 
 .service-card.active::after {
@@ -743,7 +746,13 @@ html {
     }
     
     .service-card.active::after {
-        animation: fadeOut 0.5s ease forwards;
+        opacity: 1;
+        transition: opacity 0.2s ease-out;
+    }
+
+    .service-card.fade-out::after {
+        opacity: 0;
+        transition: opacity 0.3s ease-out;
     }
 }
 
