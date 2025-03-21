@@ -1007,7 +1007,7 @@ html {
 }
 
 .carousel-card {
-    background-color: var(--primary-color);
+    background-color: #f5f5f5;
     border-radius: 10px;
     padding: 25px 30px;
     height: 100%;
@@ -1026,7 +1026,7 @@ html {
 .carousel-title {
     font-size: 1.8rem;
     margin-bottom: 15px;
-    color: var(--white);
+    color: var(--text-color);
     font-family: 'Alef', sans-serif;
     font-weight: 700;
     text-align: center;
@@ -1035,7 +1035,7 @@ html {
 .carousel-text {
     font-size: 1.1rem;
     text-align: center;
-    color: var(--white);
+    color: var(--text-color);
     line-height: 1.6;
     max-width: 550px;
     margin: 0 auto;
