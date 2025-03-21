@@ -36,7 +36,7 @@ body {
     font-family: var(--body-font);
     line-height: 1.6;
     color: var(--text-color);
-    background-color: var(--background-color);
+    background-color: var(--text-color);
     direction: rtl;
     width: 100%;
     position: relative;
@@ -76,6 +76,7 @@ p {
     padding: 0 20px;
     position: relative;
     overflow-x: hidden;
+    background-color: var(--background-color);
 }
 
 /* Header Styles */
@@ -525,6 +526,7 @@ footer {
     background-color: var(--text-color);
     color: var(--white);
     padding: 0;
+    margin-bottom: 0;
 }
 
 .footer-content {
