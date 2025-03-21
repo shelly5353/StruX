@@ -10,9 +10,12 @@
 }
 
 :root {
-    --primary-color: #1F3A93;
-    --secondary-color: #B0B0B0;
-    --text-color: #333333;
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --background-color: #f8f9fa;
+    --text-color: #333;
+    --heading-font: 'Heebo', sans-serif;
+    --body-font: 'Alef', sans-serif;
     --light-bg: #f8f9fa;
     --white: #ffffff;
 }
@@ -24,14 +27,37 @@
 }
 
 body {
-    font-family: 'Heebo', sans-serif;
-    color: var(--text-color);
+    font-family: var(--body-font);
     line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
     direction: rtl;
 }
 
-h1, h2, h3, .section-title, .company-name {
-    font-family: 'Alef', sans-serif;
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--heading-font);
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: 2rem;
+    line-height: 1.3;
+}
+
+h3 {
+    font-size: 1.5rem;
+    line-height: 1.4;
+}
+
+p {
+    font-family: var(--body-font);
+    margin-bottom: 1rem;
 }
 
 .container {
