@@ -63,34 +63,30 @@ document.addEventListener('DOMContentLoaded', function() {
     // Table of Contents functionality
     const tocButton = document.getElementById('tocButton');
     const tocModal = document.getElementById('tocModal');
-    const tocCloseButton = document.querySelector('.toc-close-button');
 
-    if (tocButton && tocModal && tocCloseButton) {
-        // Open modal
-        tocButton.addEventListener('click', () => {
-            tocModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
+    // פתיחת המודל
+    tocButton.addEventListener('click', function(e) {
+        e.stopPropagation();
+        tocModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
 
-        // Close modal function
-        const closeModal = () => {
+    // סגירת המודל בלחיצה על קישור
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    tocLinks.forEach(link => {
+        link.addEventListener('click', function() {
             tocModal.classList.remove('active');
             document.body.style.overflow = '';
-        };
-
-        // Close modal events
-        tocCloseButton.addEventListener('click', closeModal);
-        window.addEventListener('click', (e) => {
-            if (e.target === tocModal) {
-                closeModal();
-            }
         });
+    });
 
-        // Close modal when clicking on a link
-        document.querySelectorAll('.toc-list a').forEach(link => {
-            link.addEventListener('click', closeModal);
-        });
-    }
+    // סגירת המודל בלחיצה מחוץ למודל
+    document.addEventListener('click', function(event) {
+        if (!tocModal.contains(event.target) && !tocButton.contains(event.target)) {
+            tocModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
 
     // Form submission handling
     const contactForm = document.getElementById('contactForm');

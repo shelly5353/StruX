@@ -100,18 +100,17 @@ header {
 
 .header-container {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
-    transform: none !important;
-    transition: none !important;
     position: relative;
+    width: 100%;
+    padding: 0 20px;
 }
 
 .logo-container {
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-right: auto;
 }
 
 .logo {
@@ -137,12 +136,14 @@ header {
     font-weight: 900;
     color: var(--primary-color);
     line-height: 1;
+    font-family: var(--heading-font);
 }
 
 .company-tagline {
     font-size: 0.85rem;
     color: var(--text-color);
     line-height: 1;
+    font-family: var(--body-font);
 }
 
 .toc-button {
@@ -158,10 +159,139 @@ header {
     justify-content: center;
     transition: background-color 0.3s ease;
     padding: 0;
-    position: absolute;
+    position: relative;
+    margin-right: 0;
+    z-index: 1001;
+    margin-left: auto;
+}
+
+.toc-button:hover {
+    background-color: #162C70;
+}
+
+.toc-modal {
+    display: none;
+    position: fixed;
+    top: 80px;
     right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
+    width: 250px;
+    background-color: var(--white);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    z-index: 1001;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.toc-modal.active {
+    display: block;
+    transform: translateX(0);
+}
+
+.toc-header {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.toc-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.toc-close-button {
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+}
+
+.toc-close-button:hover {
+    opacity: 0.8;
+}
+
+.toc-list {
+    padding: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.toc-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.toc-list li {
+    margin-bottom: 12px;
+}
+
+.toc-list a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1.1rem;
+    display: block;
+    padding: 12px 0;
+    transition: color 0.3s ease;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.toc-list a:hover {
+    color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+    .header-container {
+        padding: 0 15px;
+    }
+    
+    .logo-container {
+        gap: 10px;
+    }
+    
+    .toc-button {
+        width: 35px;
+        height: 35px;
+        margin-left: auto;
+    }
+
+    .toc-modal {
+        top: 70px;
+        right: 15px;
+        width: 240px;
+    }
+    
+    .toc-header {
+        padding: 12px 15px;
+    }
+    
+    .toc-list {
+        padding: 15px;
+    }
+    
+    .toc-list a {
+        font-size: 1rem;
+        padding: 10px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .company-tagline {
+        display: none;
+    }
 }
 
 /* Hero Section */
@@ -826,15 +956,6 @@ footer {
         gap: 3px;
     }
 
-    .company-name {
-        font-size: 1.6rem;
-        font-family: 'Fredoka', sans-serif;
-    }
-
-    .company-tagline {
-        font-size: 0.75rem;
-    }
-
     .logo {
         height: 45px;
         width: auto;
@@ -882,10 +1003,6 @@ footer {
 
     .section-title {
         font-size: 1.4rem;
-    }
-
-    .company-tagline {
-        display: none;
     }
 
     .logo {
