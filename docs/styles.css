@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap');
 
 @viewport {
@@ -16,7 +17,7 @@
     --text-color: #333333;
     --heading-font: 'Heebo', sans-serif;
     --body-font: 'Fredoka', sans-serif;
-    --button-font: 'M PLUS Rounded 1c', sans-serif;
+    --button-font: 'Rubik', sans-serif;
     --light-bg: #f8f9fa;
     --white: #ffffff;
 }
@@ -182,7 +183,7 @@ header {
 /* Button Styles */
 .btn, .cta-button, .submit-button {
     font-family: var(--button-font) !important;
-    font-weight: 800 !important;
+    font-weight: 700 !important;
     letter-spacing: 1px;
     font-size: 1.3rem;
     text-transform: uppercase;
