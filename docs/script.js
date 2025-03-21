@@ -53,12 +53,52 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Benefit cards hover animation
+// Benefit cards hover and touch animation
 document.querySelectorAll('.benefit-card').forEach(card => {
+    // Mouse events for desktop
     card.addEventListener('mouseleave', function() {
-        this.classList.add('float-back');
-        this.addEventListener('animationend', function() {
-            this.classList.remove('float-back');
-        }, { once: true });
+        if (window.innerWidth > 768) {
+            this.classList.add('float-back');
+            this.addEventListener('animationend', function() {
+                this.classList.remove('float-back');
+            }, { once: true });
+        }
+    });
+
+    // Touch events for mobile
+    let touchTimeout;
+    
+    card.addEventListener('touchstart', function(e) {
+        // מונע את ברירת המחדל של הדפדפן
+        e.preventDefault();
+        
+        // מסיר את הקלאס מכל הקוביות האחרות
+        document.querySelectorAll('.benefit-card').forEach(otherCard => {
+            if (otherCard !== this) {
+                otherCard.classList.remove('active', 'float-back');
+            }
+        });
+        
+        // מוסיף את הקלאס active לקובייה הנוכחית
+        this.classList.add('active');
+        
+        // מנקה טיימר קודם אם קיים
+        if (touchTimeout) {
+            clearTimeout(touchTimeout);
+        }
+    });
+
+    card.addEventListener('touchend', function() {
+        const currentCard = this;
+        
+        // מחכה רגע קצר ואז מפעיל את אנימציית החזרה
+        touchTimeout = setTimeout(() => {
+            currentCard.classList.remove('active');
+            currentCard.classList.add('float-back');
+            
+            currentCard.addEventListener('animationend', function() {
+                currentCard.classList.remove('float-back');
+            }, { once: true });
+        }, 200);
     });
 }); 
