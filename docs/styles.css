@@ -1032,7 +1032,6 @@ html {
     font-family: 'Alef', sans-serif;
     font-weight: 700;
     text-align: center;
-    max-width: 200px;
 }
 
 .carousel-text {
@@ -1094,7 +1093,6 @@ html {
     .carousel-title {
         font-size: 1.4rem;
         margin-bottom: 15px;
-        max-width: 180px;
     }
     
     .carousel-text {
