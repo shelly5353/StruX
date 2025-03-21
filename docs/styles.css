@@ -29,7 +29,8 @@
 html, body {
     width: 100%;
     position: relative;
-    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -43,10 +44,6 @@ body {
     flex-direction: column;
     margin: 0;
     padding: 0;
-    position: relative;
-    overflow-x: hidden;
-    overscroll-behavior-y: contain;
-    margin-bottom: 0;
 }
 
 main {
@@ -87,8 +84,6 @@ p {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
-    position: relative;
-    overflow-x: hidden;
 }
 
 /* Header Styles */
@@ -457,7 +452,6 @@ header {
         gap: 20px;
         padding: 0 15px;
         width: 100%;
-        overflow-x: hidden;
         max-width: 500px;
         margin: 0 auto;
     }
@@ -648,7 +642,6 @@ footer {
 @media screen and (max-width: 768px) {
     .container {
         padding: 0 15px;
-        overflow-x: hidden;
     }
     
     .hero {
@@ -669,7 +662,8 @@ footer {
         gap: 20px;
         padding: 0 15px;
         width: 100%;
-        overflow-x: hidden;
+        max-width: 500px;
+        margin: 0 auto;
     }
 
     .footer-content {
