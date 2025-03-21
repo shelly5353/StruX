@@ -719,19 +719,18 @@ html {
         gap: 20px;
     }
 
-    .benefit-card:nth-child(odd) {
-        transform: translateX(-100%);
+    .benefit-card {
         opacity: 0;
+        transform: translateX(-100%);
     }
 
     .benefit-card:nth-child(even) {
         transform: translateX(100%);
-        opacity: 0;
     }
 
     .benefit-card.aos-animate {
-        transform: translateX(0);
         opacity: 1;
+        transform: translateX(0);
     }
 }
 
