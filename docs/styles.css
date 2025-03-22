@@ -725,32 +725,42 @@ header {
         grid-template-columns: 1fr;
         gap: 20px;
         padding: 0 15px;
-        width: 100%;
-        max-width: 500px;
-        margin: 0 auto;
     }
 
-    .service-card, .service-card:last-child {
-        width: 100%;
-        max-width: 500px;
-        height: 300px;
-        margin: 0 auto;
-    }
-}
-
-@media screen and (max-width: 480px) {
     .service-card {
         width: 100%;
-        max-width: 500px;
-        height: 300px;
-        margin: 0 auto;
+        max-width: 100%;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .service-card p {
+        font-size: 15px;
+        line-height: 1.6;
+        max-width: 100%;
+        margin: 10px auto;
     }
 
     .service-card:last-child {
-        width: 100%;
-        max-width: 500px;
-        height: 300px;
-        margin: 0 auto;
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .services-grid {
+        gap: 15px;
+        padding: 0 10px;
+    }
+
+    .service-card {
+        padding: 15px;
+    }
+
+    .service-card p {
+        font-size: 14px;
+        line-height: 1.5;
+        max-width: 100%;
+        margin: 8px auto;
     }
 }
 
