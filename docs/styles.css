@@ -667,6 +667,12 @@ header {
     margin-top: 40px;
 }
 
+.service-card:nth-child(3) {
+    grid-column: 1 / -1;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
 .service-card {
     background-color: var(--white);
     padding: 30px;
@@ -709,6 +715,13 @@ header {
         grid-template-columns: 1fr;
         gap: 20px;
         padding: 0 15px;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .service-card:nth-child(3) {
+        max-width: 100%;
     }
 
     .service-card {
