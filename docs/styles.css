@@ -692,8 +692,7 @@ header {
     font-size: 1.5rem;
     margin-bottom: 15px;
     text-align: center;
-    color: var(--text-color);
-    font-weight: 900;
+    color: var(--primary-color);
 }
 
 .service-card p {
@@ -736,7 +735,7 @@ header {
     }
 }
 
-@media (max-width: 480px) {
+@media screen and (max-width: 480px) {
     .services-grid {
         gap: 15px;
         padding: 0 10px;
