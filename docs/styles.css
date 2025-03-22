@@ -693,6 +693,7 @@ header {
     margin-bottom: 15px;
     text-align: center;
     color: var(--text-color);
+    font-weight: 900;
 }
 
 .service-card p {
