@@ -692,7 +692,7 @@ header {
     font-size: 1.5rem;
     margin-bottom: 15px;
     text-align: center;
-    color: var(--primary-color);
+    color: var(--text-color);
 }
 
 .service-card p {
