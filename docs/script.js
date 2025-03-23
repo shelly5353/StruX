@@ -19,6 +19,11 @@ document.addEventListener('DOMContentLoaded', function() {
             top: 0,
             behavior: 'smooth'
         });
+        
+        // פתרון נוסף במקרה שהגלילה לא מגיעה עד למעלה
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+        }, 1000);
     });
 
     // Phone input validation
