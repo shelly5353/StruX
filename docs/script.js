@@ -460,4 +460,49 @@ document.querySelectorAll('.service-card').forEach(card => {
             self.classList.remove('fade-out');
         }, 300);
     });
+});
+
+// Welcome Popup for new users
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM loaded, checking for popup");
+    // Check if it's the user's first visit
+    const hasVisitedBefore = localStorage.getItem('hasVisitedBefore');
+    console.log("Has visited before:", hasVisitedBefore);
+    
+    const popup = document.getElementById('welcomePopup');
+    const closePopupBtn = document.getElementById('closePopup');
+    const popupCtaBtn = document.getElementById('popupCta');
+    
+    console.log("Popup element:", popup);
+    
+    // Show popup even if visited before (for testing)
+    setTimeout(function() {
+        console.log("Showing popup...");
+        popup.classList.add('active');
+    }, 1000);
+    
+    // Close popup when close button is clicked
+    closePopupBtn.addEventListener('click', function() {
+        console.log("Close button clicked");
+        popup.classList.remove('active');
+    });
+    
+    // Close popup when clicking outside
+    popup.addEventListener('click', function(e) {
+        if (e.target === popup) {
+            console.log("Clicked outside popup");
+            popup.classList.remove('active');
+        }
+    });
+    
+    // CTA button action
+    popupCtaBtn.addEventListener('click', function() {
+        console.log("CTA button clicked");
+        popup.classList.remove('active');
+        // Scroll to contact section
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+            contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
 }); 

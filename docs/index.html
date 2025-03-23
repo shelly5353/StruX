@@ -21,6 +21,9 @@
         <script>
     // מנע בעיות גלילה בקצוות הדף
     document.addEventListener('DOMContentLoaded', function() {
+        // איפוס ה-localStorage לצורך בדיקה
+        localStorage.removeItem('hasVisitedBefore');
+        
         // טיפול בגלילה במכשירים ניידים
         if ('ontouchstart' in window) {
             // מנע את האפקט של "bounce" בגלילה
@@ -43,6 +46,22 @@
 </script>
     </head>
     <body>
+        <!-- Popup for new users -->
+        <div id="welcomePopup" class="popup-overlay">
+            <div class="popup-container">
+                <button id="closePopup" class="popup-close"><i class="fas fa-times"></i></button>
+                <div class="popup-content">
+                    <div class="popup-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h3 class="popup-title">מצטרפים חדשים?</h3>
+                    <p class="popup-text">שלושה חודשים ראשונים חינם!</p>
+                    <button id="popupCta" class="popup-btn">לפרטים נוספים</button>
+                </div>
+            </div>
+        </div>
+        <!-- End Popup -->
+
         <!-- Header -->
         <header>
             <div class="container header-container">
