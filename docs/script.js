@@ -15,15 +15,49 @@ document.addEventListener('DOMContentLoaded', function() {
     // Scroll to top when button is clicked
     backToTopBtn.addEventListener('click', function(e) {
         e.preventDefault();
+        
+        // הגדרת משתנה לפני השימוש בו
+        let lastScrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        
+        // ראשית ניסיון גלילה בצורה חלקה
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
         
-        // פתרון נוסף במקרה שהגלילה לא מגיעה עד למעלה
+        // יש פה שני פתרונות למקרה שהגלילה החלקה לא מגיעה עד למעלה:
+        
+        // פתרון 1: לאחר הגלילה החלקה, נוודא שמגיעים לקצה העליון בקפיצה מידית
         setTimeout(() => {
+            // שימוש בדרכים שונות לגלילה למעלה כדי לתמוך בדפדפנים ישנים
             window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
         }, 1000);
+        
+        // פתרון 2: פתרון נוסף עם מעקב אחרי התקדמות הגלילה
+        const scrollInterval = setInterval(() => {
+            // מקבלים את המיקום הנוכחי בצורה תואמת לכל הדפדפנים
+            const currentScrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+            
+            // אם כבר הגענו למצב די קרוב לראש הדף
+            if (currentScrollPos < 10) {
+                // נקפוץ למיקום 0,0 כדי להבטיח שהגענו לגמרי למעלה
+                window.scrollTo(0, 0);
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
+                clearInterval(scrollInterval);
+            } 
+            // אם הגלילה נעצרה באמצע - נמשיך למעלה בקפיצה
+            else if (currentScrollPos > 0 && Math.abs(lastScrollPos - currentScrollPos) < 1) {
+                window.scrollTo(0, 0);
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
+                clearInterval(scrollInterval);
+            }
+            
+            lastScrollPos = currentScrollPos;
+        }, 100);
     });
 
     // Phone input validation

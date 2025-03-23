@@ -115,22 +115,25 @@ p {
 
 /* Header Styles */
 header {
-    background-color: #ffffff;
-    box-shadow: var(--shadow-sm);
-    padding: 15px 0;
+    background: #ffffff;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.05);
     position: fixed;
-    width: 100%;
     top: 0;
+    left: 0;
+    width: 100%;
     z-index: 1000;
+    transition: all 0.3s ease;
+    padding: 5px 0;
 }
 
 .header-container {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
     position: relative;
-    width: 100%;
-    padding: 0 20px;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .logo-container {
@@ -324,6 +327,7 @@ header {
     padding: 80px 0 150px;
     text-align: center;
     position: relative;
+    margin-top: 80px;
 }
 
 .hero .container {
@@ -1365,26 +1369,26 @@ footer {
 /* Responsive Styles */
 @media (max-width: 768px) {
     .container {
-        max-width: 100%;
         padding: 0 15px;
+        width: 100%;
     }
     
     .header-container {
-        padding: 15px;
+        padding: 10px 15px;
     }
     
     .logo-container {
-        max-width: 50%;
+        margin-right: 0;
     }
     
     .logo {
-        height: 45px;
+        max-height: 45px; /* הגדלת הלוגו במובייל */
     }
     
     .toc-button {
-        width: 35px;
-        height: 35px;
         margin-right: 10px;
+        width: 40px;
+        height: 40px;
     }
     
     .toc-modal {
@@ -1407,7 +1411,8 @@ footer {
     }
 
     .hero {
-        padding: 70px 0 100px;
+        margin-top: 65px; /* מרווח מהסרגל העליון */
+        padding-top: 60px;
     }
 
     .hero-image {
@@ -1583,47 +1588,57 @@ footer {
 }
 
 @media (max-width: 480px) {
+    .hero {
+        margin-top: 60px; /* מרווח בטלפונים קטנים */
+        padding-top: 50px;
+    }
+    
     .hero-image {
-        max-width: 150px;
+        max-width: 200px;
     }
     
     .hero-logo {
-        margin-bottom: 8px;
+        margin-bottom: 5px;
     }
     
     .hero h1 {
-        font-size: 2.2rem;
-        line-height: 1.3;
-        margin-bottom: 25px;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
     }
     
     .hero p {
-        font-size: 1.1rem;
-        line-height: 1.6;
-        padding: 0 10px;
+        font-size: 0.9rem;
+        margin-bottom: 20px;
     }
     
     .btn-hero {
-        margin-top: 10px;
-        font-size: 0.95rem;
-        padding: 12px 20px;
+        font-size: 0.9rem;
+        padding: 10px 20px;
     }
     
     .section-title {
-        font-size: 2.1rem;
-        padding: 0 5px;
+        font-size: 1.6rem;
     }
     
     .btn {
-        width: 95%;
+        padding: 10px 20px;
     }
     
     .company-tagline {
-        display: none;
+        font-size: 0.7rem;
     }
-
+    
     .logo {
-        height: 40px;
+        max-height: 40px; /* הגדלת הלוגו בטלפונים קטנים */
+    }
+    
+    header {
+        padding: 0;
+        height: auto;
+    }
+    
+    .header-container {
+        padding: 8px 10px;
     }
     
     .services-grid {
@@ -1944,8 +1959,9 @@ select {
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.3s, transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s, background-color 0.3s, box-shadow 0.3s;
     z-index: 1000;
+    -webkit-tap-highlight-color: transparent;
 }
 
 #backToTopBtn.visible {
@@ -1957,6 +1973,11 @@ select {
     background-color: var(--secondary-color);
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+#backToTopBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 @media (max-width: 768px) {
@@ -1976,4 +1997,17 @@ select {
         right: 15px;
         font-size: 1rem;
     }
+}
+
+/* Helper classes */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
