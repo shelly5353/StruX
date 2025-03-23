@@ -1106,7 +1106,7 @@ footer {
 .footer-contact p {
     margin-bottom: 12px;
     font-size: 1rem;
-    font-family: var(--button-font);
+    font-family: var(--button-font) !important;
     color: #ffffff;
     display: flex;
     align-items: center;
