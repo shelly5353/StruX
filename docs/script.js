@@ -218,38 +218,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     window.addEventListener('scroll', animateSectionTitles);
     animateSectionTitles(); // Run once on load
-
-    // Back to Top button functionality
-    const backToTopButton = document.getElementById('backToTop');
-    
-    // Show/hide the button based on scroll position
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 500) {
-            backToTopButton.classList.add('visible');
-        } else {
-            backToTopButton.classList.remove('visible');
-        }
-    });
-    
-    // Scroll to top when clicked
-    backToTopButton.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-    
-    // Check scroll position initially
-    if (window.scrollY > 500) {
-        backToTopButton.classList.add('visible');
-    }
-    
-    // Initialize AOS animations
-    AOS.init({
-        duration: 1000,
-        once: false,
-        mirror: true
-    });
 });
 
 // Add animations for carousel items
@@ -431,5 +399,25 @@ document.querySelectorAll('.service-card').forEach(card => {
         touchTimeout = setTimeout(() => {
             self.classList.remove('fade-out');
         }, 300);
+    });
+});
+
+// פונקציונליות כפתור חזרה למעלה
+const backToTopBtn = document.getElementById('backToTopBtn');
+
+// מציג או מסתיר את הכפתור בהתאם למיקום הגלילה
+window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) { // מציג את הכפתור אחרי גלילה של 300 פיקסלים
+        backToTopBtn.classList.add('visible');
+    } else {
+        backToTopBtn.classList.remove('visible');
+    }
+});
+
+// מעבר לראש העמוד בלחיצה על הכפתור
+backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
     });
 }); 

@@ -319,27 +319,11 @@ header {
 
 /* Hero Section */
 .hero {
-    background-image: url('./logo/background logo.png');
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #2a4fb3 100%);
     color: var(--white);
     padding: 80px 0 150px;
     text-align: center;
     position: relative;
-    overflow: hidden;
-}
-
-.hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(25, 58, 147, 0.9);
-    z-index: 1;
 }
 
 .hero .container {
@@ -348,11 +332,6 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.hero-content, .hero-logo {
-    position: relative;
-    z-index: 2;
 }
 
 .hero-logo {
@@ -526,20 +505,6 @@ header {
 .benefits {
     padding: 0;
     background: linear-gradient(135deg, #d4d4d4 0%, #a0a0a0 100%);
-    position: relative;
-    overflow: hidden;
-}
-
-.benefits::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #d4d4d4 0%, #a0a0a0 100%);
-    background-attachment: fixed;
-    z-index: -1;
 }
 
 .benefits .section-title {
@@ -611,26 +576,19 @@ header {
     background: var(--white);
     border-radius: 12px;
     padding: 30px;
-    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.05),
-                -10px -10px 20px rgba(255, 255, 255, 0.7),
-                inset 1px 1px 2px rgba(255, 255, 255, 0.5),
-                inset -1px -1px 2px rgba(0, 0, 0, 0.02);
+    box-shadow: var(--shadow-md);
     margin-bottom: 30px;
     transition: var(--transition-smooth);
     transform-origin: center;
-    border: none;
+    border: 1px solid rgba(0,0,0,0.05);
     position: relative;
     overflow: hidden;
-    background: linear-gradient(145deg, #f8f8f8, #ffffff);
 }
 
 .benefit-card:hover {
     transform: translateY(-8px) scale(1.02);
-    box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.1),
-                -12px -12px 24px rgba(255, 255, 255, 0.8),
-                inset 2px 2px 5px rgba(255, 255, 255, 0.5),
-                inset -2px -2px 5px rgba(0, 0, 0, 0.03);
-    background: linear-gradient(145deg, #ffffff, #f6f9ff);
+    box-shadow: var(--shadow-lg);
+    background: var(--gradient-light);
 }
 
 .benefit-icon {
@@ -725,16 +683,12 @@ header {
     border-radius: 12px;
     padding: 30px;
     margin-bottom: 30px;
+    box-shadow: var(--shadow-md);
     transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
     overflow: hidden;
-    border: none;
+    border: 1px solid rgba(0,0,0,0.05);
     transform-origin: center bottom;
-    /* Neomorphism shadow style */
-    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.05),
-                -10px -10px 20px rgba(255, 255, 255, 0.7),
-                inset 1px 1px 2px rgba(255, 255, 255, 0.5),
-                inset -1px -1px 2px rgba(0, 0, 0, 0.02);
 }
 
 .service-card:nth-child(3) {
@@ -746,12 +700,8 @@ header {
 
 .service-card:hover {
     transform: translateY(-10px);
-    background: linear-gradient(145deg, #ffffff, #f6f9ff);
-    box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.1),
-                -12px -12px 24px rgba(255, 255, 255, 0.8),
-                inset 2px 2px 5px rgba(255, 255, 255, 0.5),
-                inset -2px -2px 5px rgba(0, 0, 0, 0.02);
-    border-color: rgba(77, 123, 243, 0.1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    animation: border-glow 1.5s ease-in-out infinite alternate;
 }
 
 .service-card:before {
@@ -825,10 +775,6 @@ header {
     padding: 80px 0;
     position: relative;
     color: var(--white);
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
 .transparency .section-title {
@@ -1964,45 +1910,63 @@ select {
 }
 
 /* כפתור חזרה למעלה */
-.back-to-top {
+.back-to-top-btn {
     position: fixed;
-    bottom: 25px;
-    right: 25px;
+    bottom: 30px;
+    left: 30px;
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: #ffffff;
+    background-color: var(--primary-color);
+    color: white;
     border: none;
-    color: var(--primary-color);
-    font-size: 1.2rem;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
+    transition: all 0.3s ease-in-out;
     transform: translateY(20px);
-    transition: all 0.3s ease;
-    /* Neomorphism style shadow */
-    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.1),
-                -8px -8px 15px rgba(255, 255, 255, 0.7),
-                inset 2px 2px 5px rgba(255, 255, 255, 0.5),
-                inset -2px -2px 5px rgba(0, 0, 0, 0.05);
 }
 
-.back-to-top.visible {
+.back-to-top-btn.visible {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
 
-.back-to-top:hover {
-    background: var(--primary-color);
-    color: #ffffff;
+.back-to-top-btn:hover {
+    background-color: var(--secondary-color);
     transform: translateY(-5px);
-    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15),
-                -10px -10px 20px rgba(255, 255, 255, 0.8),
-                inset 2px 2px 5px rgba(255, 255, 255, 0.1),
-                inset -2px -2px 5px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.back-to-top-btn i {
+    font-size: 1.2rem;
+}
+
+/* תמיכה במסכים קטנים */
+@media (max-width: 768px) {
+    .back-to-top-btn {
+        width: 45px;
+        height: 45px;
+        bottom: 20px;
+        left: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .back-to-top-btn {
+        width: 40px;
+        height: 40px;
+        bottom: 15px;
+        left: 15px;
+    }
+    
+    .back-to-top-btn i {
+        font-size: 1rem;
+    }
 }
