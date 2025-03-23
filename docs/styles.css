@@ -462,6 +462,7 @@ header {
     border-radius: 25px;
     transition: all 0.3s ease;
     text-decoration: none;
+    font-family: var(--button-font);
 }
 
 .btn-hero:hover {
