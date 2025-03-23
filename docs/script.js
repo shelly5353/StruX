@@ -465,9 +465,9 @@ document.querySelectorAll('.service-card').forEach(card => {
 // Welcome Popup for new users
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM loaded, checking for popup");
-    // Check if it's the user's first visit
-    const hasVisitedBefore = localStorage.getItem('hasVisitedBefore');
-    console.log("Has visited before:", hasVisitedBefore);
+    
+    // איפוס localStorage לצורך בדיקה - תוכל להסיר שורה זו כשהפופאפ עובד כראוי
+    localStorage.removeItem('hasVisitedBefore');
     
     const popup = document.getElementById('welcomePopup');
     const closePopupBtn = document.getElementById('closePopup');
@@ -475,34 +475,50 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log("Popup element:", popup);
     
-    // Show popup even if visited before (for testing)
-    setTimeout(function() {
-        console.log("Showing popup...");
-        popup.classList.add('active');
-    }, 1000);
+    if (!popup) {
+        console.error("Popup element not found!");
+        return;
+    }
     
-    // Close popup when close button is clicked
-    closePopupBtn.addEventListener('click', function() {
-        console.log("Close button clicked");
-        popup.classList.remove('active');
-    });
+    if (!closePopupBtn) {
+        console.error("Close button not found!");
+    } else {
+        console.log("Close button found, attaching event listener");
+        // Close popup when close button is clicked - ישירות מסיר את הסגנון
+        closePopupBtn.addEventListener('click', function(e) {
+            console.log("Close button clicked");
+            popup.style.opacity = "0";
+            popup.style.visibility = "hidden";
+            popup.style.pointerEvents = "none";
+        });
+    }
+    
+    if (!popupCtaBtn) {
+        console.error("CTA button not found!");
+    } else {
+        console.log("CTA button found, attaching event listener");
+        // CTA button action - ישירות מסיר את הסגנון
+        popupCtaBtn.addEventListener('click', function(e) {
+            console.log("CTA button clicked");
+            popup.style.opacity = "0";
+            popup.style.visibility = "hidden";
+            popup.style.pointerEvents = "none";
+            
+            // גלילה לתחילת הדף
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
     
     // Close popup when clicking outside
     popup.addEventListener('click', function(e) {
         if (e.target === popup) {
             console.log("Clicked outside popup");
-            popup.classList.remove('active');
-        }
-    });
-    
-    // CTA button action
-    popupCtaBtn.addEventListener('click', function() {
-        console.log("CTA button clicked");
-        popup.classList.remove('active');
-        // Scroll to contact section
-        const contactSection = document.getElementById('contact');
-        if (contactSection) {
-            contactSection.scrollIntoView({ behavior: 'smooth' });
+            popup.style.opacity = "0";
+            popup.style.visibility = "hidden";
+            popup.style.pointerEvents = "none";
         }
     });
 }); 

@@ -237,9 +237,6 @@
         <script>
     // מנע בעיות גלילה בקצוות הדף
     document.addEventListener('DOMContentLoaded', function() {
-        // איפוס ה-localStorage לצורך בדיקה
-        localStorage.removeItem('hasVisitedBefore');
-        
         // טיפול בגלילה במכשירים ניידים
         if ('ontouchstart' in window) {
             // מנע את האפקט של "bounce" בגלילה
@@ -263,15 +260,19 @@
     </head>
     <body>
         <!-- Popup for new users -->
-        <div id="welcomePopup" class="popup-overlay">
-            <div class="popup-container">
+        <div id="welcomePopup" class="popup-overlay" style="opacity: 1; visibility: visible; pointer-events: all;">
+            <div class="popup-container" style="transform: scale(1); opacity: 1;">
                 <button id="closePopup" class="popup-close"><i class="fas fa-times"></i></button>
                 <div class="popup-content">
                     <div class="popup-icon">
-                        <i class="fas fa-gift"></i>
+                        <i class="fas fa-building" style="color: white;"></i>
                     </div>
-                    <h3 class="popup-title">מצטרפים חדשים?</h3>
-                    <p class="popup-text">שלושה חודשים ראשונים חינם!</p>
+                    <h3 class="popup-title">StruX</h3>
+                    <p class="popup-text">
+                        מצטרפים חדשים?<br>
+                        <span class="highlight">שלושה חודשים חינם!</span>
+                    </p>
+                    <button id="popupCta" class="popup-btn">בואו נתחיל <i class="fas fa-arrow-up"></i></button>
                 </div>
             </div>
         </div>
@@ -649,5 +650,19 @@
             <i class="fas fa-chevron-up" aria-hidden="true"></i>
             <span class="visually-hidden">חזרה למעלה</span>
         </button>
+        
+        <!-- בדיקת טעינה של JavaScript -->
+        <script>
+            console.log('HTML loaded, checking if script.js is loaded...');
+            
+            // בדיקה אחרי 2 שניות אם הפופאפ מופעל
+            setTimeout(function() {
+                var popup = document.getElementById('welcomePopup');
+                if (popup && !popup.classList.contains('active')) {
+                    console.log('Popup not activated after 2 seconds, forcing activation...');
+                    popup.classList.add('active');
+                }
+            }, 2000);
+        </script>
     </body>
 </html>
