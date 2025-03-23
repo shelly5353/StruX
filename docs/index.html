@@ -206,6 +206,71 @@
             padding: 50px 0;
         }
         
+        /* עיצוב סקציית קצת מהשטח */
+        .from-field {
+            background-color: #e8e8e8; /* רקע אפור בהיר */
+            padding: 70px 0;
+            position: relative;
+        }
+        
+        .from-field .section-title {
+            color: #333;
+            margin-bottom: 40px;
+        }
+        
+        .field-images {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        #fieldCarousel .carousel-inner {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        #fieldCarousel .carousel-item img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+        
+        #fieldCarousel .carousel-control-prev,
+        #fieldCarousel .carousel-control-next {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(30, 115, 190, 0.7);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.7;
+        }
+        
+        #fieldCarousel .carousel-control-prev:hover,
+        #fieldCarousel .carousel-control-next:hover {
+            background-color: rgba(30, 115, 190, 0.9);
+            opacity: 0.9;
+        }
+        
+        #fieldCarousel .carousel-indicators {
+            bottom: -30px;
+        }
+        
+        #fieldCarousel .carousel-indicators button {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin: 0 5px;
+            background-color: rgba(30, 115, 190, 0.6);
+            opacity: 0.5;
+        }
+        
+        #fieldCarousel .carousel-indicators button.active {
+            background-color: #1e73be;
+            opacity: 0.9;
+            transform: scale(1.2);
+        }
+        
         @media (max-width: 768px) {
             .company-card {
                 padding: 30px 20px;
@@ -305,6 +370,8 @@
                     </li>
                     <li><a href="#benefits">היתרונות שלנו</a>
                     </li>
+                    <li><a href="#from-field">קצת מהשטח</a>
+                    </li>
                     <li><a href="#contact">צור קשר</a>
                     </li>
                 </ul>
@@ -358,7 +425,6 @@
                         <button type="button" data-bs-target="#groupCompaniesCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Company 1"></button>
                         <button type="button" data-bs-target="#groupCompaniesCarousel" data-bs-slide-to="1" aria-label="Company 2"></button>
                         <button type="button" data-bs-target="#groupCompaniesCarousel" data-bs-slide-to="2" aria-label="Company 3"></button>
-                        <button type="button" data-bs-target="#groupCompaniesCarousel" data-bs-slide-to="3" aria-label="Company 4"></button>
                     </div>
                     
                     <!-- Carousel Items -->
@@ -369,8 +435,8 @@
                                 <div class="company-logo">
                                     <img src="./logo/strux_logo_new.png" alt="לוגו חברה 1" class="img-fluid">
                                 </div>
-                                <h3 class="company-name">חברה לאנרגיה ירוקה</h3>
-                                <p class="company-description">פתרונות אנרגיה מתחדשת לבניינים ומתחמי מגורים, כולל התקנת פאנלים סולאריים ומערכות אגירת אנרגיה.</p>
+                                <h3 class="company-name">חנייה אורבנית</h3>
+                                <p class="company-description">פתרונות חניה חכמים ומתקדמים למתחמי מגורים, ניהול חניות עירוניות ומערכות בקרת כניסה אוטומטיות. התמחות במקסום שטחי חניה ופתרונות שיתוף חניות.</p>
                             </div>
                         </div>
                         
@@ -380,8 +446,8 @@
                                 <div class="company-logo">
                                     <img src="./logo/strux_logo_design_pre_v4_export_8.png" alt="לוגו חברה 2" class="img-fluid">
                                 </div>
-                                <h3 class="company-name">חברת בנייה וחידוש</h3>
-                                <p class="company-description">שירותי שיפוץ, חידוש וחיזוק מבנים, התמחות בתמ"א 38 ופרויקטים להתחדשות עירונית.</p>
+                                <h3 class="company-name">אריאל - שירותי כוח אדם</h3>
+                                <p class="company-description">מתן שירותי כוח אדם מקצועיים ואיכותיים לניהול ואחזקת מבנים. אנשי מקצוע מיומנים ומסורים עם ניסיון רב בתחום הנדל"ן והתחזוקה.</p>
                             </div>
                         </div>
                         
@@ -391,19 +457,8 @@
                                 <div class="company-logo">
                                     <img src="./logo/strux_logo_design_pre_v4_export_10.png" alt="לוגו חברה 3" class="img-fluid">
                                 </div>
-                                <h3 class="company-name">חברת אבטחה ומיגון</h3>
-                                <p class="company-description">פתרונות אבטחה מתקדמים לבניינים ומתחמי מגורים, כולל מערכות אזעקה, מצלמות ובקרת כניסה חכמה.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Fourth Company -->
-                        <div class="carousel-item">
-                            <div class="company-card">
-                                <div class="company-logo">
-                                    <img src="./logo/strux_logo_design_pre_v4_export_11.png" alt="לוגו חברה 4" class="img-fluid">
-                                </div>
-                                <h3 class="company-name">חברת טכנולוגיות לבניין חכם</h3>
-                                <p class="company-description">פיתוח והתקנת מערכות בית חכם, אוטומציה ביתית ופתרונות IoT למתחמי מגורים.</p>
+                                <h3 class="company-name">אנרגיה אורבנית</h3>
+                                <p class="company-description">פתרונות אנרגיה חכמים ומתחדשים לבניינים משותפים. התקנת מערכות סולאריות, אגירת אנרגיה וייעול צריכת החשמל בשטחים המשותפים להפחתת עלויות.</p>
                             </div>
                         </div>
                     </div>
@@ -541,6 +596,45 @@
                     <div class="benefit-card" data-aos="fade-left" data-aos-duration="600" data-aos-delay="300" data-aos-offset="200"><i class="fas fa-tasks benefit-icon"></i>
                         <h3>תכנון ג׳אנט שנתי</h3>
                         <p>תכנון שנתי מסודר לכל פעולות האחזקה והניהול בבניין! המערכת מאפשרת יצירה וניהול של ג׳אנט שנתי שמרכז את כל הטיפולים התקופתיים.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- From the Field Section -->
+        <section class="from-field" id="from-field">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">קצת מהשטח</h2>
+                <div class="field-images" data-aos="fade-up" data-aos-delay="100">
+                    <div id="fieldCarousel" class="carousel slide" data-bs-ride="carousel" style="overflow: visible; padding-bottom: 40px;">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#fieldCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="תמונה 1"></button>
+                            <button type="button" data-bs-target="#fieldCarousel" data-bs-slide-to="1" aria-label="תמונה 2"></button>
+                            <button type="button" data-bs-target="#fieldCarousel" data-bs-slide-to="2" aria-label="תמונה 3"></button>
+                            <button type="button" data-bs-target="#fieldCarousel" data-bs-slide-to="3" aria-label="תמונה 4"></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="./תמונות לגלריה/Unknown.png" class="d-block w-100" alt="תמונה מהשטח">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="./תמונות לגלריה/Unknown.jpeg" class="d-block w-100" alt="תמונה מהשטח">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="./תמונות לגלריה/20240815_103612.jpg" class="d-block w-100" alt="תמונה מהשטח">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="./תמונות לגלריה/Screenshot_20250128_160201_AliExpress.jpg" class="d-block w-100" alt="תמונה מהשטח">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#fieldCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">הקודם</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#fieldCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">הבא</span>
+                        </button>
                     </div>
                 </div>
             </div>
