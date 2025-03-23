@@ -1,5 +1,25 @@
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Back to top button functionality
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    
+    // Show/hide back to top button on scroll
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            backToTopBtn.classList.add('visible');
+        } else {
+            backToTopBtn.classList.remove('visible');
+        }
+    });
+    
+    // Scroll to top when button is clicked
+    backToTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
     // Phone input validation
     const phoneInput = document.getElementById('phone');
     if (phoneInput) {
@@ -399,25 +419,5 @@ document.querySelectorAll('.service-card').forEach(card => {
         touchTimeout = setTimeout(() => {
             self.classList.remove('fade-out');
         }, 300);
-    });
-});
-
-// פונקציונליות כפתור חזרה למעלה
-const backToTopBtn = document.getElementById('backToTopBtn');
-
-// מציג או מסתיר את הכפתור בהתאם למיקום הגלילה
-window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 300) { // מציג את הכפתור אחרי גלילה של 300 פיקסלים
-        backToTopBtn.classList.add('visible');
-    } else {
-        backToTopBtn.classList.remove('visible');
-    }
-});
-
-// מעבר לראש העמוד בלחיצה על הכפתור
-backToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
     });
 }); 
