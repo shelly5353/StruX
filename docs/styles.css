@@ -822,6 +822,8 @@ header {
     line-height: 1.8;
     text-align: center;
     color: var(--text-color);
+    padding-left: 50px;
+    padding-right: 50px;
 }
 
 .transparency .btn-light {
@@ -1585,6 +1587,34 @@ footer {
         width: 30px;
         height: 30px;
     }
+
+    .carousel {
+        margin: 20px auto;
+        max-width: 100%;
+        padding: 15px;
+    }
+    
+    .carousel-item {
+        padding: 15px;
+        height: 300px;
+    }
+    
+    .carousel-card {
+        padding: 25px 15px;
+        min-height: 220px;
+    }
+    
+    .carousel-title {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+    
+    .carousel-text {
+        font-size: 16px !important;
+        line-height: 1.6;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1755,6 +1785,33 @@ footer {
         bottom: 10px;
         right: 10px;
         font-size: 0.9rem;
+    }
+
+    .carousel {
+        margin: 15px auto;
+        padding: 10px;
+    }
+    
+    .carousel-item {
+        padding: 10px;
+        height: 260px;
+    }
+    
+    .carousel-card {
+        padding: 20px 10px;
+        min-height: 200px;
+    }
+    
+    .carousel-title {
+        font-size: 1.5rem;
+        margin-bottom: 12px;
+    }
+    
+    .carousel-text {
+        font-size: 14px !important;
+        line-height: 1.5;
+        padding-left: 8px !important;
+        padding-right: 8px !important;
     }
 }
 
