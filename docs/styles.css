@@ -1,9 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap');
-
-html {
-    scroll-behavior: auto;
-}
-
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap');
 
@@ -32,9 +27,6 @@ html {
     --transition-smooth: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     --gradient-light: linear-gradient(135deg, #f5f7ff, var(--light-bg));
-    --shadow-neo: 8px 8px 16px rgba(0, 0, 0, 0.1), -8px -8px 16px rgba(255, 255, 255, 0.7);
-    --shadow-neo-inset: inset 5px 5px 10px rgba(0, 0, 0, 0.05), inset -5px -5px 10px rgba(255, 255, 255, 0.8);
-    --shadow-neo-pressed: inset 2px 2px 5px rgba(0, 0, 0, 0.1), inset -2px -2px 5px rgba(255, 255, 255, 0.5);
 }
 
 * {
@@ -51,6 +43,7 @@ body {
 }
 
 html {
+    scroll-behavior: smooth;
     scroll-padding-top: 80px;
     min-height: 100vh;
     overflow-y: auto;
@@ -326,12 +319,16 @@ header {
 
 /* Hero Section */
 .hero {
-    position: relative;
-    background: var(--gradient-primary);
-    color: #ffffff;
-    padding: 120px 0 100px;
-    overflow: hidden;
+    background-image: url('./logo/background logo.png');
     background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: var(--white);
+    padding: 80px 0 150px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
 }
 
 .hero::before {
@@ -341,12 +338,8 @@ header {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('./logo/strux_logo_design_pre_v4_export_9.png');
-    background-size: cover;
-    background-position: center;
-    opacity: 0.1;
-    background-attachment: fixed;
-    z-index: 0;
+    background: rgba(25, 58, 147, 0.9);
+    z-index: 1;
 }
 
 .hero .container {
@@ -355,6 +348,11 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.hero-content, .hero-logo {
+    position: relative;
+    z-index: 2;
 }
 
 .hero-logo {
@@ -526,9 +524,22 @@ header {
 
 /* Benefits Section */
 .benefits {
-    padding: 80px 0;
+    padding: 0;
+    background: linear-gradient(135deg, #d4d4d4 0%, #a0a0a0 100%);
     position: relative;
-    background: #f5f5f5;
+    overflow: hidden;
+}
+
+.benefits::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #d4d4d4 0%, #a0a0a0 100%);
+    background-attachment: fixed;
+    z-index: -1;
 }
 
 .benefits .section-title {
@@ -598,19 +609,28 @@ header {
 
 .benefit-card {
     background: var(--white);
-    border-radius: 15px;
-    padding: 30px 20px;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.05),
+                -10px -10px 20px rgba(255, 255, 255, 0.7),
+                inset 1px 1px 2px rgba(255, 255, 255, 0.5),
+                inset -1px -1px 2px rgba(0, 0, 0, 0.02);
     margin-bottom: 30px;
-    box-shadow: var(--shadow-neo);
     transition: var(--transition-smooth);
-    height: 100%;
-    text-align: center;
+    transform-origin: center;
     border: none;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(145deg, #f8f8f8, #ffffff);
 }
 
 .benefit-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.12), -12px -12px 24px rgba(255, 255, 255, 0.8);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.1),
+                -12px -12px 24px rgba(255, 255, 255, 0.8),
+                inset 2px 2px 5px rgba(255, 255, 255, 0.5),
+                inset -2px -2px 5px rgba(0, 0, 0, 0.03);
+    background: linear-gradient(145deg, #ffffff, #f6f9ff);
 }
 
 .benefit-icon {
@@ -628,10 +648,12 @@ header {
 
 .benefit-card h3 {
     font-family: var(--heading-font);
-    font-weight: 800;
-    color: var(--primary-color);
-    margin-bottom: 15px;
-    font-size: 1.3rem;
+    font-weight: 900;
+    color: #000000;
+    margin-bottom: 18px;
+    font-size: 1.5rem;
+    position: relative;
+    padding-bottom: 8px;
 }
 
 .benefit-card h3::after {
@@ -639,9 +661,12 @@ header {
 }
 
 .benefit-card p {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #222222;
+    font-size: 18px;
+    line-height: 1.8;
+    color: #000000;
+    margin-bottom: 1.5rem;
+    font-family: var(--body-font);
+    font-weight: 400;
 }
 
 /* Services Section */
@@ -697,15 +722,19 @@ header {
 
 .service-card {
     background: var(--white);
-    border-radius: 15px;
+    border-radius: 12px;
     padding: 30px;
     margin-bottom: 30px;
-    box-shadow: var(--shadow-neo);
     transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
     overflow: hidden;
     border: none;
     transform-origin: center bottom;
+    /* Neomorphism shadow style */
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.05),
+                -10px -10px 20px rgba(255, 255, 255, 0.7),
+                inset 1px 1px 2px rgba(255, 255, 255, 0.5),
+                inset -1px -1px 2px rgba(0, 0, 0, 0.02);
 }
 
 .service-card:nth-child(3) {
@@ -717,8 +746,12 @@ header {
 
 .service-card:hover {
     transform: translateY(-10px);
-    box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.12), -12px -12px 24px rgba(255, 255, 255, 0.8);
-    animation: border-glow 1.5s ease-in-out infinite alternate;
+    background: linear-gradient(145deg, #ffffff, #f6f9ff);
+    box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.1),
+                -12px -12px 24px rgba(255, 255, 255, 0.8),
+                inset 2px 2px 5px rgba(255, 255, 255, 0.5),
+                inset -2px -2px 5px rgba(0, 0, 0, 0.02);
+    border-color: rgba(77, 123, 243, 0.1);
 }
 
 .service-card:before {
@@ -765,7 +798,7 @@ header {
     z-index: 1;
     font-family: var(--heading-font);
     font-weight: 900;
-    color: var(--primary-color);
+    color: #000000;
     margin-bottom: 18px;
     font-size: 1.5rem;
     padding-bottom: 8px;
@@ -780,7 +813,7 @@ header {
     z-index: 1;
     font-size: 18px;
     line-height: 1.8;
-    color: #222222;
+    color: #000000;
     margin-bottom: 1.5rem;
     font-family: var(--body-font);
     font-weight: 400;
@@ -788,25 +821,14 @@ header {
 
 /* Transparency Section */
 .transparency {
-    background: linear-gradient(135deg, #1F3A93 0%, #4D7BF3 100%);
+    background: var(--gradient-primary);
     padding: 80px 0;
     position: relative;
-    overflow: hidden;
+    color: var(--white);
     background-attachment: fixed;
-}
-
-.transparency::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.1) 75%, transparent 75%, transparent);
-    background-size: 10px 10px;
-    opacity: 0.1;
-    background-attachment: fixed;
-    z-index: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .transparency .section-title {
@@ -1942,50 +1964,45 @@ select {
 }
 
 /* כפתור חזרה למעלה */
-#back-to-top {
+.back-to-top {
     position: fixed;
     bottom: 25px;
     right: 25px;
     width: 50px;
     height: 50px;
-    background: var(--white);
-    color: var(--primary-color);
     border-radius: 50%;
+    background: #ffffff;
+    border: none;
+    color: var(--primary-color);
+    font-size: 1.2rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
-    box-shadow: var(--shadow-neo);
+    cursor: pointer;
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
     transform: translateY(20px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    text-decoration: none;
+    transition: all 0.3s ease;
+    /* Neomorphism style shadow */
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.1),
+                -8px -8px 15px rgba(255, 255, 255, 0.7),
+                inset 2px 2px 5px rgba(255, 255, 255, 0.5),
+                inset -2px -2px 5px rgba(0, 0, 0, 0.05);
 }
 
-#back-to-top.show {
+.back-to-top.visible {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
 
-#back-to-top:hover {
+.back-to-top:hover {
     background: var(--primary-color);
-    color: var(--white);
+    color: #ffffff;
     transform: translateY(-5px);
-    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.15), -8px -8px 16px rgba(255, 255, 255, 0.5);
-}
-
-#back-to-top:active {
-    transform: translateY(0);
-    box-shadow: var(--shadow-neo-pressed);
-}
-
-/* אפקט פרלקס */
-.parallax {
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15),
+                -10px -10px 20px rgba(255, 255, 255, 0.8),
+                inset 2px 2px 5px rgba(255, 255, 255, 0.1),
+                inset -2px -2px 5px rgba(0, 0, 0, 0.05);
 }

@@ -218,6 +218,38 @@ document.addEventListener('DOMContentLoaded', function() {
     
     window.addEventListener('scroll', animateSectionTitles);
     animateSectionTitles(); // Run once on load
+
+    // Back to Top button functionality
+    const backToTopButton = document.getElementById('backToTop');
+    
+    // Show/hide the button based on scroll position
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 500) {
+            backToTopButton.classList.add('visible');
+        } else {
+            backToTopButton.classList.remove('visible');
+        }
+    });
+    
+    // Scroll to top when clicked
+    backToTopButton.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+    
+    // Check scroll position initially
+    if (window.scrollY > 500) {
+        backToTopButton.classList.add('visible');
+    }
+    
+    // Initialize AOS animations
+    AOS.init({
+        duration: 1000,
+        once: false,
+        mirror: true
+    });
 });
 
 // Add animations for carousel items
@@ -318,25 +350,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
     document.head.appendChild(style);
-
-    // Back to Top button functionality
-    const backToTopButton = document.getElementById('back-to-top');
-    
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 300) {
-            backToTopButton.classList.add('show');
-        } else {
-            backToTopButton.classList.remove('show');
-        }
-    });
-    
-    backToTopButton.addEventListener('click', function(e) {
-        e.preventDefault();
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
 });
 
 // Benefit cards hover and touch animation
