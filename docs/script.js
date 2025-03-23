@@ -13,18 +13,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Scroll to top when button is clicked
-    backToTopBtn.addEventListener('click', function() {
+    backToTopBtn.addEventListener('click', function(e) {
+        e.preventDefault();
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
-        
-        // וידוא שהדף יגלול עד לתחילת העמוד
-        setTimeout(function() {
-            if (window.pageYOffset > 0) {
-                window.scrollTo(0, 0);
-            }
-        }, 1000);
     });
 
     // Phone input validation
