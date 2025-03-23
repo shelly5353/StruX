@@ -688,6 +688,8 @@ header {
     position: relative;
     overflow: hidden;
     border: 1px solid rgba(0,0,0,0.05);
+    transform-origin: center;
+    transform: perspective(1000px) rotateX(0) translateZ(0);
 }
 
 .service-card:nth-child(3) {
@@ -698,8 +700,16 @@ header {
 }
 
 .service-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-lg);
+    transform: perspective(1000px) translateY(-5px) translateZ(5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.08);
+    animation: gradientShift 0.5s forwards;
+    border-color: rgba(77, 123, 243, 0.1);
+}
+
+.service-card:hover .service-icon {
+    transform: scale(1.15) translateY(-5px);
+    color: var(--secondary-color);
+    text-shadow: 0 5px 15px rgba(77, 123, 243, 0.3);
 }
 
 .service-card:before {
@@ -717,6 +727,7 @@ header {
     font-size: 3rem;
     color: var(--primary-color);
     margin-bottom: 20px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .service-card h3 {
@@ -1839,4 +1850,14 @@ select {
     height: 4px;
     background: var(--gradient-primary);
     border-radius: 2px;
+}
+
+/* הוספת keyframes חדש לאנימציית הרקע */
+@keyframes gradientShift {
+    0% {
+        background: var(--white);
+    }
+    100% {
+        background: linear-gradient(135deg, #f5f9ff 0%, #ffffff 100%);
+    }
 }
