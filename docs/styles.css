@@ -1260,83 +1260,93 @@ footer {
 /* Gallery */
 .services-gallery {
     padding: 60px 0;
-    background: linear-gradient(135deg, #d4d4d4 0%, #a0a0a0 100%);
-    margin-top: 2px;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, #4a4a4a 0%, #6b6b6b 100%);
+    margin-top: 0;
+    border-bottom: none;
 }
 
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    margin-top: 0;
-    padding: 0 20px;
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin: 0 auto;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
 }
 
 .gallery-item {
-    background: linear-gradient(135deg, #d4d4d4 0%, #a0a0a0 100%);
+    background: transparent;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: var(--shadow-sm);
-    will-change: transform, box-shadow;
+    will-change: transform;
     transition: var(--transition-smooth);
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+    box-shadow: none;
 }
 
 .gallery-item:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
+    transform: none;
+    box-shadow: none;
 }
 
 .gallery-item .carousel {
-    height: 250px;
+    height: 400px;
     overflow: hidden;
+    margin: 0;
+    padding: 0;
+    background: transparent;
 }
 
 .gallery-item .carousel-item {
-    height: 250px;
+    height: 400px;
+    padding: 0;
 }
 
 .gallery-item .carousel-item img {
-    object-fit: cover;
+    object-fit: contain;
     height: 100%;
     width: 100%;
-    background-color: var(--light-bg);
+    background-color: transparent;
 }
 
 /* Gallery Controls */
+.gallery-item .carousel-indicators {
+    bottom: 15px;
+}
+
+.gallery-item .carousel-indicators button {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    margin: 0 5px;
+    opacity: 0.7;
+}
+
+.gallery-item .carousel-indicators button.active {
+    background-color: white;
+    opacity: 1;
+    transform: scale(1.2);
+}
+
 .gallery-item .carousel-control-prev,
 .gallery-item .carousel-control-next {
-    width: 35px;
-    height: 35px;
-    background-color: transparent;
-    border: none;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
     top: 50%;
     transform: translateY(-50%);
-    opacity: 0;
+    opacity: 0.7;
     transition: var(--transition-base);
 }
 
 .gallery-item:hover .carousel-control-prev,
 .gallery-item:hover .carousel-control-next {
     opacity: 1;
-}
-
-.gallery-item .carousel-control-prev {
-    right: 10px;
-    left: auto;
-}
-
-.gallery-item .carousel-control-next {
-    left: 10px;
-    right: auto;
-}
-
-.gallery-item .carousel-control-prev-icon {
-    transform: rotate(180deg);
-}
-
-.gallery-item .carousel-control-next-icon {
-    transform: rotate(0deg);
 }
 
 /* Utility Classes */
