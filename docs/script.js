@@ -16,48 +16,11 @@ document.addEventListener('DOMContentLoaded', function() {
     backToTopBtn.addEventListener('click', function(e) {
         e.preventDefault();
         
-        // הגדרת משתנה לפני השימוש בו
-        let lastScrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-        
-        // ראשית ניסיון גלילה בצורה חלקה
+        // Smooth scroll to top
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
-        
-        // יש פה שני פתרונות למקרה שהגלילה החלקה לא מגיעה עד למעלה:
-        
-        // פתרון 1: לאחר הגלילה החלקה, נוודא שמגיעים לקצה העליון בקפיצה מידית
-        setTimeout(() => {
-            // שימוש בדרכים שונות לגלילה למעלה כדי לתמוך בדפדפנים ישנים
-            window.scrollTo(0, 0);
-            document.documentElement.scrollTop = 0;
-            document.body.scrollTop = 0;
-        }, 1000);
-        
-        // פתרון 2: פתרון נוסף עם מעקב אחרי התקדמות הגלילה
-        const scrollInterval = setInterval(() => {
-            // מקבלים את המיקום הנוכחי בצורה תואמת לכל הדפדפנים
-            const currentScrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-            
-            // אם כבר הגענו למצב די קרוב לראש הדף
-            if (currentScrollPos < 10) {
-                // נקפוץ למיקום 0,0 כדי להבטיח שהגענו לגמרי למעלה
-                window.scrollTo(0, 0);
-                document.documentElement.scrollTop = 0;
-                document.body.scrollTop = 0;
-                clearInterval(scrollInterval);
-            } 
-            // אם הגלילה נעצרה באמצע - נמשיך למעלה בקפיצה
-            else if (currentScrollPos > 0 && Math.abs(lastScrollPos - currentScrollPos) < 1) {
-                window.scrollTo(0, 0);
-                document.documentElement.scrollTop = 0;
-                document.body.scrollTop = 0;
-                clearInterval(scrollInterval);
-            }
-            
-            lastScrollPos = currentScrollPos;
-        }, 100);
     });
 
     // Phone input validation
@@ -92,6 +55,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 1500);
             }
         });
+    });
+
+    // Prevent scroll getting stuck at the bottom
+    let lastScrollTop = 0;
+    window.addEventListener('scroll', function() {
+        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // If we're at the bottom and not scrolling up
+        if ((window.innerHeight + currentScroll) >= document.body.offsetHeight - 10 && currentScroll > lastScrollTop) {
+            // Add a small padding to prevent getting stuck
+            document.body.style.paddingBottom = '1px';
+            setTimeout(() => {
+                document.body.style.paddingBottom = '0';
+            }, 100);
+        }
+        
+        lastScrollTop = currentScroll;
     });
 
     // Enhanced Service cards interaction
