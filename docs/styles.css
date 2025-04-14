@@ -41,6 +41,19 @@ body {
     margin: 0;
     padding: 0;
 }
+html, body {
+    overscroll-behavior-y: none;
+    height: auto;
+    min-height: 100vh;
+}
+
+/* תוספת למניעת היתקעות בסוף הדף */
+body::after {
+    content: '';
+    display: block;
+    height: 50px;
+    margin-bottom: 30px;
+}
 
 html {
     scroll-behavior: smooth;

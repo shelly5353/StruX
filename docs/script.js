@@ -3,25 +3,27 @@ document.addEventListener('DOMContentLoaded', function() {
     // Back to top button functionality
     const backToTopBtn = document.getElementById('backToTopBtn');
     
-    // Show/hide back to top button on scroll
-    window.addEventListener('scroll', function() {
-        if (window.pageYOffset > 300) {
-            backToTopBtn.classList.add('visible');
-        } else {
-            backToTopBtn.classList.remove('visible');
-        }
-    });
-    
-    // Scroll to top when button is clicked
-    backToTopBtn.addEventListener('click', function(e) {
-        e.preventDefault();
+    if (backToTopBtn) {
+        // Show/hide back to top button on scroll
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        }, { passive: true });
         
-        // Smooth scroll to top
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+        // Scroll to top when button is clicked
+        backToTopBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Smooth scroll to top
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
-    });
+    }
 
     // Phone input validation
     const phoneInput = document.getElementById('phone');
@@ -446,45 +448,52 @@ document.querySelectorAll('.service-card').forEach(card => {
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM loaded, checking for popup");
     
-    // איפוס localStorage לצורך בדיקה - תוכל להסיר שורה זו כשהפופאפ עובד כראוי
-    localStorage.removeItem('hasVisitedBefore');
-    
     const popup = document.getElementById('welcomePopup');
     const closePopupBtn = document.getElementById('closePopup');
     const popupCtaBtn = document.getElementById('popupCta');
-    
-    console.log("Popup element:", popup);
     
     if (!popup) {
         console.error("Popup element not found!");
         return;
     }
     
-    if (!closePopupBtn) {
-        console.error("Close button not found!");
-    } else {
-        console.log("Close button found, attaching event listener");
-        // Close popup when close button is clicked - ישירות מסיר את הסגנון
+    // בדיקה אם המשתמש ביקר בעבר
+    const hasVisitedBefore = localStorage.getItem('hasVisitedBefore');
+    if (hasVisitedBefore) {
+        popup.style.display = 'none';
+        return;
+    }
+    
+    // הצגת הפופאפ
+    function showPopup() {
+        popup.style.opacity = "1";
+        popup.style.visibility = "visible";
+        popup.style.pointerEvents = "all";
+        document.body.style.overflow = "hidden";
+    }
+    
+    // הסתרת הפופאפ
+    function hidePopup() {
+        popup.style.opacity = "0";
+        popup.style.visibility = "hidden";
+        popup.style.pointerEvents = "none";
+        document.body.style.overflow = "";
+        localStorage.setItem('hasVisitedBefore', 'true');
+    }
+    
+    // טיפול בלחיצה על כפתור הסגירה
+    if (closePopupBtn) {
         closePopupBtn.addEventListener('click', function(e) {
-            console.log("Close button clicked");
-            popup.style.opacity = "0";
-            popup.style.visibility = "hidden";
-            popup.style.pointerEvents = "none";
+            e.stopPropagation();
+            hidePopup();
         });
     }
     
-    if (!popupCtaBtn) {
-        console.error("CTA button not found!");
-    } else {
-        console.log("CTA button found, attaching event listener");
-        // CTA button action - ישירות מסיר את הסגנון
+    // טיפול בלחיצה על כפתור ה-CTA
+    if (popupCtaBtn) {
         popupCtaBtn.addEventListener('click', function(e) {
-            console.log("CTA button clicked");
-            popup.style.opacity = "0";
-            popup.style.visibility = "hidden";
-            popup.style.pointerEvents = "none";
-            
-            // גלילה לתחילת הדף
+            e.stopPropagation();
+            hidePopup();
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
@@ -492,13 +501,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Close popup when clicking outside
+    // טיפול בלחיצה מחוץ לפופאפ
     popup.addEventListener('click', function(e) {
         if (e.target === popup) {
-            console.log("Clicked outside popup");
-            popup.style.opacity = "0";
-            popup.style.visibility = "hidden";
-            popup.style.pointerEvents = "none";
+            hidePopup();
         }
     });
+    
+    // הצגת הפופאפ אחרי טעינת הדף
+    setTimeout(showPopup, 1000);
 }); 
