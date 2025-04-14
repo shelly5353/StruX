@@ -2356,66 +2356,75 @@ select {
 }
 
 #groupCompaniesCarousel {
-    padding-bottom: 70px;
-    margin-bottom: 20px;
+    overflow: visible !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0;
     position: relative;
-    overflow: visible;
 }
 
 #groupCompaniesCarousel .carousel-inner {
     overflow: hidden;
-    position: relative;
-    padding-bottom: 3px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
 #groupCompaniesCarousel .carousel-item {
-    transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
-    padding: 5px;
-    opacity: 0;
-    display: block;
-    position: absolute;
-    top: 0;
-    width: 100%;
-}
-
-#groupCompaniesCarousel .carousel-item.active {
-    opacity: 1;
-    position: relative;
-}
-
-#groupCompaniesCarousel .carousel-item-start {
-    transform: translateX(0);
-}
-
-#groupCompaniesCarousel .carousel-item-end {
-    transform: translateX(0);
-}
-
-#groupCompaniesCarousel .carousel-item-next:not(.carousel-item-start),
-#groupCompaniesCarousel .active.carousel-item-end {
-    transform: translateX(-100%);
-}
-
-#groupCompaniesCarousel .carousel-item-prev:not(.carousel-item-end),
-#groupCompaniesCarousel .active.carousel-item-start {
-    transform: translateX(100%);
+    min-height: 400px;
+    padding: 0;
+    transition: transform 0.6s ease-in-out;
 }
 
 #groupCompaniesCarousel .carousel-indicators {
-    bottom: -50px;
-    z-index: 2;
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+#groupCompaniesCarousel .carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    opacity: 0.3;
+    transition: all 0.3s ease;
+}
+
+#groupCompaniesCarousel .carousel-indicators button.active {
+    opacity: 1;
+    transform: scale(1.2);
 }
 
 #groupCompaniesCarousel .carousel-control-prev,
 #groupCompaniesCarousel .carousel-control-next {
-    width: 35px;
-    height: 35px;
-    background-color: rgba(31, 58, 147, 0.7);
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.9);
     border-radius: 50%;
-    top: 45%;
+    top: 50%;
     transform: translateY(-50%);
-    opacity: 0.7;
-    z-index: 3;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+#groupCompaniesCarousel .carousel-control-prev:hover,
+#groupCompaniesCarousel .carousel-control-next:hover {
+    opacity: 1;
+    background: var(--white);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#groupCompaniesCarousel .carousel-control-prev {
+    left: -25px;
+}
+
+#groupCompaniesCarousel .carousel-control-next {
+    right: -25px;
 }
 
 .group-companies {
@@ -2438,4 +2447,113 @@ body::after {
     height: 1px;
     margin-bottom: 10px;
     pointer-events: none;
+}
+
+/* עוטף את הקרוסלה במעטפת עם padding תחתון */
+.carousel-wrapper {
+    position: relative;
+    padding-bottom: 60px; /* מרווח ברור למטה עבור האינדיקטורים */
+    margin-bottom: 20px;
+}
+
+/* תיקון הגדרות גלישה וגובה */
+#groupCompaniesCarousel {
+    overflow: visible !important; /* אפשר לאינדיקטורים להיות מחוץ לגבולות */
+    padding-bottom: 0 !important; /* הסרת padding שיכול לגרום לחיתוך */
+    margin-bottom: 0;
+    position: relative;
+}
+
+/* שומר על התוכן הפנימי בתוך הגבולות */
+#groupCompaniesCarousel .carousel-inner {
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* מוודא שהכרטיסיות מוצגות בשלמותן */
+#groupCompaniesCarousel .carousel-item {
+    min-height: 400px; /* גובה מספיק גדול */
+    padding: 0;
+    transition: transform 0.6s ease-in-out;
+}
+
+/* מיקום האינדיקטורים מחוץ לקרוסלה */
+#groupCompaniesCarousel .carousel-indicators {
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+#groupCompaniesCarousel .carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    opacity: 0.3;
+    transition: all 0.3s ease;
+}
+
+#groupCompaniesCarousel .carousel-indicators button.active {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* שיפור הניווט */
+#groupCompaniesCarousel .carousel-control-prev,
+#groupCompaniesCarousel .carousel-control-next {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+#groupCompaniesCarousel .carousel-control-prev:hover,
+#groupCompaniesCarousel .carousel-control-next:hover {
+    opacity: 1;
+    background: var(--white);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#groupCompaniesCarousel .carousel-control-prev {
+    left: -25px;
+}
+
+#groupCompaniesCarousel .carousel-control-next {
+    right: -25px;
+}
+
+/* התאמה למובייל */
+@media (max-width: 768px) {
+    .carousel-wrapper {
+        padding-bottom: 50px;
+    }
+    
+    #groupCompaniesCarousel .carousel-item {
+        min-height: 350px;
+    }
+    
+    #groupCompaniesCarousel .carousel-control-prev,
+    #groupCompaniesCarousel .carousel-control-next {
+        width: 40px;
+        height: 40px;
+    }
+    
+    #groupCompaniesCarousel .carousel-control-prev {
+        left: -20px;
+    }
+    
+    #groupCompaniesCarousel .carousel-control-next {
+        right: -20px;
+    }
 }
