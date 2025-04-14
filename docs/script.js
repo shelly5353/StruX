@@ -59,22 +59,29 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Prevent scroll getting stuck at the bottom
-    let lastScrollTop = 0;
+    // מונע את הבעיה של "bounce" בקצוות הדף
+    document.addEventListener('touchmove', function(e) {
+        // מאפשר גלילה רגילה בלי התערבות
+    }, { passive: true });
+    
+    // טיפול בגלילה בסוף הדף
+    let lastScrollPosition = 0;
     window.addEventListener('scroll', function() {
-        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+        const currentScroll = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.body.scrollHeight;
         
-        // If we're at the bottom and not scrolling up
-        if ((window.innerHeight + currentScroll) >= document.body.offsetHeight - 10 && currentScroll > lastScrollTop) {
-            // Add a small padding to prevent getting stuck
+        // אם מגיעים לסוף העמוד ולא מנסים לגלול למעלה
+        if ((windowHeight + currentScroll >= documentHeight - 5) && currentScroll > lastScrollPosition) {
+            // מוסיף מרווח קטן למניעת "היתקעות"
             document.body.style.paddingBottom = '1px';
-            setTimeout(() => {
+            setTimeout(function() {
                 document.body.style.paddingBottom = '0';
-            }, 100);
+            }, 200);
         }
         
-        lastScrollTop = currentScroll;
-    });
+        lastScrollPosition = currentScroll;
+    }, { passive: true });
 
     // Enhanced Service cards interaction
     const serviceCards = document.querySelectorAll('.service-card');

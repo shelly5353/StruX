@@ -40,28 +40,9 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
-}
-html, body {
-    overscroll-behavior-y: none;
-    height: auto;
-    min-height: 100vh;
-}
-
-/* תוספת למניעת היתקעות בסוף הדף */
-body::after {
-    content: '';
-    display: block;
-    height: 50px;
-    margin-bottom: 30px;
-}
-
-html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 0;
-    min-height: 100vh;
-    overflow-y: auto;
     overscroll-behavior-y: auto;
     -webkit-overflow-scrolling: touch;
+    height: 100%;
 }
 
 body {
@@ -74,9 +55,8 @@ body {
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
+    overflow-y: auto;
     padding-bottom: 20px;
-    overscroll-behavior-y: none;
-    -webkit-overflow-scrolling: touch;
 }
 
 main {
@@ -2456,6 +2436,6 @@ body::after {
     content: '';
     display: block;
     height: 1px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     pointer-events: none;
 }
