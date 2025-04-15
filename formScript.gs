@@ -15,43 +15,35 @@ function initializeSheet() {
 
 // פונקציה לטיפול בבקשות GET
 function doGet(e) {
-  return ContentService.createTextOutput()
-    .setMimeType(ContentService.MimeType.JSON)
-    .setContent(JSON.stringify({
-      'status': 'success',
-      'message': 'הטופס מוכן לקבלת נתונים'
-    }));
+  return HtmlService.createHtmlOutput('<html><body><h1>שירות טפסים של StruX</h1><p>השירות פעיל ומוכן לקבלת נתונים</p></body></html>');
 }
 
 // הפונקציה הראשית שמקבלת נתונים מהאתר
 function doPost(e) {
   Logger.log("doPost function called");
   
-  // טיפול בבקשת preflight
-  if (e && e.parameter && e.parameter.method === 'OPTIONS') {
-    return ContentService.createTextOutput(JSON.stringify({}))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-  
   // בדיקה אם יש נתונים
-  if (!e || !e.postData) {
-    Logger.log("No post data received");
-    return ContentService.createTextOutput(JSON.stringify({
-      'status': 'error',
-      'message': 'לא התקבלו נתונים'
-    }))
-      .setMimeType(ContentService.MimeType.JSON);
+  if (!e || (!e.postData && !e.parameter)) {
+    Logger.log("No data received");
+    return HtmlService.createHtmlOutput('<html><body><script>window.parent.postMessage("error", "*");</script></body></html>');
   }
 
   try {
-    // קבלת הנתונים מהבקשה
-    var jsonData = JSON.parse(e.postData.contents);
+    // קבלת הנתונים מהבקשה - אנחנו מצפים לנתונים בפורמט פרמטרים רגילים
+    var jsonData = {
+      name: e.parameter.name,
+      phone: e.parameter.phone,
+      email: e.parameter.email,
+      callTime: e.parameter.callTime,
+      notes: e.parameter.notes
+    };
+    
     Logger.log("Received data: " + JSON.stringify(jsonData));
     
     // בדיקת תקינות הנתונים
     if (!jsonData.name || !jsonData.phone || !jsonData.email) {
       Logger.log("Missing required fields: " + JSON.stringify(jsonData));
-      throw new Error('חסרים שדות חובה: שם, טלפון או אימייל');
+      return HtmlService.createHtmlOutput('<html><body><script>window.parent.postMessage("error", "*");</script></body></html>');
     }
     
     var timestamp = new Date();
@@ -67,7 +59,7 @@ function doPost(e) {
       Logger.log("Successfully accessed the sheet: " + sheet.getName());
     } catch (sheetError) {
       Logger.log("Error accessing sheet: " + sheetError.toString());
-      throw new Error('לא ניתן לגשת לגיליון הנתונים');
+      return HtmlService.createHtmlOutput('<html><body><script>window.parent.postMessage("error", "*");</script></body></html>');
     }
     
     // הוספת שורה חדשה עם הנתונים
@@ -84,20 +76,15 @@ function doPost(e) {
     sheet.appendRow(rowData);
     Logger.log('הנתונים נשמרו בהצלחה');
 
-    return ContentService.createTextOutput(JSON.stringify({
-      'status': 'success',
-      'message': 'הנתונים נשמרו בהצלחה'
-    }))
-      .setMimeType(ContentService.MimeType.JSON);
+    // החזרת תשובת הצלחה בפורמט HTML שישלח הודעה להורה
+    return HtmlService.createHtmlOutput('<html><body><script>window.parent.postMessage("success", "*");</script></body></html>');
 
   } catch (error) {
     Logger.log('Error in doPost: ' + error.toString());
     Logger.log('Error stack: ' + error.stack);
-    return ContentService.createTextOutput(JSON.stringify({
-      'status': 'error',
-      'message': error.toString()
-    }))
-      .setMimeType(ContentService.MimeType.JSON);
+    
+    // החזרת תשובת שגיאה
+    return HtmlService.createHtmlOutput('<html><body><script>window.parent.postMessage("error", "*");</script></body></html>');
   }
 }
 
@@ -244,5 +231,19 @@ function deleteExtraSheets() {
       message: error.toString()
     };
   }
+}
+
+// Add a function to handle OPTIONS requests
+function doOptions(e) {
+  var headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type'
+  };
+  
+  return ContentService.createTextOutput()
+    .setContent('')
+    .setMimeType(ContentService.MimeType.TEXT)
+    .setHeaders(headers);
 } 
 

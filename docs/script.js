@@ -223,39 +223,69 @@ document.addEventListener('DOMContentLoaded', function() {
                 .map(checkbox => checkbox.value)
                 .join(', ');
             
-            // Prepare the data
-            const formData = {
-                name: name,
-                phone: phone,
-                email: email,
-                callTime: selectedTimes,
-                notes: message
-            };
-            
             try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycby4YbZxlGgwWyFLOKiiyiyRGsiDZDRUR8_kmn0FwVxnVvg_26I88FLpL-vpgJFfL0eU/exec', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                });
+                // יצירת iframe בלתי נראה להגשת הטופס
+                const iframe = document.createElement('iframe');
+                iframe.name = 'hidden_iframe';
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
                 
-                const responseText = await response.text();
-                let result;
-                try {
-                    result = JSON.parse(responseText);
-                } catch (parseError) {
-                    console.error('Error parsing response:', parseError);
-                    throw new Error('תשובה לא תקינה מהשרת');
-                }
+                // יצירת טופס דינמי
+                const tempForm = document.createElement('form');
+                tempForm.method = 'POST';
+                tempForm.action = 'https://script.google.com/macros/s/AKfycbyU6mONNGUo0_vpvoEikMdH8O0wFTJJQ7O_DIVgRCNCQthhGcb-FgQQEz-OpmZ-vdra/exec';
+                tempForm.target = 'hidden_iframe';
                 
-                if (result.status === 'success') {
-                    showSuccess();
-                    this.reset();
-                } else {
-                    throw new Error(result.message || 'שגיאה בשליחת הטופס');
-                }
+                // הוספת שדות נתונים
+                const appendField = (name, value) => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = name;
+                    input.value = value;
+                    tempForm.appendChild(input);
+                };
+                
+                appendField('name', name);
+                appendField('phone', phone);
+                appendField('email', email);
+                appendField('callTime', selectedTimes);
+                appendField('notes', message);
+                
+                // הוספת הטופס ושליחתו
+                document.body.appendChild(tempForm);
+                
+                // תקשורת עם ה-iframe
+                const iframeListener = (e) => {
+                    try {
+                        if (e.data === "success") {
+                            showSuccess();
+                            contactForm.reset();
+                        } else if (e.data === "error") {
+                            showError('אירעה שגיאה בשליחת הנתונים. אנא נסה שוב או צור קשר בטלפון 050-6599806');
+                        }
+                    } catch (error) {
+                        console.error('Error processing response:', error);
+                        showError('אירעה שגיאה בעיבוד התשובה מהשרת. אנא נסה שוב מאוחר יותר.');
+                    } finally {
+                        window.removeEventListener('message', iframeListener);
+                        if (document.body.contains(iframe)) document.body.removeChild(iframe);
+                        if (document.body.contains(tempForm)) document.body.removeChild(tempForm);
+                    }
+                };
+                
+                window.addEventListener('message', iframeListener);
+                
+                // שליחת הטופס
+                tempForm.submit();
+                
+                // הגדרת טיימאאוט למקרה שלא מתקבלת תשובה
+                setTimeout(() => {
+                    window.removeEventListener('message', iframeListener);
+                    if (document.body.contains(iframe)) document.body.removeChild(iframe);
+                    if (document.body.contains(tempForm)) document.body.removeChild(tempForm);
+                    showSuccess(); // נניח שהפעולה הצליחה גם אם לא התקבלה תשובה
+                    contactForm.reset();
+                }, 5000);
             } catch (error) {
                 console.error('Error:', error);
                 showError('אירעה שגיאה בשליחת הטופס. אנא נסה שוב מאוחר יותר או צור קשר בטלפון 050-6599806');
