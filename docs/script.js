@@ -233,12 +233,14 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             
             try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbyrxEWBtJqibcFl8P9S1MF3Vlxgjmu6pYC4VSrvsjlTlOueYr1C_JpfKMEOou8uTPc/exec', {
+                const response = await fetch('https://script.google.com/macros/s/AKfycby6A45iD0l0Z9rLupNDp6vWdlteBByfaidaSZhPka-TNPmofvmTJBddRZqhbYQSS0M/exec', {
                     method: 'POST',
-                    body: JSON.stringify(formData),
+                    mode: 'cors',
+                    cache: 'no-cache',
                     headers: {
                         'Content-Type': 'application/json'
-                    }
+                    },
+                    body: JSON.stringify(formData)
                 });
                 
                 if (!response.ok) {
