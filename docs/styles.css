@@ -2738,3 +2738,8 @@ body::after {
 .company-name:has(a:hover):after {
     opacity: 0;
 }
+
+.company-card:hover {
+    /* ביטול אפקט ריחוף של כל הכרטיס */
+    transform: none;
+}
