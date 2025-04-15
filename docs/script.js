@@ -186,54 +186,76 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Form submission with improved animation
+    // Form submission with improved animation and Google Sheets integration
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+        contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             // Animation for the submit button
             const submitButton = this.querySelector('.submit-button');
             submitButton.innerHTML = '<span class="spinner"></span> שולח...';
             submitButton.disabled = true;
+
+            // Get selected call times
+            const selectedTimes = Array.from(this.querySelectorAll('input[name="call_time[]"]:checked'))
+                .map(checkbox => checkbox.value)
+                .join(', ');
             
-            const formData = new FormData(this);
-            const data = {
-                name: formData.get('name'),
-                phone: formData.get('phone'),
-                email: formData.get('email'),
-                callTimes: Array.from(formData.getAll('call_time[]')),
-                message: formData.get('message')
+            // Prepare the data
+            const formData = {
+                name: this.querySelector('#name').value,
+                phone: this.querySelector('#phone').value,
+                email: this.querySelector('#email').value,
+                callTime: selectedTimes,
+                notes: this.querySelector('#message').value
             };
             
-            console.log('Form submitted:', data);
-            
-            // Simulated form submission delay for animation
-            setTimeout(() => {
-                submitButton.innerHTML = '<i class="fas fa-check"></i> נשלח בהצלחה!';
-                submitButton.style.backgroundColor = '#4caf50';
+            try {
+                const response = await fetch('https://script.google.com/macros/s/AKfycbyrxEWBtJqibcFl8P9S1MF3Vlxgjmu6pYC4VSrvsjlTlOueYr1C_JpfKMEOou8uTPc/exec', {
+                    method: 'POST',
+                    body: JSON.stringify(formData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
                 
-                // Create and show a success message
-                const successMessage = document.createElement('div');
-                successMessage.className = 'success-message';
-                successMessage.innerHTML = '<i class="fas fa-check-circle"></i> תודה! נציג שלנו יצור איתך קשר בהקדם.';
-                this.parentNode.appendChild(successMessage);
+                const result = await response.json();
                 
-                // Hide the form
-                this.style.opacity = '0.5';
-                this.style.pointerEvents = 'none';
-                
-                // Reset after a delay
-                setTimeout(() => {
-                    this.reset();
-                    this.style.opacity = '1';
-                    this.style.pointerEvents = 'auto';
-                    submitButton.innerHTML = 'שלח פרטים';
-                    submitButton.disabled = false;
-                    submitButton.style.backgroundColor = '';
-                    successMessage.remove();
-                }, 5000);
-            }, 1500);
+                if (result.status === 'success') {
+                    // Create and show a success message
+                    const successMessage = document.createElement('div');
+                    successMessage.className = 'success-message';
+                    successMessage.innerHTML = '<i class="fas fa-check-circle"></i> תודה! נציג שלנו יצור איתך קשר בהקדם.';
+                    this.parentNode.appendChild(successMessage);
+                    
+                    // Update button style
+                    submitButton.innerHTML = '<i class="fas fa-check"></i> נשלח בהצלחה!';
+                    submitButton.style.backgroundColor = '#4caf50';
+                    
+                    // Hide the form
+                    this.style.opacity = '0.5';
+                    this.style.pointerEvents = 'none';
+                    
+                    // Reset after a delay
+                    setTimeout(() => {
+                        this.reset();
+                        this.style.opacity = '1';
+                        this.style.pointerEvents = 'auto';
+                        submitButton.innerHTML = 'שלח פרטים';
+                        submitButton.disabled = false;
+                        submitButton.style.backgroundColor = '';
+                        successMessage.remove();
+                    }, 5000);
+                } else {
+                    throw new Error(result.message || 'שגיאה בשליחת הטופס');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                submitButton.innerHTML = 'שלח פרטים';
+                submitButton.disabled = false;
+                alert('אירעה שגיאה בשליחת הטופס. אנא נסו שוב מאוחר יותר.');
+            }
         });
         
         // Animation for form fields focus
