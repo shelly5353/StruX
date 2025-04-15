@@ -654,11 +654,7 @@
                 <h2 class="section-title" data-aos="fade-up">לקבלת הצעת מחיר מותאמת לבניין שלך</h2>
                 <p style="text-align: center; margin-bottom: 30px;" data-aos="fade-up" data-aos-delay="100">הגעת עד לכאן כל מה שנשאר זה רק לבקש שנציג מטעמנו יחזור אלייך עם כל הפרטים</p>
                 <div class="form-container" data-aos="fade-up" data-aos-delay="200">
-                    <form id="contactForm" action="https://script.google.com/macros/s/AKfycbyudmMC6DVgovO7iniTOtWsrZshjb6WxQD2c5VVG5KHahkJCjxSLNu36Jsr_PG2EdEA/exec" method="POST">
-                        <input type="hidden" name="_subject" value="בקשה ליצירת קשר מאתר StruX">
-                        <input type="hidden" name="_captcha" value="false">
-                        <input type="hidden" name="_next" value="https://www.strux.management">
-                        <input type="hidden" name="_template" value="table">
+                    <form id="contactForm" onsubmit="return false;">
                         <div class="form-group">
                             <label for="name">שם מלא</label>
                             <input type="text" id="name" name="name" class="form-control" required>

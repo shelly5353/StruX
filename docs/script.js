@@ -238,26 +238,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     throw new Error('הדפדפן שלך אינו תומך בשליחת טפסים מקוונים. אנא נסה בדפדפן עדכני יותר.');
                 }
                 
-                // במקרה של preflight OPTIONS request
-                const checkCorsSupport = async () => {
-                    try {
-                        const optionsResponse = await fetch('https://script.google.com/macros/s/AKfycbyudmMC6DVgovO7iniTOtWsrZshjb6WxQD2c5VVG5KHahkJCjxSLNu36Jsr_PG2EdEA/exec', {
-                            method: 'OPTIONS',
-                            mode: 'cors',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            }
-                        });
-                        return optionsResponse.ok;
-                    } catch (error) {
-                        console.warn('CORS preflight check failed:', error);
-                        return false;
-                    }
-                };
-                
-                // בדיקת תמיכה ב-CORS
-                await checkCorsSupport();
-                
                 // נסיון ראשון - שליחה ישירה
                 try {
                     const response = await fetch('https://script.google.com/macros/s/AKfycbyudmMC6DVgovO7iniTOtWsrZshjb6WxQD2c5VVG5KHahkJCjxSLNu36Jsr_PG2EdEA/exec', {
@@ -286,101 +266,34 @@ document.addEventListener('DOMContentLoaded', function() {
                 } catch (primaryError) {
                     console.warn('Primary submission method failed:', primaryError);
                     
-                    // נסיון שני - iframe
+                    // נסיון שני - formSubmit.co
                     try {
-                        console.log('Trying alternative JSONP approach...');
-                        
-                        const iframeResult = await new Promise((resolve, reject) => {
-                            // יצירת iframe זמני
-                            const iframe = document.createElement('iframe');
-                            iframe.style.display = 'none';
-                            document.body.appendChild(iframe);
-                            
-                            // יצירת טופס בתוך ה-iframe
-                            const form = document.createElement('form');
-                            form.method = 'POST';
-                            form.action = 'https://script.google.com/macros/s/AKfycbyudmMC6DVgovO7iniTOtWsrZshjb6WxQD2c5VVG5KHahkJCjxSLNu36Jsr_PG2EdEA/exec';
-                            form.target = '_blank';
-                            
-                            // הוספת שדות לטופס
-                            Object.keys(formData).forEach(key => {
-                                const input = document.createElement('input');
-                                input.type = 'hidden';
-                                input.name = key;
-                                input.value = formData[key];
-                                form.appendChild(input);
-                            });
-                            
-                            // הוספת הטופס ל-iframe ושליחתו
-                            iframe.contentDocument.body.appendChild(form);
-                            
-                            // כאשר ה-iframe נטען מחדש (אחרי השליחה)
-                            iframe.onload = function() {
-                                try {
-                                    // ניקוי ה-iframe
-                                    setTimeout(() => {
-                                        document.body.removeChild(iframe);
-                                    }, 500);
-                                    
-                                    // החזרת תוצאה מוצלחת
-                                    resolve({ status: 'success' });
-                                } catch (error) {
-                                    reject(error);
-                                }
-                            };
-                            
-                            // במקרה של שגיאה
-                            iframe.onerror = function() {
-                                reject(new Error('שגיאה בשליחת הטופס דרך iframe'));
-                            };
-                            
-                            // קביעת timeout למקרה שאין תגובה
-                            setTimeout(() => {
-                                reject(new Error('פג זמן השליחה'));
-                            }, 10000);
-                            
-                            // שליחת הטופס
-                            form.submit();
+                        const formSubmitResponse = await fetch('https://formsubmit.co/ajax/struxisrael@gmail.com', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                name: formData.name,
+                                phone: formData.phone,
+                                email: formData.email,
+                                callTime: formData.callTime,
+                                message: formData.notes
+                            })
                         });
                         
-                        if (iframeResult.status === 'success') {
+                        if (formSubmitResponse.ok) {
                             showSuccess();
                             contactForm.reset();
                             return; // סיימנו בהצלחה
+                        } else {
+                            throw new Error('formSubmit.co לא הגיב בצורה תקינה');
                         }
-                        
-                    } catch (iframeError) {
-                        console.warn('iframe submission failed:', iframeError);
-                        
-                        // נסיון שלישי - formSubmit.co
-                        try {
-                            const formSubmitResponse = await fetch('https://formsubmit.co/ajax/struxisrael@gmail.com', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Accept': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    name: formData.name,
-                                    phone: formData.phone,
-                                    email: formData.email,
-                                    callTime: formData.callTime,
-                                    message: formData.notes
-                                })
-                            });
-                            
-                            if (formSubmitResponse.ok) {
-                                showSuccess();
-                                contactForm.reset();
-                                return; // סיימנו בהצלחה
-                            } else {
-                                throw new Error('formSubmit.co לא הגיב בצורה תקינה');
-                            }
-                        
-                        } catch (formSubmitError) {
-                            console.error('All submission methods failed:', formSubmitError);
-                            throw new Error('כל שיטות השליחה נכשלו');
-                        }
+                    
+                    } catch (formSubmitError) {
+                        console.error('All submission methods failed:', formSubmitError);
+                        throw new Error('כל שיטות השליחה נכשלו');
                     }
                 }
             } catch (error) {
