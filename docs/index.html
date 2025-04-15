@@ -767,12 +767,15 @@
             };
             
             // שליחת נתוני הטופס לשרת
-            fetch('https://script.google.com/macros/s/AKfycbzeTlAYnaxfR2XlZ3wr4d6te_1R8F0mGujZh45p2TIGtVyE4CPO5EPGHrIcBdV9f4F7/exec', {
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbzeTlAYnaxfR2XlZ3wr4d6te_1R8F0mGujZh45p2TIGtVyE4CPO5EPGHrIcBdV9f4F7/exec';
+            const form = new FormData();
+            Object.keys(formData).forEach(key => {
+                form.append(key, formData[key]);
+            });
+            
+            fetch(scriptUrl, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams(formData)
+                body: form
             })
             .then(response => {
                 if (!response.ok) {
@@ -781,19 +784,9 @@
                 return response.text();
             })
             .then(data => {
-                try {
-                    const jsonData = JSON.parse(data);
-                    if (jsonData.status === 'success') {
-                        alert('הטופס נשלח בהצלחה!');
-                        this.reset();
-                    } else {
-                        alert('אירעה שגיאה בשליחת הטופס: ' + jsonData.message);
-                    }
-                } catch (e) {
-                    console.log('Response:', data);
-                    alert('הטופס נשלח בהצלחה!');
-                    this.reset();
-                }
+                console.log('Response:', data);
+                alert('הטופס נשלח בהצלחה!');
+                this.reset();
             })
             .catch(error => {
                 console.error('Error:', error);
