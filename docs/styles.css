@@ -2632,7 +2632,10 @@ body::after {
 }
 
 .input-focused label {
-    color: var(--primary-color);
+    color: var(--text-color);
+    font-weight: 700;
+    transform: none;
+    transition: none;
 }
 
 .input-focused .form-control {

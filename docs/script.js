@@ -536,20 +536,38 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // בדיקה אם המשתמש ביקר בעבר
     const hasVisitedBefore = localStorage.getItem('hasVisitedBefore');
-    if (hasVisitedBefore) {
-        popup.style.display = 'none';
-        return;
+    if (!hasVisitedBefore) {
+        console.log("New user detected, showing popup");
+        // הצגת הפופאפ רק למשתמשים חדשים
+        setTimeout(() => {
+            showPopup();
+        }, 1500); // עיכוב של 1.5 שניות לפני הצגת הפופאפ
+    } else {
+        console.log("Returning user, popup will not be shown");
     }
     
     // הצגת הפופאפ
     function showPopup() {
-        popup.classList.add('active');
+        console.log("Showing popup");
+        popup.style.opacity = "1";
+        popup.style.visibility = "visible";
+        popup.style.pointerEvents = "all";
         document.body.style.overflow = "hidden";
+        popup.classList.add('active');
+        
+        // הפעלת אנימציית הפופאפ
+        const container = popup.querySelector('.popup-container');
+        if (container) {
+            container.style.transform = "scale(1)";
+            container.style.opacity = "1";
+        }
     }
     
     // הסתרת הפופאפ
     function hidePopup() {
-        popup.classList.remove('active');
+        popup.style.opacity = "0";
+        popup.style.visibility = "hidden";
+        popup.style.pointerEvents = "none";
         document.body.style.overflow = "";
         localStorage.setItem('hasVisitedBefore', 'true');
     }
@@ -580,7 +598,4 @@ document.addEventListener('DOMContentLoaded', function() {
             hidePopup();
         }
     });
-    
-    // הצגת הפופאפ אחרי טעינת הדף
-    setTimeout(showPopup, 1000);
 }); 
