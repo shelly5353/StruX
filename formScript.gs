@@ -28,14 +28,27 @@ function doPost(e) {
   Logger.log("doPost function called");
   Logger.log("Request data: " + JSON.stringify(e));
   
+  // הגדרת כותרות CORS
+  const headers = {
+    "Access-Control-Allow-Origin": "https://www.strux.management",
+    "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Max-Age": "86400"
+  };
+  
+  // תשובה לבקשת preflight של OPTIONS
+  if (e && e.parameter && e.parameter.method === 'OPTIONS') {
+    return ContentService.createTextOutput(JSON.stringify({ 'status': 'success' }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  
   if (!e) {
     Logger.log("No event object received");
-    return ContentService.createTextOutput()
-      .setMimeType(ContentService.MimeType.JSON)
-      .setContent(JSON.stringify({
-        'status': 'error',
-        'message': 'לא התקבלו נתונים'
-      }));
+    return ContentService.createTextOutput(JSON.stringify({
+      'status': 'error',
+      'message': 'לא התקבלו נתונים'
+    }))
+      .setMimeType(ContentService.MimeType.JSON);
   }
 
   // Handle JSON data
@@ -83,22 +96,20 @@ function doPost(e) {
     sheet.appendRow(rowData);
     Logger.log('הנתונים נשמרו בהצלחה');
 
-    return ContentService.createTextOutput()
-      .setMimeType(ContentService.MimeType.JSON)
-      .setContent(JSON.stringify({
-        'status': 'success',
-        'message': 'הנתונים נשמרו בהצלחה'
-      }));
+    return ContentService.createTextOutput(JSON.stringify({
+      'status': 'success',
+      'message': 'הנתונים נשמרו בהצלחה'
+    }))
+      .setMimeType(ContentService.MimeType.JSON);
 
   } catch (error) {
     Logger.log('Error in doPost: ' + error.toString());
     Logger.log('Error stack: ' + error.stack);
-    return ContentService.createTextOutput()
-      .setMimeType(ContentService.MimeType.JSON)
-      .setContent(JSON.stringify({
-        'status': 'error',
-        'message': error.toString()
-      }));
+    return ContentService.createTextOutput(JSON.stringify({
+      'status': 'error',
+      'message': error.toString()
+    }))
+      .setMimeType(ContentService.MimeType.JSON);
   }
 }
 
