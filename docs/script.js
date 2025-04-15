@@ -241,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // נסיון ראשון - שליחה ישירה
                 try {
                     console.log('Sending data to Google Sheets:', formData);
-                    const response = await fetch('https://script.google.com/macros/s/AKfycbyudmMC6DVgovO7iniTOtWsrZshjb6WxQD2c5VVG5KHahkJCjxSLNu36Jsr_PG2EdEA/exec', {
+                    const response = await fetch('https://script.google.com/macros/s/AKfycbw1yKOgJtKCFxHFSqJd41DWV2l1CPwSOYHpbhrg3wGF57nmRaCNllhr-9X0NvTElc1Y/exec', {
                         method: 'POST',
                         mode: 'no-cors',
                         headers: {
