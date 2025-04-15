@@ -2,19 +2,32 @@
 function initializeSheet() {
   try {
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    
+    // הגדרת עמודות וכותרות
+    var headers = [
+      'שם מלא',
+      'טלפון נייד',
+      'מייל', 
+      'מתי נוח לך שנתקשר?',
+      'הערות נוספות',
+      'תאריך ושעה',
+      'סטטוס טיפול'
+    ];
+    
     // יצירת כותרות בשורה הראשונה
-    sheet.getRange(1, 1, 1, 7).setValues([
-      ['שם מלא', 'טלפון נייד', 'מייל', 'מתי נוח לך שנתקשר?', 'הערות נוספות', 'תאריך ושעה', 'סטטוס טיפול']
-    ]);
+    sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
     
     // עיצוב הגיליון
     formatSheet(sheet);
     
-    // הגדרת פורמט תאריך לעמודה האחרונה
-    sheet.getRange(2, 6, 100, 1).setNumberFormat('dd/MM/yyyy HH:mm:ss');
-    
-    // יצירת רשימה נפתחת עבור עמודת הסטטוס
+    // יצירת רשימה נפתחת לעמודת הסטטוס
     createStatusDropdown(sheet);
+    
+    // מחיקת שורות ריקות מיותרות
+    var maxRows = sheet.getMaxRows();
+    if (maxRows > 100) {
+      sheet.deleteRows(101, maxRows - 100);
+    }
     
     return true;
   } catch (error) {
@@ -77,7 +90,7 @@ function formatSheet(sheet) {
     var lastRow = sheet.getLastRow();
     var lastColumn = sheet.getLastColumn();
     
-    // עיצוב כותרות
+    // עיצוב כותרות - שורה ראשונה
     var headerRange = sheet.getRange(1, 1, 1, lastColumn);
     headerRange.setBackground('#1e73be');  // רקע כחול
     headerRange.setFontColor('#ffffff');   // צבע טקסט לבן
@@ -85,18 +98,40 @@ function formatSheet(sheet) {
     headerRange.setFontFamily('Heebo');    // פונט עברי
     headerRange.setFontSize(12);           // גודל פונט
     headerRange.setHorizontalAlignment('center'); // יישור אמצע
+    headerRange.setVerticalAlignment('middle');   // יישור אנכי באמצע
     headerRange.setBorder(true, true, true, true, null, null, '#000000', SpreadsheetApp.BorderStyle.SOLID); // גבולות
-
+    
+    // הגדרת גובה שורת הכותרת
+    sheet.setRowHeight(1, 35);  // גובה שורת כותרת
+    
+    // התאמת רוחב עמודות
+    sheet.autoResizeColumns(1, lastColumn);
+    sheet.setColumnWidth(1, 150);  // שם מלא
+    sheet.setColumnWidth(2, 120);  // טלפון
+    sheet.setColumnWidth(3, 180);  // מייל
+    sheet.setColumnWidth(4, 200);  // מתי נוח
+    sheet.setColumnWidth(5, 250);  // הערות
+    sheet.setColumnWidth(6, 150);  // תאריך ושעה
+    sheet.setColumnWidth(7, 120);  // סטטוס
+    
     // עיצוב תאים
     if (lastRow > 1) {
       var dataRange = sheet.getRange(2, 1, lastRow - 1, lastColumn);
       dataRange.setFontFamily('Heebo');
       dataRange.setFontSize(11);
       dataRange.setBorder(true, true, true, true, true, true, '#cccccc', SpreadsheetApp.BorderStyle.SOLID);
+      dataRange.setVerticalAlignment('middle');   // יישור אנכי באמצע
+      
+      // עיצוב עמודות ספציפיות
+      sheet.getRange(2, 2, lastRow - 1, 1).setHorizontalAlignment('center');  // טלפון ממורכז
+      sheet.getRange(2, 6, lastRow - 1, 1).setHorizontalAlignment('center');  // תאריך ממורכז
+      sheet.getRange(2, 7, lastRow - 1, 1).setHorizontalAlignment('center');  // סטטוס ממורכז
       
       // צביעת שורות לסירוגין
       for (var i = 2; i <= lastRow; i++) {
         var rowRange = sheet.getRange(i, 1, 1, lastColumn);
+        sheet.setRowHeight(i, 25);  // גובה קבוע לשורות
+        
         if (i % 2 === 0) {
           rowRange.setBackground('#f3f3f3'); // אפור בהיר לשורות זוגיות
         } else {
@@ -105,11 +140,17 @@ function formatSheet(sheet) {
       }
     }
     
-    // התאמת רוחב עמודות
-    sheet.autoResizeColumns(1, lastColumn);
-    
     // הקפאת שורת הכותרת
     sheet.setFrozenRows(1);
+    
+    // עיצוב תצוגת התאריך בעמודה השישית
+    if (lastRow > 1) {
+      var dateColumn = sheet.getRange(2, 6, lastRow - 1, 1);
+      dateColumn.setNumberFormat('dd/MM/yyyy HH:mm:ss');
+    }
+    
+    // הוספת מסננים לכותרות
+    headerRange.createFilter();
     
     Logger.log('עיצוב הגיליון הושלם בהצלחה');
     return true;
