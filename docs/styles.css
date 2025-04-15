@@ -2692,3 +2692,15 @@ body::after {
         transform: rotate(360deg);
     }
 }
+
+.company-logo a {
+    display: inline-block;
+    transition: transform 0.2s cubic-bezier(0.4,0,0.2,1), box-shadow 0.2s cubic-bezier(0.4,0,0.2,1);
+    border-radius: 50%;
+}
+.company-logo a:hover, .company-logo a:focus {
+    cursor: pointer;
+    transform: scale(1.08);
+    box-shadow: 0 4px 18px 0 rgba(30, 115, 190, 0.18);
+    outline: none;
+}
