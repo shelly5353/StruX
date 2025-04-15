@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             try {
                 // כתובת ה-URL של הסקריפט
-                const scriptURL = 'https://script.google.com/macros/s/AKfycbz0Lgp3twVPm6xhDLvmGiUYwoU7dNchdTSGqmJyFPkLqKhHRThzAVna9p4GOIqXoG2f/exec';
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbyOTDktIq9A4-AFuW_pVnZNabxAbHjz77oEXY39owisKHKWwp2kcMvbGLf1n4rZF8-m/exec';
                 
                 // בנייה של ה-URL עם פרמטרים
                 const url = new URL(scriptURL);
