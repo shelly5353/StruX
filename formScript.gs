@@ -28,20 +28,6 @@ function doPost(e) {
   Logger.log("doPost function called");
   Logger.log("Request data: " + JSON.stringify(e));
   
-  // הגדרת כותרות CORS
-  const headers = {
-    "Access-Control-Allow-Origin": "https://www.strux.management",
-    "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
-    "Access-Control-Max-Age": "86400"
-  };
-  
-  // תשובה לבקשת preflight של OPTIONS
-  if (e && e.parameter && e.parameter.method === 'OPTIONS') {
-    return ContentService.createTextOutput(JSON.stringify({ 'status': 'success' }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-  
   if (!e) {
     Logger.log("No event object received");
     return ContentService.createTextOutput(JSON.stringify({
@@ -58,6 +44,7 @@ function doPost(e) {
     if (e.postData && e.postData.contents) {
       Logger.log("Received postData.contents: " + e.postData.contents);
       jsonData = JSON.parse(e.postData.contents);
+      Logger.log("Parsed JSON data: " + JSON.stringify(jsonData));
     } else if (e.parameter) {
       Logger.log("Received parameters: " + JSON.stringify(e.parameter));
       jsonData = e.parameter;

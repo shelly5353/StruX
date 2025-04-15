@@ -240,28 +240,37 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // נסיון ראשון - שליחה ישירה
                 try {
+                    console.log('Sending data to Google Sheets:', formData);
                     const response = await fetch('https://script.google.com/macros/s/AKfycbyudmMC6DVgovO7iniTOtWsrZshjb6WxQD2c5VVG5KHahkJCjxSLNu36Jsr_PG2EdEA/exec', {
                         method: 'POST',
                         mode: 'cors',
                         cache: 'no-cache',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
                         },
                         body: JSON.stringify(formData)
                     });
                     
-                    if (response.ok) {
-                        const result = await response.json();
-                        
-                        if (result.status === 'success') {
-                            showSuccess();
-                            this.reset();
-                            return; // סיימנו בהצלחה
-                        }
+                    console.log('Response status:', response.status);
+                    const responseText = await response.text();
+                    console.log('Response text:', responseText);
+                    
+                    let result;
+                    try {
+                        result = JSON.parse(responseText);
+                    } catch (parseError) {
+                        console.error('Error parsing response:', parseError);
+                        throw new Error('תשובה לא תקינה מהשרת');
                     }
                     
-                    // אם הגענו לכאן, התגובה לא הייתה תקינה - ננסה דרך הבאה
-                    throw new Error('גוגל שיטס לא הגיב בצורה תקינה');
+                    if (result.status === 'success') {
+                        showSuccess();
+                        this.reset();
+                        return; // סיימנו בהצלחה
+                    } else {
+                        throw new Error(result.message || 'שגיאה לא ידועה מהשרת');
+                    }
                     
                 } catch (primaryError) {
                     console.warn('Primary submission method failed:', primaryError);
