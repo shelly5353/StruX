@@ -6,6 +6,13 @@ function initializeSheet() {
     sheet.getRange(1, 1, 1, 6).setValues([
       ['שם מלא', 'טלפון נייד', 'מייל', 'מתי נוח לך שנתקשר?', 'הערות נוספות', 'תאריך ושעה']
     ]);
+    
+    // עיצוב הגיליון
+    formatSheet(sheet);
+    
+    // הגדרת פורמט תאריך לעמודה האחרונה
+    sheet.getRange(2, 6, 100, 1).setNumberFormat('dd/MM/yyyy HH:mm:ss');
+    
     return true;
   } catch (error) {
     Logger.log('Error in initializeSheet: ' + error.toString());
@@ -17,6 +24,55 @@ function initializeSheet() {
 function doGet(e) {
   return HtmlService.createHtmlOutput('<html><body><h1>שירות טפסים של StruX</h1><p>השירות פעיל ומוכן לקבלת נתונים</p></body></html>')
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+}
+
+// פונקציה לעיצוב הגיליון
+function formatSheet(sheet) {
+  try {
+    // מספר השורות והעמודות
+    var lastRow = sheet.getLastRow();
+    var lastColumn = sheet.getLastColumn();
+    
+    // עיצוב כותרות
+    var headerRange = sheet.getRange(1, 1, 1, lastColumn);
+    headerRange.setBackground('#1e73be');  // רקע כחול
+    headerRange.setFontColor('#ffffff');   // צבע טקסט לבן
+    headerRange.setFontWeight('bold');     // טקסט מודגש
+    headerRange.setFontFamily('Heebo');    // פונט עברי
+    headerRange.setFontSize(12);           // גודל פונט
+    headerRange.setHorizontalAlignment('center'); // יישור אמצע
+    headerRange.setBorder(true, true, true, true, null, null, '#000000', SpreadsheetApp.BorderStyle.SOLID); // גבולות
+
+    // עיצוב תאים
+    if (lastRow > 1) {
+      var dataRange = sheet.getRange(2, 1, lastRow - 1, lastColumn);
+      dataRange.setFontFamily('Heebo');
+      dataRange.setFontSize(11);
+      dataRange.setBorder(true, true, true, true, true, true, '#cccccc', SpreadsheetApp.BorderStyle.SOLID);
+      
+      // צביעת שורות לסירוגין
+      for (var i = 2; i <= lastRow; i++) {
+        var rowRange = sheet.getRange(i, 1, 1, lastColumn);
+        if (i % 2 === 0) {
+          rowRange.setBackground('#f3f3f3'); // אפור בהיר לשורות זוגיות
+        } else {
+          rowRange.setBackground('#ffffff'); // לבן לשורות אי-זוגיות
+        }
+      }
+    }
+    
+    // התאמת רוחב עמודות
+    sheet.autoResizeColumns(1, lastColumn);
+    
+    // הקפאת שורת הכותרת
+    sheet.setFrozenRows(1);
+    
+    Logger.log('עיצוב הגיליון הושלם בהצלחה');
+    return true;
+  } catch (error) {
+    Logger.log('שגיאה בעיצוב הגיליון: ' + error.toString());
+    return false;
+  }
 }
 
 // הפונקציה הראשית שמקבלת נתונים מהאתר
@@ -79,6 +135,9 @@ function doPost(e) {
     Logger.log("Attempting to append row: " + JSON.stringify(rowData));
     sheet.appendRow(rowData);
     Logger.log('הנתונים נשמרו בהצלחה');
+    
+    // עיצוב הגיליון לאחר הוספת הנתונים
+    formatSheet(sheet);
 
     // החזרת תשובת הצלחה בפורמט JSON
     return ContentService.createTextOutput(JSON.stringify({"status": "success"}))
@@ -237,6 +296,92 @@ function deleteExtraSheets() {
       message: error.toString()
     };
   }
+}
+
+// פונקציה לעדכון עיצוב הגיליון הקיים
+function formatExistingSheet() {
+  try {
+    var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = spreadsheet.getSheetByName('טופס יצירת קשר');
+    
+    if (!sheet) {
+      Logger.log('הגיליון "טופס יצירת קשר" לא נמצא');
+      return {
+        status: 'error',
+        message: 'הגיליון "טופס יצירת קשר" לא נמצא'
+      };
+    }
+    
+    // עיצוב הגיליון
+    var success = formatSheet(sheet);
+    
+    if (success) {
+      return {
+        status: 'success',
+        message: 'עיצוב הגיליון הושלם בהצלחה'
+      };
+    } else {
+      return {
+        status: 'error',
+        message: 'אירעה שגיאה בעיצוב הגיליון'
+      };
+    }
+  } catch (error) {
+    Logger.log('Error in formatExistingSheet: ' + error.toString());
+    return {
+      status: 'error',
+      message: error.toString()
+    };
+  }
+}
+
+// פונקציה לשיפור תצוגת התאריך
+function formatDateTimeColumn() {
+  try {
+    var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = spreadsheet.getSheetByName('טופס יצירת קשר');
+    
+    if (!sheet) {
+      Logger.log('הגיליון "טופס יצירת קשר" לא נמצא');
+      return {
+        status: 'error',
+        message: 'הגיליון "טופס יצירת קשר" לא נמצא'
+      };
+    }
+    
+    var lastRow = sheet.getLastRow();
+    
+    if (lastRow > 1) {
+      // עמודת התאריך היא העמודה השישית (F)
+      var dateColumn = sheet.getRange(2, 6, lastRow - 1, 1);
+      dateColumn.setNumberFormat('dd/MM/yyyy HH:mm:ss');
+    }
+    
+    return {
+      status: 'success',
+      message: 'פורמט התאריך עודכן בהצלחה'
+    };
+  } catch (error) {
+    Logger.log('Error in formatDateTimeColumn: ' + error.toString());
+    return {
+      status: 'error',
+      message: error.toString()
+    };
+  }
+}
+
+// פונקציה לביצוע כל פעולות העיצוב יחד
+function beautifySheet() {
+  var result = formatExistingSheet();
+  Logger.log(result.message);
+  
+  var dateResult = formatDateTimeColumn();
+  Logger.log(dateResult.message);
+  
+  return {
+    status: 'success',
+    message: 'עיצוב הגיליון הושלם בהצלחה'
+  };
 }
 
 // Add a function to handle OPTIONS requests
