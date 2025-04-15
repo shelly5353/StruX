@@ -9,26 +9,35 @@ function initializeSheet() {
 
 // פונקציה לטיפול בבקשות GET
 function doGet(e) {
-  return ContentService.createTextOutput()
-    .setMimeType(ContentService.MimeType.JSON)
-    .setContent(JSON.stringify({
-      'status': 'success',
-      'message': 'הטופס מוכן לקבלת נתונים'
-    }))
-    .addHeader('Access-Control-Allow-Origin', '*')
-    .addHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-    .addHeader('Access-Control-Allow-Headers', 'Content-Type');
+  var output = ContentService.createTextOutput();
+  output.setMimeType(ContentService.MimeType.JSON);
+  output.setContent(JSON.stringify({
+    'status': 'success',
+    'message': 'הטופס מוכן לקבלת נתונים'
+  }));
+  
+  return output;
 }
 
 // הפונקציה הראשית שמקבלת נתונים מהאתר
 function doPost(e) {
-  // Handle preflight OPTIONS request
-  if (e.postData.type === "application/json") {
+  if (!e) {
+    var errorOutput = ContentService.createTextOutput();
+    errorOutput.setMimeType(ContentService.MimeType.JSON);
+    errorOutput.setContent(JSON.stringify({
+      'status': 'error',
+      'message': 'לא התקבלו נתונים'
+    }));
+    return errorOutput;
+  }
+
+  // Handle JSON data
+  if (e.postData && e.postData.type === "application/json") {
     try {
       Logger.log("התקבלה בקשה חדשה");
       
       // בדיקה שהתקבלו נתונים
-      if (!e || !e.postData || !e.postData.contents) {
+      if (!e.postData.contents) {
         throw new Error('לא התקבלו נתונים');
       }
 
@@ -58,36 +67,81 @@ function doPost(e) {
       sheet.appendRow(rowData);
       Logger.log('הנתונים נשמרו בהצלחה: ' + JSON.stringify(rowData));
 
-      return ContentService.createTextOutput()
-        .setMimeType(ContentService.MimeType.JSON)
-        .setContent(JSON.stringify({
-          'status': 'success',
-          'message': 'הנתונים נשמרו בהצלחה'
-        }))
-        .addHeader('Access-Control-Allow-Origin', '*')
-        .addHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-        .addHeader('Access-Control-Allow-Headers', 'Content-Type');
+      var successOutput = ContentService.createTextOutput();
+      successOutput.setMimeType(ContentService.MimeType.JSON);
+      successOutput.setContent(JSON.stringify({
+        'status': 'success',
+        'message': 'הנתונים נשמרו בהצלחה'
+      }));
+      
+      return successOutput;
 
     } catch (error) {
       Logger.log('שגיאה: ' + error.toString());
-      return ContentService.createTextOutput()
-        .setMimeType(ContentService.MimeType.JSON)
-        .setContent(JSON.stringify({
-          'status': 'error',
-          'message': error.toString()
-        }))
-        .addHeader('Access-Control-Allow-Origin', '*')
-        .addHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-        .addHeader('Access-Control-Allow-Headers', 'Content-Type');
+      var errorOutput = ContentService.createTextOutput();
+      errorOutput.setMimeType(ContentService.MimeType.JSON);
+      errorOutput.setContent(JSON.stringify({
+        'status': 'error',
+        'message': error.toString()
+      }));
+      
+      return errorOutput;
     }
   }
   
-  // Handle preflight OPTIONS request
-  return ContentService.createTextOutput()
-    .setMimeType(ContentService.MimeType.TEXT)
-    .addHeader('Access-Control-Allow-Origin', '*')
-    .addHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-    .addHeader('Access-Control-Allow-Headers', 'Content-Type');
+  // Handle form data
+  try {
+    var data = {
+      name: e.parameter.name,
+      phone: e.parameter.phone,
+      email: e.parameter.email,
+      callTime: e.parameter.callTime || '',
+      notes: e.parameter.notes || ''
+    };
+    
+    // בדיקת תקינות הנתונים
+    if (!data.name || !data.phone || !data.email) {
+      throw new Error('חסרים שדות חובה');
+    }
+    
+    var timestamp = new Date();
+    
+    // קבלת הגיליון הפעיל
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    
+    // הוספת שורה חדשה עם הנתונים
+    var rowData = [
+      data.name,
+      data.phone,
+      data.email,
+      data.callTime,
+      data.notes,
+      timestamp
+    ];
+    
+    sheet.appendRow(rowData);
+    Logger.log('הנתונים נשמרו בהצלחה: ' + JSON.stringify(rowData));
+    
+    var successOutput = ContentService.createTextOutput();
+    successOutput.setMimeType(ContentService.MimeType.JSON);
+    successOutput.setContent(JSON.stringify({
+      'status': 'success',
+      'message': 'הנתונים נשמרו בהצלחה'
+    }));
+    
+    return successOutput;
+    
+  } catch (error) {
+    Logger.log('שגיאה: ' + error.toString());
+    var errorOutput = ContentService.createTextOutput();
+    errorOutput.setMimeType(ContentService.MimeType.JSON);
+    errorOutput.setContent(JSON.stringify({
+      'status': 'error',
+      'message': error.toString()
+    }));
+    
+    return errorOutput;
+  }
 }
 
 // פונקציה להגדרה ראשונית

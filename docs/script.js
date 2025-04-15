@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             
             try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbznHQWb59W9aOa8r4XcAyuTcFeOyG1moHZPwd8qembE7CPnTDbl5oSBuFlK_SyCw4OW/exec', {
+                const response = await fetch('https://script.google.com/macros/s/AKfycbxwavLTrPq8KhvV0d1gi3l4vpG6mdfY8ize5gi4eK80sn49WpReLCPaPlZe7YB8msk/exec', {
                     method: 'POST',
                     mode: 'cors',
                     cache: 'no-cache',
