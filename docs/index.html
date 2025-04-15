@@ -333,8 +333,8 @@
     </head>
     <body>
         <!-- Popup for new users -->
-        <div id="welcomePopup" class="popup-overlay" style="opacity: 0; visibility: hidden; pointer-events: none;">
-            <div class="popup-container" style="transform: scale(0.8); opacity: 0;">
+        <div id="welcomePopup" class="popup-overlay">
+            <div class="popup-container">
                 <button id="closePopup" class="popup-close"><i class="fas fa-times"></i></button>
                 <div class="popup-content">
                     <div class="popup-icon">
@@ -750,6 +750,15 @@
         <!-- בדיקת טעינה של JavaScript -->
         <script>
             console.log('HTML loaded, checking if script.js is loaded...');
+            
+            // בדיקה אחרי 2 שניות אם הפופאפ מופעל
+            setTimeout(function() {
+                var popup = document.getElementById('welcomePopup');
+                if (popup && !popup.classList.contains('active')) {
+                    console.log('Popup not activated after 2 seconds, forcing activation...');
+                    popup.classList.add('active');
+                }
+            }, 2000);
         </script>
     </body>
 </html>

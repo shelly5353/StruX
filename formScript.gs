@@ -26,20 +26,10 @@ function doGet(e) {
 // הפונקציה הראשית שמקבלת נתונים מהאתר
 function doPost(e) {
   Logger.log("doPost function called");
-  Logger.log("Request data: " + JSON.stringify(e));
   
-  // Handle CORS preflight
-  if (e.parameter && e.parameter.cors === 'preflight') {
-    return ContentService.createTextOutput()
-      .setMimeType(ContentService.MimeType.JSON)
-      .setContent(JSON.stringify({
-        'status': 'success',
-        'message': 'CORS preflight successful'
-      }));
-  }
-
-  if (!e) {
-    Logger.log("No event object received");
+  // בדיקה אם יש נתונים
+  if (!e || !e.postData) {
+    Logger.log("No post data received");
     return ContentService.createTextOutput(JSON.stringify({
       'status': 'error',
       'message': 'לא התקבלו נתונים'
@@ -47,20 +37,10 @@ function doPost(e) {
       .setMimeType(ContentService.MimeType.JSON);
   }
 
-  // Handle JSON data
   try {
-    var jsonData;
-    
-    if (e.postData && e.postData.contents) {
-      Logger.log("Received postData.contents: " + e.postData.contents);
-      jsonData = JSON.parse(e.postData.contents);
-      Logger.log("Parsed JSON data: " + JSON.stringify(jsonData));
-    } else if (e.parameter) {
-      Logger.log("Received parameters: " + JSON.stringify(e.parameter));
-      jsonData = e.parameter;
-    } else {
-      throw new Error('לא התקבלו נתונים בפורמט תקין');
-    }
+    // קבלת הנתונים מהבקשה
+    var jsonData = JSON.parse(e.postData.contents);
+    Logger.log("Received data: " + JSON.stringify(jsonData));
     
     // בדיקת תקינות הנתונים
     if (!jsonData.name || !jsonData.phone || !jsonData.email) {
@@ -72,7 +52,12 @@ function doPost(e) {
     
     // נסיון לגשת לגיליון הפעיל
     try {
-      var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+      var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+      var sheet = spreadsheet.getSheetByName('טופס יצירת קשר');
+      if (!sheet) {
+        sheet = spreadsheet.insertSheet('טופס יצירת קשר');
+        initializeSheet();
+      }
       Logger.log("Successfully accessed the sheet: " + sheet.getName());
     } catch (sheetError) {
       Logger.log("Error accessing sheet: " + sheetError.toString());
@@ -216,65 +201,6 @@ function onFormSubmit(e) {
   }
 }
 
-function createForm() {
-  try {
-    // יצירת טופס חדש
-    var form = FormApp.create('טופס יצירת קשר');
-    
-    // הוספת השדות לטופס
-    form.addTextItem()
-        .setTitle('שם מלא')
-        .setRequired(true);
-        
-    form.addTextItem()
-        .setTitle('טלפון נייד')
-        .setRequired(true);
-        
-    form.addTextItem()
-        .setTitle('מייל')
-        .setRequired(true);
-        
-    form.addTextItem()
-        .setTitle('מתי נוח לך שנתקשר?')
-        .setRequired(true);
-        
-    form.addParagraphTextItem()
-        .setTitle('הערות נוספות');
-        
-    // חיבור הטופס לגיליון
-    var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-    form.setDestination(FormApp.DestinationType.SPREADSHEET, spreadsheet.getId());
-    
-    // יצירת הכותרות בגיליון
-    initializeSheet();
-    
-    // הגדרת הטריגר אוטומטית
-    var triggers = ScriptApp.getProjectTriggers();
-    // מחיקת טריגרים קיימים כדי למנוע כפילויות
-    triggers.forEach(function(trigger) {
-      ScriptApp.deleteTrigger(trigger);
-    });
-    
-    // יצירת טריגר חדש
-    ScriptApp.newTrigger('onFormSubmit')
-      .forForm(form)
-      .onFormSubmit()
-      .create();
-      
-    Logger.log('Form created successfully!');
-    Logger.log('Form URL: ' + form.getPublishedUrl());
-    Logger.log('Form edit URL: ' + form.getEditUrl());
-    
-    return {
-      publishedUrl: form.getPublishedUrl(),
-      editUrl: form.getEditUrl()
-    };
-  } catch (error) {
-    Logger.log('Error creating form: ' + error.toString());
-    throw error;
-  }
-}
-
 // פונקציה לבדיקת הטריגרים הקיימים
 function checkTriggers() {
   var triggers = ScriptApp.getProjectTriggers();
@@ -282,6 +208,35 @@ function checkTriggers() {
     Logger.log('Trigger ' + i + ': ' + triggers[i].getHandlerFunction());
     Logger.log('Event Type: ' + triggers[i].getEventType());
     Logger.log('Source: ' + triggers[i].getTriggerSource());
+  }
+}
+
+// פונקציה למחיקת גיליונות מיותרים
+function deleteExtraSheets() {
+  try {
+    var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+    var sheets = spreadsheet.getSheets();
+    var mainSheet = spreadsheet.getSheetByName('טופס יצירת קשר');
+    
+    // מחיקת כל הגיליונות חוץ מהגיליון הראשי
+    for (var i = 0; i < sheets.length; i++) {
+      var sheet = sheets[i];
+      if (sheet.getName() !== 'טופס יצירת קשר') {
+        spreadsheet.deleteSheet(sheet);
+        Logger.log('Deleted sheet: ' + sheet.getName());
+      }
+    }
+    
+    return {
+      status: 'success',
+      message: 'נמחקו כל הגיליונות המיותרים'
+    };
+  } catch (error) {
+    Logger.log('Error in deleteExtraSheets: ' + error.toString());
+    return {
+      status: 'error',
+      message: error.toString()
+    };
   }
 } 
 

@@ -233,75 +233,28 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             
             try {
-                // בדיקה אם הדפדפן תומך ב-Fetch
-                if (!window.fetch) {
-                    throw new Error('הדפדפן שלך אינו תומך בשליחת טפסים מקוונים. אנא נסה בדפדפן עדכני יותר.');
+                const response = await fetch('https://script.google.com/macros/s/AKfycbw1yKOgJtKCFxHFSqJd41DWV2l1CPwSOYHpbhrg3wGF57nmRaCNllhr-9X0NvTElc1Y/exec', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const responseText = await response.text();
+                let result;
+                try {
+                    result = JSON.parse(responseText);
+                } catch (parseError) {
+                    console.error('Error parsing response:', parseError);
+                    throw new Error('תשובה לא תקינה מהשרת');
                 }
                 
-                // נסיון ראשון - שליחה ישירה
-                try {
-                    console.log('Sending data to Google Sheets:', formData);
-                    const response = await fetch('https://script.google.com/macros/s/AKfycbw1yKOgJtKCFxHFSqJd41DWV2l1CPwSOYHpbhrg3wGF57nmRaCNllhr-9X0NvTElc1Y/exec', {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(formData)
-                    });
-                    
-                    console.log('Response status:', response.status);
-                    const responseText = await response.text();
-                    console.log('Response text:', responseText);
-                    
-                    let result;
-                    try {
-                        result = JSON.parse(responseText);
-                    } catch (parseError) {
-                        console.error('Error parsing response:', parseError);
-                        throw new Error('תשובה לא תקינה מהשרת');
-                    }
-                    
-                    if (result.status === 'success') {
-                        showSuccess();
-                        this.reset();
-                        return; // סיימנו בהצלחה
-                    } else {
-                        throw new Error(result.message || 'שגיאה לא ידועה מהשרת');
-                    }
-                    
-                } catch (primaryError) {
-                    console.warn('Primary submission method failed:', primaryError);
-                    
-                    // נסיון שני - formSubmit.co
-                    try {
-                        const formSubmitResponse = await fetch('https://formsubmit.co/ajax/struxisrael@gmail.com', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Accept': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                name: formData.name,
-                                phone: formData.phone,
-                                email: formData.email,
-                                callTime: formData.callTime,
-                                message: formData.notes
-                            })
-                        });
-                        
-                        if (formSubmitResponse.ok) {
-                            showSuccess();
-                            contactForm.reset();
-                            return; // סיימנו בהצלחה
-                        } else {
-                            throw new Error('formSubmit.co לא הגיב בצורה תקינה');
-                        }
-                    
-                    } catch (formSubmitError) {
-                        console.error('All submission methods failed:', formSubmitError);
-                        throw new Error('כל שיטות השליחה נכשלו');
-                    }
+                if (result.status === 'success') {
+                    showSuccess();
+                    this.reset();
+                } else {
+                    throw new Error(result.message || 'שגיאה בשליחת הטופס');
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -590,17 +543,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // הצגת הפופאפ
     function showPopup() {
-        popup.style.opacity = "1";
-        popup.style.visibility = "visible";
-        popup.style.pointerEvents = "all";
+        popup.classList.add('active');
         document.body.style.overflow = "hidden";
     }
     
     // הסתרת הפופאפ
     function hidePopup() {
-        popup.style.opacity = "0";
-        popup.style.visibility = "hidden";
-        popup.style.pointerEvents = "none";
+        popup.classList.remove('active');
         document.body.style.overflow = "";
         localStorage.setItem('hasVisitedBefore', 'true');
     }
