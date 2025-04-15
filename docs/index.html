@@ -654,7 +654,7 @@
                 <h2 class="section-title" data-aos="fade-up">לקבלת הצעת מחיר מותאמת לבניין שלך</h2>
                 <p style="text-align: center; margin-bottom: 30px;" data-aos="fade-up" data-aos-delay="100">הגעת עד לכאן כל מה שנשאר זה רק לבקש שנציג מטעמנו יחזור אלייך עם כל הפרטים</p>
                 <div class="form-container" data-aos="fade-up" data-aos-delay="200">
-                    <form id="contactForm" onsubmit="return false;">
+                    <form id="contactForm" action="/submit-form" method="POST">
                         <div class="form-group">
                             <label for="name">שם מלא</label>
                             <input type="text" id="name" name="name" class="form-control" required>
@@ -751,5 +751,18 @@
         <script>
             console.log('HTML loaded, checking if script.js is loaded...');
         </script>
+        <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            
+            // Send form data to server
+            fetch('/submit-form', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
     </body>
 </html>
