@@ -243,11 +243,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log('Sending data to Google Sheets:', formData);
                     const response = await fetch('https://script.google.com/macros/s/AKfycbyudmMC6DVgovO7iniTOtWsrZshjb6WxQD2c5VVG5KHahkJCjxSLNu36Jsr_PG2EdEA/exec', {
                         method: 'POST',
-                        mode: 'cors',
-                        cache: 'no-cache',
+                        mode: 'no-cors',
                         headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
+                            'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(formData)
                     });

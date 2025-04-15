@@ -28,6 +28,16 @@ function doPost(e) {
   Logger.log("doPost function called");
   Logger.log("Request data: " + JSON.stringify(e));
   
+  // Handle CORS preflight
+  if (e.parameter && e.parameter.cors === 'preflight') {
+    return ContentService.createTextOutput()
+      .setMimeType(ContentService.MimeType.JSON)
+      .setContent(JSON.stringify({
+        'status': 'success',
+        'message': 'CORS preflight successful'
+      }));
+  }
+
   if (!e) {
     Logger.log("No event object received");
     return ContentService.createTextOutput(JSON.stringify({
@@ -274,3 +284,4 @@ function checkTriggers() {
     Logger.log('Source: ' + triggers[i].getTriggerSource());
   }
 } 
+
