@@ -224,69 +224,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 .join(', ');
             
             try {
-                // יצירת iframe בלתי נראה להגשת הטופס
-                const iframe = document.createElement('iframe');
-                iframe.name = 'hidden_iframe';
-                iframe.style.display = 'none';
-                document.body.appendChild(iframe);
+                // כתובת ה-URL של הסקריפט
+                const scriptURL = 'https://script.google.com/macros/s/AKfycby0u9HxOWFaL9r8tujOiRvbhxTWmalsHOm6dXFVIHZZjNx3CYGfRp1HounFnCmnbVs/exec';
                 
-                // יצירת טופס דינמי
-                const tempForm = document.createElement('form');
-                tempForm.method = 'POST';
-                // כתובת ה-URL של הסקריפט המעודכן
-                tempForm.action = 'https://script.google.com/macros/s/AKfycbwyFXuRByLNnl1V14YrSSMB8n6zC87Rvqi46vgfR4HWSn0OIzTvR2p2ngluQQXw7zGU/exec';
-                tempForm.target = 'hidden_iframe';
+                // בנייה של ה-URL עם פרמטרים
+                const url = new URL(scriptURL);
+                const params = new URLSearchParams();
+                params.append('name', name);
+                params.append('phone', phone);
+                params.append('email', email);
+                params.append('callTime', selectedTimes);
+                params.append('notes', message);
                 
-                // הוספת שדות נתונים
-                const appendField = (name, value) => {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = name;
-                    input.value = value;
-                    tempForm.appendChild(input);
-                };
+                // הוספת הפרמטרים ל-URL
+                url.search = params.toString();
                 
-                appendField('name', name);
-                appendField('phone', phone);
-                appendField('email', email);
-                appendField('callTime', selectedTimes);
-                appendField('notes', message);
+                // שליחת הבקשה
+                const response = await fetch(url, {
+                    method: 'POST',
+                    mode: 'no-cors' // חשוב - זה מונע שגיאות CORS
+                });
                 
-                // הוספת הטופס ושליחתו
-                document.body.appendChild(tempForm);
+                // גם אם אין לנו תשובה (mode: no-cors לא מחזיר תוכן), נניח שהפעולה הצליחה
+                showSuccess();
+                contactForm.reset();
                 
-                // תקשורת עם ה-iframe
-                const iframeListener = (e) => {
-                    try {
-                        if (e.data === "success") {
-                            showSuccess();
-                            contactForm.reset();
-                        } else if (e.data === "error") {
-                            showError('אירעה שגיאה בשליחת הנתונים. אנא נסה שוב או צור קשר בטלפון 050-6599806');
-                        }
-                    } catch (error) {
-                        console.error('Error processing response:', error);
-                        showError('אירעה שגיאה בעיבוד התשובה מהשרת. אנא נסה שוב מאוחר יותר.');
-                    } finally {
-                        window.removeEventListener('message', iframeListener);
-                        if (document.body.contains(iframe)) document.body.removeChild(iframe);
-                        if (document.body.contains(tempForm)) document.body.removeChild(tempForm);
-                    }
-                };
-                
-                window.addEventListener('message', iframeListener);
-                
-                // שליחת הטופס
-                tempForm.submit();
-                
-                // הגדרת טיימאאוט למקרה שלא מתקבלת תשובה
-                setTimeout(() => {
-                    window.removeEventListener('message', iframeListener);
-                    if (document.body.contains(iframe)) document.body.removeChild(iframe);
-                    if (document.body.contains(tempForm)) document.body.removeChild(tempForm);
-                    showSuccess(); // נניח שהפעולה הצליחה גם אם לא התקבלה תשובה
-                    contactForm.reset();
-                }, 5000);
             } catch (error) {
                 console.error('Error:', error);
                 showError('אירעה שגיאה בשליחת הטופס. אנא נסה שוב מאוחר יותר או צור קשר בטלפון 050-6599806');

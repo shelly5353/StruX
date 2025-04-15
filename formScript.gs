@@ -26,8 +26,8 @@ function doPost(e) {
   // בדיקה אם יש נתונים
   if (!e || (!e.postData && !e.parameter)) {
     Logger.log("No data received");
-    return HtmlService.createHtmlOutput('<html><body><script>window.parent.postMessage("error", "*");</script></body></html>')
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+    return ContentService.createTextOutput(JSON.stringify({"status": "error", "message": "No data received"}))
+      .setMimeType(ContentService.MimeType.JSON);
   }
 
   try {
@@ -45,8 +45,8 @@ function doPost(e) {
     // בדיקת תקינות הנתונים
     if (!jsonData.name || !jsonData.phone || !jsonData.email) {
       Logger.log("Missing required fields: " + JSON.stringify(jsonData));
-      return HtmlService.createHtmlOutput('<html><body><script>window.parent.postMessage("error", "*");</script></body></html>')
-        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+      return ContentService.createTextOutput(JSON.stringify({"status": "error", "message": "Missing required fields"}))
+        .setMimeType(ContentService.MimeType.JSON);
     }
     
     var timestamp = new Date();
@@ -62,8 +62,8 @@ function doPost(e) {
       Logger.log("Successfully accessed the sheet: " + sheet.getName());
     } catch (sheetError) {
       Logger.log("Error accessing sheet: " + sheetError.toString());
-      return HtmlService.createHtmlOutput('<html><body><script>window.parent.postMessage("error", "*");</script></body></html>')
-        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+      return ContentService.createTextOutput(JSON.stringify({"status": "error", "message": "Error accessing spreadsheet"}))
+        .setMimeType(ContentService.MimeType.JSON);
     }
     
     // הוספת שורה חדשה עם הנתונים
@@ -80,17 +80,17 @@ function doPost(e) {
     sheet.appendRow(rowData);
     Logger.log('הנתונים נשמרו בהצלחה');
 
-    // החזרת תשובת הצלחה בפורמט HTML שישלח הודעה להורה
-    return HtmlService.createHtmlOutput('<html><body><script>window.parent.postMessage("success", "*");</script></body></html>')
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+    // החזרת תשובת הצלחה בפורמט JSON
+    return ContentService.createTextOutput(JSON.stringify({"status": "success"}))
+      .setMimeType(ContentService.MimeType.JSON);
 
   } catch (error) {
     Logger.log('Error in doPost: ' + error.toString());
     Logger.log('Error stack: ' + error.stack);
     
     // החזרת תשובת שגיאה
-    return HtmlService.createHtmlOutput('<html><body><script>window.parent.postMessage("error", "*");</script></body></html>')
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+    return ContentService.createTextOutput(JSON.stringify({"status": "error", "message": error.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
   }
 }
 
@@ -241,16 +241,8 @@ function deleteExtraSheets() {
 
 // Add a function to handle OPTIONS requests
 function doOptions(e) {
-  var headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type'
-  };
-  
   return ContentService.createTextOutput()
-    .setContent('')
-    .setMimeType(ContentService.MimeType.TEXT)
-    .setHeaders(headers)
-    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+    .setMimeType(ContentService.MimeType.JSON)
+    .setContent(JSON.stringify({"status": "success"}));
 } 
 
