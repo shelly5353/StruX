@@ -2730,3 +2730,11 @@ body::after {
 .carousel-item:nth-child(4) .company-name a:hover {
     border-bottom: 2px solid #0097a7;
 }
+
+.company-name:hover:after {
+    opacity: 0;
+}
+/* Hide blue underline when hovering the link itself (for browsers supporting :has) */
+.company-name:has(a:hover):after {
+    opacity: 0;
+}
