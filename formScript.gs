@@ -9,58 +9,85 @@ function initializeSheet() {
 
 // פונקציה לטיפול בבקשות GET
 function doGet(e) {
-  return ContentService.createTextOutput(JSON.stringify({
-    'status': 'success',
-    'message': 'הטופס מוכן לקבלת נתונים'
-  })).setMimeType(ContentService.MimeType.JSON);
+  return ContentService.createTextOutput()
+    .setMimeType(ContentService.MimeType.JSON)
+    .setContent(JSON.stringify({
+      'status': 'success',
+      'message': 'הטופס מוכן לקבלת נתונים'
+    }))
+    .addHeader('Access-Control-Allow-Origin', '*')
+    .addHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+    .addHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
 // הפונקציה הראשית שמקבלת נתונים מהאתר
 function doPost(e) {
-  try {
-    Logger.log("התקבלה בקשה חדשה");
-    
-    // בדיקה שהתקבלו נתונים
-    if (!e || !e.postData || !e.postData.contents) {
-      return ContentService.createTextOutput(JSON.stringify({
-        'status': 'error',
-        'message': 'לא התקבלו נתונים'
-      })).setMimeType(ContentService.MimeType.JSON);
+  // Handle preflight OPTIONS request
+  if (e.postData.type === "application/json") {
+    try {
+      Logger.log("התקבלה בקשה חדשה");
+      
+      // בדיקה שהתקבלו נתונים
+      if (!e || !e.postData || !e.postData.contents) {
+        throw new Error('לא התקבלו נתונים');
+      }
+
+      // המרת הנתונים שהתקבלו
+      var data = JSON.parse(e.postData.contents);
+      
+      // בדיקת תקינות הנתונים
+      if (!data.name || !data.phone || !data.email) {
+        throw new Error('חסרים שדות חובה');
+      }
+      
+      var timestamp = new Date();
+      
+      // קבלת הגיליון הפעיל
+      var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+      
+      // הוספת שורה חדשה עם הנתונים
+      var rowData = [
+        data.name,
+        data.phone,
+        data.email,
+        data.callTime || '',
+        data.notes || '',
+        timestamp
+      ];
+      
+      sheet.appendRow(rowData);
+      Logger.log('הנתונים נשמרו בהצלחה: ' + JSON.stringify(rowData));
+
+      return ContentService.createTextOutput()
+        .setMimeType(ContentService.MimeType.JSON)
+        .setContent(JSON.stringify({
+          'status': 'success',
+          'message': 'הנתונים נשמרו בהצלחה'
+        }))
+        .addHeader('Access-Control-Allow-Origin', '*')
+        .addHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        .addHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    } catch (error) {
+      Logger.log('שגיאה: ' + error.toString());
+      return ContentService.createTextOutput()
+        .setMimeType(ContentService.MimeType.JSON)
+        .setContent(JSON.stringify({
+          'status': 'error',
+          'message': error.toString()
+        }))
+        .addHeader('Access-Control-Allow-Origin', '*')
+        .addHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        .addHeader('Access-Control-Allow-Headers', 'Content-Type');
     }
-
-    // המרת הנתונים שהתקבלו
-    var data = JSON.parse(e.postData.contents);
-    var timestamp = new Date();
-    
-    // קבלת הגיליון הפעיל
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    
-    // הוספת שורה חדשה עם הנתונים
-    var rowData = [
-      data.name || '',           // שם מלא
-      data.phone || '',          // טלפון נייד
-      data.email || '',          // מייל
-      data.callTime || '',       // מתי נוח לך שנתקשר?
-      data.notes || '',          // הערות נוספות
-      timestamp                  // תאריך ושעה
-    ];
-    
-    sheet.appendRow(rowData);
-    Logger.log('הנתונים נשמרו בהצלחה: ' + JSON.stringify(rowData));
-
-    // החזרת תשובה חיובית
-    return ContentService.createTextOutput(JSON.stringify({
-      'status': 'success',
-      'message': 'הנתונים נשמרו בהצלחה'
-    })).setMimeType(ContentService.MimeType.JSON);
-
-  } catch (error) {
-    Logger.log('שגיאה: ' + error.toString());
-    return ContentService.createTextOutput(JSON.stringify({
-      'status': 'error',
-      'message': error.toString()
-    })).setMimeType(ContentService.MimeType.JSON);
   }
+  
+  // Handle preflight OPTIONS request
+  return ContentService.createTextOutput()
+    .setMimeType(ContentService.MimeType.TEXT)
+    .addHeader('Access-Control-Allow-Origin', '*')
+    .addHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+    .addHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
 // פונקציה להגדרה ראשונית
