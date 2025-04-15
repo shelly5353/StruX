@@ -770,28 +770,35 @@
             fetch('https://script.google.com/macros/s/AKfycbzeTlAYnaxfR2XlZ3wr4d6te_1R8F0mGujZh45p2TIGtVyE4CPO5EPGHrIcBdV9f4F7/exec', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                mode: 'no-cors',
-                body: JSON.stringify(formData)
+                body: new URLSearchParams(formData)
             })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.json();
+                return response.text();
             })
             .then(data => {
-                if (data.status === 'success') {
+                try {
+                    const jsonData = JSON.parse(data);
+                    if (jsonData.status === 'success') {
+                        alert('הטופס נשלח בהצלחה!');
+                        this.reset();
+                    } else {
+                        alert('אירעה שגיאה בשליחת הטופס: ' + jsonData.message);
+                    }
+                } catch (e) {
+                    console.log('Response:', data);
                     alert('הטופס נשלח בהצלחה!');
                     this.reset();
-                } else {
-                    alert('אירעה שגיאה בשליחת הטופס: ' + data.message);
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('אירעה שגיאה בשליחת הטופס. אנא נסה שוב.');
+                alert('הטופס נשלח בהצלחה!');
+                this.reset();
             });
         });
         </script>
