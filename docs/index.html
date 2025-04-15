@@ -333,8 +333,8 @@
     </head>
     <body>
         <!-- Popup for new users -->
-        <div id="welcomePopup" class="popup-overlay" style="opacity: 0; visibility: hidden; pointer-events: none;">
-            <div class="popup-container" style="transform: scale(0.8); opacity: 0;">
+        <div id="welcomePopup" class="popup-overlay">
+            <div class="popup-container">
                 <button id="closePopup" class="popup-close"><i class="fas fa-times"></i></button>
                 <div class="popup-content">
                     <div class="popup-icon">
@@ -750,50 +750,6 @@
         <!-- בדיקת טעינה של JavaScript -->
         <script>
             console.log('HTML loaded, checking if script.js is loaded...');
-        </script>
-        <script>
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // קבלת נתוני הטופס
-            const formData = {
-                name: document.getElementById('name').value,
-                phone: document.getElementById('phone').value,
-                email: document.getElementById('email').value,
-                callTime: Array.from(document.querySelectorAll('input[name="call_time[]"]:checked'))
-                    .map(checkbox => checkbox.value)
-                    .join(', '),
-                notes: document.getElementById('message').value
-            };
-            
-            // שליחת נתוני הטופס לשרת
-            const scriptUrl = 'https://script.google.com/macros/s/AKfycbzeTlAYnaxfR2XlZ3wr4d6te_1R8F0mGujZh45p2TIGtVyE4CPO5EPGHrIcBdV9f4F7/exec';
-            const form = new FormData();
-            Object.keys(formData).forEach(key => {
-                form.append(key, formData[key]);
-            });
-            
-            fetch(scriptUrl, {
-                method: 'POST',
-                body: form
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.text();
-            })
-            .then(data => {
-                console.log('Response:', data);
-                alert('הטופס נשלח בהצלחה!');
-                this.reset();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('הטופס נשלח בהצלחה!');
-                this.reset();
-            });
-        });
         </script>
     </body>
 </html>

@@ -233,7 +233,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 // יצירת טופס דינמי
                 const tempForm = document.createElement('form');
                 tempForm.method = 'POST';
-                tempForm.action = 'https://script.google.com/macros/s/AKfycbyU6mONNGUo0_vpvoEikMdH8O0wFTJJQ7O_DIVgRCNCQthhGcb-FgQQEz-OpmZ-vdra/exec';
+                // כתובת ה-URL של הסקריפט המעודכן
+                tempForm.action = 'https://script.google.com/macros/s/AKfycbwyFXuRByLNnl1V14YrSSMB8n6zC87Rvqi46vgfR4HWSn0OIzTvR2p2ngluQQXw7zGU/exec';
                 tempForm.target = 'hidden_iframe';
                 
                 // הוספת שדות נתונים
@@ -564,6 +565,13 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
     
+    // מציג את הפופאפ תמיד בשביל בדיקה (אחר-כך נוכל להחזיר לגרסה המקורית)
+    console.log("Showing popup for testing");
+    setTimeout(() => {
+        showPopup();
+    }, 1500); // עיכוב של 1.5 שניות לפני הצגת הפופאפ
+    
+    /* הקוד המקורי - מוחבא כרגע לצורך בדיקה
     // בדיקה אם המשתמש ביקר בעבר
     const hasVisitedBefore = localStorage.getItem('hasVisitedBefore');
     if (!hasVisitedBefore) {
@@ -575,6 +583,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.log("Returning user, popup will not be shown");
     }
+    */
     
     // הצגת הפופאפ
     function showPopup() {

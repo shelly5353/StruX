@@ -15,7 +15,8 @@ function initializeSheet() {
 
 // פונקציה לטיפול בבקשות GET
 function doGet(e) {
-  return HtmlService.createHtmlOutput('<html><body><h1>שירות טפסים של StruX</h1><p>השירות פעיל ומוכן לקבלת נתונים</p></body></html>');
+  return HtmlService.createHtmlOutput('<html><body><h1>שירות טפסים של StruX</h1><p>השירות פעיל ומוכן לקבלת נתונים</p></body></html>')
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
 
 // הפונקציה הראשית שמקבלת נתונים מהאתר
@@ -25,7 +26,8 @@ function doPost(e) {
   // בדיקה אם יש נתונים
   if (!e || (!e.postData && !e.parameter)) {
     Logger.log("No data received");
-    return HtmlService.createHtmlOutput('<html><body><script>window.parent.postMessage("error", "*");</script></body></html>');
+    return HtmlService.createHtmlOutput('<html><body><script>window.parent.postMessage("error", "*");</script></body></html>')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
   }
 
   try {
@@ -43,7 +45,8 @@ function doPost(e) {
     // בדיקת תקינות הנתונים
     if (!jsonData.name || !jsonData.phone || !jsonData.email) {
       Logger.log("Missing required fields: " + JSON.stringify(jsonData));
-      return HtmlService.createHtmlOutput('<html><body><script>window.parent.postMessage("error", "*");</script></body></html>');
+      return HtmlService.createHtmlOutput('<html><body><script>window.parent.postMessage("error", "*");</script></body></html>')
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
     }
     
     var timestamp = new Date();
@@ -59,7 +62,8 @@ function doPost(e) {
       Logger.log("Successfully accessed the sheet: " + sheet.getName());
     } catch (sheetError) {
       Logger.log("Error accessing sheet: " + sheetError.toString());
-      return HtmlService.createHtmlOutput('<html><body><script>window.parent.postMessage("error", "*");</script></body></html>');
+      return HtmlService.createHtmlOutput('<html><body><script>window.parent.postMessage("error", "*");</script></body></html>')
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
     }
     
     // הוספת שורה חדשה עם הנתונים
@@ -77,14 +81,16 @@ function doPost(e) {
     Logger.log('הנתונים נשמרו בהצלחה');
 
     // החזרת תשובת הצלחה בפורמט HTML שישלח הודעה להורה
-    return HtmlService.createHtmlOutput('<html><body><script>window.parent.postMessage("success", "*");</script></body></html>');
+    return HtmlService.createHtmlOutput('<html><body><script>window.parent.postMessage("success", "*");</script></body></html>')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 
   } catch (error) {
     Logger.log('Error in doPost: ' + error.toString());
     Logger.log('Error stack: ' + error.stack);
     
     // החזרת תשובת שגיאה
-    return HtmlService.createHtmlOutput('<html><body><script>window.parent.postMessage("error", "*");</script></body></html>');
+    return HtmlService.createHtmlOutput('<html><body><script>window.parent.postMessage("error", "*");</script></body></html>')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
   }
 }
 
@@ -244,6 +250,7 @@ function doOptions(e) {
   return ContentService.createTextOutput()
     .setContent('')
     .setMimeType(ContentService.MimeType.TEXT)
-    .setHeaders(headers);
+    .setHeaders(headers)
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 } 
 
