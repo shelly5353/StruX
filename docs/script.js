@@ -192,6 +192,27 @@ document.addEventListener('DOMContentLoaded', function() {
         contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
+            // Validate form data
+            const name = this.querySelector('#name').value.trim();
+            const phone = this.querySelector('#phone').value.trim();
+            const email = this.querySelector('#email').value.trim();
+            const message = this.querySelector('#message').value.trim();
+            
+            if (!name || !phone || !email) {
+                showError('אנא מלא את כל השדות החובה');
+                return;
+            }
+            
+            if (phone.length < 10) {
+                showError('מספר הטלפון חייב להכיל לפחות 10 ספרות');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showError('כתובת האימייל אינה תקינה');
+                return;
+            }
+            
             // Animation for the submit button
             const submitButton = this.querySelector('.submit-button');
             submitButton.innerHTML = '<span class="spinner"></span> שולח...';
@@ -204,11 +225,11 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Prepare the data
             const formData = {
-                name: this.querySelector('#name').value,
-                phone: this.querySelector('#phone').value,
-                email: this.querySelector('#email').value,
+                name: name,
+                phone: phone,
+                email: email,
                 callTime: selectedTimes,
-                notes: this.querySelector('#message').value
+                notes: message
             };
             
             try {
@@ -220,41 +241,24 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
                 
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                
                 const result = await response.json();
                 
                 if (result.status === 'success') {
-                    // Create and show a success message
-                    const successMessage = document.createElement('div');
-                    successMessage.className = 'success-message';
-                    successMessage.innerHTML = '<i class="fas fa-check-circle"></i> תודה! נציג שלנו יצור איתך קשר בהקדם.';
-                    this.parentNode.appendChild(successMessage);
-                    
-                    // Update button style
-                    submitButton.innerHTML = '<i class="fas fa-check"></i> נשלח בהצלחה!';
-                    submitButton.style.backgroundColor = '#4caf50';
-                    
-                    // Hide the form
-                    this.style.opacity = '0.5';
-                    this.style.pointerEvents = 'none';
-                    
-                    // Reset after a delay
-                    setTimeout(() => {
-                        this.reset();
-                        this.style.opacity = '1';
-                        this.style.pointerEvents = 'auto';
-                        submitButton.innerHTML = 'שלח פרטים';
-                        submitButton.disabled = false;
-                        submitButton.style.backgroundColor = '';
-                        successMessage.remove();
-                    }, 5000);
+                    showSuccess();
+                    this.reset();
                 } else {
                     throw new Error(result.message || 'שגיאה בשליחת הטופס');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                submitButton.innerHTML = 'שלח פרטים';
+                showError('אירעה שגיאה בשליחת הטופס. אנא נסה שוב מאוחר יותר.');
+            } finally {
                 submitButton.disabled = false;
-                alert('אירעה שגיאה בשליחת הטופס. אנא נסו שוב מאוחר יותר.');
+                submitButton.innerHTML = 'שלח פרטים';
             }
         });
         
@@ -271,6 +275,47 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         });
+    }
+    
+    function isValidEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    function showError(message) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+        
+        const form = document.getElementById('contactForm');
+        const existingError = form.querySelector('.error-message');
+        if (existingError) {
+            existingError.remove();
+        }
+        
+        form.parentNode.insertBefore(errorDiv, form);
+        
+        setTimeout(() => {
+            errorDiv.remove();
+        }, 5000);
+    }
+
+    function showSuccess() {
+        const successMessage = document.createElement('div');
+        successMessage.className = 'success-message';
+        successMessage.innerHTML = '<i class="fas fa-check-circle"></i> תודה! נציג שלנו יצור איתך קשר בהקדם.';
+        
+        const form = document.getElementById('contactForm');
+        form.parentNode.appendChild(successMessage);
+        
+        form.style.opacity = '0.5';
+        form.style.pointerEvents = 'none';
+        
+        setTimeout(() => {
+            form.style.opacity = '1';
+            form.style.pointerEvents = 'auto';
+            successMessage.remove();
+        }, 5000);
     }
     
     // Add animations to section titles when they enter viewport
