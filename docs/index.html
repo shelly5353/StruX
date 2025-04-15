@@ -769,10 +769,8 @@
             // שליחת נתוני הטופס לשרת
             fetch('https://script.google.com/macros/s/AKfycby4YbZxlGgwWyFLOKiiyiyRGsiDZDRUR8_kmn0FwVxnVvg_26I88FLpL-vpgJFfL0eU/exec', {
                 method: 'POST',
-                mode: 'cors',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData)
             })
