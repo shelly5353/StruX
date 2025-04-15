@@ -1,154 +1,178 @@
 // פונקציה ליצירת כותרות בגיליון
 function initializeSheet() {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  // יצירת כותרות בשורה הראשונה
-  sheet.getRange(1, 1, 1, 6).setValues([
-    ['שם מלא', 'טלפון נייד', 'מייל', 'מתי נוח לך שנתקשר?', 'הערות נוספות', 'תאריך ושעה']
-  ]);
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    // יצירת כותרות בשורה הראשונה
+    sheet.getRange(1, 1, 1, 6).setValues([
+      ['שם מלא', 'טלפון נייד', 'מייל', 'מתי נוח לך שנתקשר?', 'הערות נוספות', 'תאריך ושעה']
+    ]);
+    return true;
+  } catch (error) {
+    Logger.log('Error in initializeSheet: ' + error.toString());
+    return false;
+  }
 }
 
 // פונקציה לטיפול בבקשות GET
 function doGet(e) {
-  var output = ContentService.createTextOutput();
-  output.setMimeType(ContentService.MimeType.JSON);
-  output.setContent(JSON.stringify({
-    'status': 'success',
-    'message': 'הטופס מוכן לקבלת נתונים'
-  }));
-  
-  return output;
+  return ContentService.createTextOutput()
+    .setMimeType(ContentService.MimeType.JSON)
+    .setContent(JSON.stringify({
+      'status': 'success',
+      'message': 'הטופס מוכן לקבלת נתונים'
+    }));
 }
 
 // הפונקציה הראשית שמקבלת נתונים מהאתר
 function doPost(e) {
+  Logger.log("doPost function called");
+  Logger.log("Request data: " + JSON.stringify(e));
+  
   if (!e) {
-    var errorOutput = ContentService.createTextOutput();
-    errorOutput.setMimeType(ContentService.MimeType.JSON);
-    errorOutput.setContent(JSON.stringify({
-      'status': 'error',
-      'message': 'לא התקבלו נתונים'
-    }));
-    return errorOutput;
+    Logger.log("No event object received");
+    return ContentService.createTextOutput()
+      .setMimeType(ContentService.MimeType.JSON)
+      .setContent(JSON.stringify({
+        'status': 'error',
+        'message': 'לא התקבלו נתונים'
+      }));
   }
 
   // Handle JSON data
-  if (e.postData && e.postData.type === "application/json") {
-    try {
-      Logger.log("התקבלה בקשה חדשה");
-      
-      // בדיקה שהתקבלו נתונים
-      if (!e.postData.contents) {
-        throw new Error('לא התקבלו נתונים');
-      }
-
-      // המרת הנתונים שהתקבלו
-      var data = JSON.parse(e.postData.contents);
-      
-      // בדיקת תקינות הנתונים
-      if (!data.name || !data.phone || !data.email) {
-        throw new Error('חסרים שדות חובה');
-      }
-      
-      var timestamp = new Date();
-      
-      // קבלת הגיליון הפעיל
-      var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-      
-      // הוספת שורה חדשה עם הנתונים
-      var rowData = [
-        data.name,
-        data.phone,
-        data.email,
-        data.callTime || '',
-        data.notes || '',
-        timestamp
-      ];
-      
-      sheet.appendRow(rowData);
-      Logger.log('הנתונים נשמרו בהצלחה: ' + JSON.stringify(rowData));
-
-      var successOutput = ContentService.createTextOutput();
-      successOutput.setMimeType(ContentService.MimeType.JSON);
-      successOutput.setContent(JSON.stringify({
-        'status': 'success',
-        'message': 'הנתונים נשמרו בהצלחה'
-      }));
-      
-      return successOutput;
-
-    } catch (error) {
-      Logger.log('שגיאה: ' + error.toString());
-      var errorOutput = ContentService.createTextOutput();
-      errorOutput.setMimeType(ContentService.MimeType.JSON);
-      errorOutput.setContent(JSON.stringify({
-        'status': 'error',
-        'message': error.toString()
-      }));
-      
-      return errorOutput;
-    }
-  }
-  
-  // Handle form data
   try {
-    var data = {
-      name: e.parameter.name,
-      phone: e.parameter.phone,
-      email: e.parameter.email,
-      callTime: e.parameter.callTime || '',
-      notes: e.parameter.notes || ''
-    };
+    var jsonData;
+    
+    if (e.postData && e.postData.contents) {
+      Logger.log("Received postData.contents: " + e.postData.contents);
+      jsonData = JSON.parse(e.postData.contents);
+    } else if (e.parameter) {
+      Logger.log("Received parameters: " + JSON.stringify(e.parameter));
+      jsonData = e.parameter;
+    } else {
+      throw new Error('לא התקבלו נתונים בפורמט תקין');
+    }
     
     // בדיקת תקינות הנתונים
-    if (!data.name || !data.phone || !data.email) {
-      throw new Error('חסרים שדות חובה');
+    if (!jsonData.name || !jsonData.phone || !jsonData.email) {
+      Logger.log("Missing required fields: " + JSON.stringify(jsonData));
+      throw new Error('חסרים שדות חובה: שם, טלפון או אימייל');
     }
     
     var timestamp = new Date();
     
-    // קבלת הגיליון הפעיל
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    // נסיון לגשת לגיליון הפעיל
+    try {
+      var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+      Logger.log("Successfully accessed the sheet: " + sheet.getName());
+    } catch (sheetError) {
+      Logger.log("Error accessing sheet: " + sheetError.toString());
+      throw new Error('לא ניתן לגשת לגיליון הנתונים');
+    }
     
     // הוספת שורה חדשה עם הנתונים
     var rowData = [
-      data.name,
-      data.phone,
-      data.email,
-      data.callTime,
-      data.notes,
+      jsonData.name,
+      jsonData.phone,
+      jsonData.email,
+      jsonData.callTime || '',
+      jsonData.notes || '',
       timestamp
     ];
     
+    Logger.log("Attempting to append row: " + JSON.stringify(rowData));
     sheet.appendRow(rowData);
-    Logger.log('הנתונים נשמרו בהצלחה: ' + JSON.stringify(rowData));
-    
-    var successOutput = ContentService.createTextOutput();
-    successOutput.setMimeType(ContentService.MimeType.JSON);
-    successOutput.setContent(JSON.stringify({
-      'status': 'success',
-      'message': 'הנתונים נשמרו בהצלחה'
-    }));
-    
-    return successOutput;
-    
+    Logger.log('הנתונים נשמרו בהצלחה');
+
+    return ContentService.createTextOutput()
+      .setMimeType(ContentService.MimeType.JSON)
+      .setContent(JSON.stringify({
+        'status': 'success',
+        'message': 'הנתונים נשמרו בהצלחה'
+      }));
+
   } catch (error) {
-    Logger.log('שגיאה: ' + error.toString());
-    var errorOutput = ContentService.createTextOutput();
-    errorOutput.setMimeType(ContentService.MimeType.JSON);
-    errorOutput.setContent(JSON.stringify({
-      'status': 'error',
-      'message': error.toString()
-    }));
-    
-    return errorOutput;
+    Logger.log('Error in doPost: ' + error.toString());
+    Logger.log('Error stack: ' + error.stack);
+    return ContentService.createTextOutput()
+      .setMimeType(ContentService.MimeType.JSON)
+      .setContent(JSON.stringify({
+        'status': 'error',
+        'message': error.toString()
+      }));
   }
 }
 
 // פונקציה להגדרה ראשונית
 function setup() {
-  // יצירת הכותרות בגיליון
-  initializeSheet();
-  Logger.log('ההגדרה הראשונית הושלמה בהצלחה!');
+  try {
+    // יצירת הכותרות בגיליון
+    if (initializeSheet()) {
+      Logger.log('ההגדרה הראשונית הושלמה בהצלחה!');
+      return true;
+    } else {
+      Logger.log('שגיאה בהגדרה הראשונית');
+      return false;
+    }
+  } catch (error) {
+    Logger.log('Error in setup: ' + error.toString());
+    return false;
+  }
+}
+
+// פונקציה לבדיקת הגיליון והרשאות
+function checkSpreadsheet() {
+  try {
+    var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = spreadsheet.getActiveSheet();
+    var name = spreadsheet.getName();
+    var url = spreadsheet.getUrl();
+    var editors = spreadsheet.getEditors();
+    var viewers = spreadsheet.getViewers();
+    
+    Logger.log('Spreadsheet Name: ' + name);
+    Logger.log('Spreadsheet URL: ' + url);
+    Logger.log('Active Sheet Name: ' + sheet.getName());
+    
+    Logger.log('Editors:');
+    for (var i = 0; i < editors.length; i++) {
+      Logger.log(' - ' + editors[i].getEmail());
+    }
+    
+    Logger.log('Viewers:');
+    for (var i = 0; i < viewers.length; i++) {
+      Logger.log(' - ' + viewers[i].getEmail());
+    }
+    
+    // נסיון לכתוב שורה לגיליון כדי לבדוק הרשאות
+    var testRow = ['TEST', 'TEST', 'TEST', 'TEST', 'TEST', new Date()];
+    sheet.appendRow(testRow);
+    Logger.log('Successfully wrote test row to sheet');
+    
+    // מחיקת שורת הבדיקה
+    var lastRow = sheet.getLastRow();
+    sheet.deleteRow(lastRow);
+    Logger.log('Successfully deleted test row from sheet');
+    
+    return {
+      status: 'success',
+      name: name,
+      url: url,
+      sheetName: sheet.getName()
+    };
+  } catch (error) {
+    Logger.log('Error in checkSpreadsheet: ' + error.toString());
+    return {
+      status: 'error',
+      message: error.toString()
+    };
+  }
+}
+
+// פונקציה לטיפול בשגיאות ולבדיקת הרשאות
+function testPermissions() {
+  var result = checkSpreadsheet();
+  Logger.log('Test result: ' + JSON.stringify(result));
+  return result;
 }
 
 function onFormSubmit(e) {
