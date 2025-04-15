@@ -27,6 +27,12 @@ function doGet(e) {
 function doPost(e) {
   Logger.log("doPost function called");
   
+  // טיפול בבקשת preflight
+  if (e && e.parameter && e.parameter.method === 'OPTIONS') {
+    return ContentService.createTextOutput(JSON.stringify({}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  
   // בדיקה אם יש נתונים
   if (!e || !e.postData) {
     Logger.log("No post data received");

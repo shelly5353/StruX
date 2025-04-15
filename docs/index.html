@@ -463,7 +463,7 @@
                         <div class="carousel-item">
                             <div class="company-card">
                                 <div class="company-logo">
-                                    <img src="./logo/strux_logo_design_pre_v4_export_10.png" alt="לוגו חברה 3" class="img-fluid">
+                                    <img src="./logo/strux_logo_design_pre_v4_export_20.png" alt="לוגו חברה 3" class="img-fluid">
                                 </div>
                                 <h3 class="company-name">אנרגיה אורבנית</h3>
                                 <p class="company-description">פתרונות אנרגיה חכמים ומתחדשים לבניינים משותפים. התקנת מערכות סולאריות, אגירת אנרגיה וייעול צריכת החשמל בשטחים המשותפים להפחתת עלויות.</p>
@@ -755,14 +755,46 @@
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Get form data
-            const formData = new FormData(this);
+            // קבלת נתוני הטופס
+            const formData = {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                callTime: Array.from(document.querySelectorAll('input[name="call_time[]"]:checked'))
+                    .map(checkbox => checkbox.value)
+                    .join(', '),
+                notes: document.getElementById('message').value
+            };
             
-            // Send form data to server
-            fetch('/submit-form', {
+            // שליחת נתוני הטופס לשרת
+            fetch('https://script.google.com/macros/s/AKfycby4YbZxlGgwWyFLOKiiyiyRGsiDZDRUR8_kmn0FwVxnVvg_26I88FLpL-vpgJFfL0eU/exec', {
                 method: 'POST',
-                body: formData
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(formData)
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('הטופס נשלח בהצלחה!');
+                    this.reset();
+                } else {
+                    alert('אירעה שגיאה בשליחת הטופס: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('אירעה שגיאה בשליחת הטופס. אנא נסה שוב.');
+            });
+        });
+        </script>
     </body>
 </html>

@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             
             try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbw1yKOgJtKCFxHFSqJd41DWV2l1CPwSOYHpbhrg3wGF57nmRaCNllhr-9X0NvTElc1Y/exec', {
+                const response = await fetch('https://script.google.com/macros/s/AKfycby4YbZxlGgwWyFLOKiiyiyRGsiDZDRUR8_kmn0FwVxnVvg_26I88FLpL-vpgJFfL0eU/exec', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
