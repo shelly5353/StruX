@@ -3,8 +3,8 @@ function initializeSheet() {
   try {
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
     // יצירת כותרות בשורה הראשונה
-    sheet.getRange(1, 1, 1, 6).setValues([
-      ['שם מלא', 'טלפון נייד', 'מייל', 'מתי נוח לך שנתקשר?', 'הערות נוספות', 'תאריך ושעה']
+    sheet.getRange(1, 1, 1, 7).setValues([
+      ['שם מלא', 'טלפון נייד', 'מייל', 'מתי נוח לך שנתקשר?', 'הערות נוספות', 'תאריך ושעה', 'סטטוס טיפול']
     ]);
     
     // עיצוב הגיליון
@@ -13,9 +13,53 @@ function initializeSheet() {
     // הגדרת פורמט תאריך לעמודה האחרונה
     sheet.getRange(2, 6, 100, 1).setNumberFormat('dd/MM/yyyy HH:mm:ss');
     
+    // יצירת רשימה נפתחת עבור עמודת הסטטוס
+    createStatusDropdown(sheet);
+    
     return true;
   } catch (error) {
     Logger.log('Error in initializeSheet: ' + error.toString());
+    return false;
+  }
+}
+
+// פונקציה ליצירת רשימה נפתחת לעמודת סטטוס
+function createStatusDropdown(sheet) {
+  try {
+    // יצירת כלל אימות עבור רשימה נפתחת
+    var rule = SpreadsheetApp.newDataValidation()
+      .requireValueInList(['בהמתנה', 'בטיפול', 'טופל', 'לא רלוונטי'], true)
+      .setAllowInvalid(false)
+      .build();
+    
+    // קבלת מספר השורות
+    var lastRow = sheet.getLastRow();
+    var rowsToAdd = Math.max(100, lastRow - 1);
+    
+    // החלת הכלל על עמודת הסטטוס (עמודה 7)
+    sheet.getRange(2, 7, rowsToAdd, 1).setDataValidation(rule);
+    
+    // הגדרת ערך ברירת מחדל "בהמתנה" לכל השורות החדשות
+    if (lastRow > 1) {
+      var statusRange = sheet.getRange(2, 7, lastRow - 1, 1);
+      var currentValues = statusRange.getValues();
+      
+      var needsUpdate = false;
+      for (var i = 0; i < currentValues.length; i++) {
+        if (!currentValues[i][0]) {
+          currentValues[i][0] = 'בהמתנה';
+          needsUpdate = true;
+        }
+      }
+      
+      if (needsUpdate) {
+        statusRange.setValues(currentValues);
+      }
+    }
+    
+    return true;
+  } catch (error) {
+    Logger.log('Error in createStatusDropdown: ' + error.toString());
     return false;
   }
 }
@@ -129,7 +173,8 @@ function doPost(e) {
       jsonData.email,
       jsonData.callTime || '',
       jsonData.notes || '',
-      timestamp
+      timestamp,
+      'בהמתנה' // ערך ברירת מחדל לעמודת הסטטוס
     ];
     
     Logger.log("Attempting to append row: " + JSON.stringify(rowData));
@@ -138,6 +183,9 @@ function doPost(e) {
     
     // עיצוב הגיליון לאחר הוספת הנתונים
     formatSheet(sheet);
+    
+    // עדכון הרשימה הנפתחת עבור עמודת הסטטוס
+    createStatusDropdown(sheet);
 
     // החזרת תשובת הצלחה בפורמט JSON
     return ContentService.createTextOutput(JSON.stringify({"status": "success"}))
@@ -370,13 +418,67 @@ function formatDateTimeColumn() {
   }
 }
 
-// פונקציה לביצוע כל פעולות העיצוב יחד
+// פונקציה להוספת עמודת סטטוס לגיליון קיים
+function addStatusColumn() {
+  try {
+    var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = spreadsheet.getSheetByName('טופס יצירת קשר');
+    
+    if (!sheet) {
+      Logger.log('הגיליון "טופס יצירת קשר" לא נמצא');
+      return {
+        status: 'error',
+        message: 'הגיליון "טופס יצירת קשר" לא נמצא'
+      };
+    }
+    
+    // בדיקה אם כבר יש 7 עמודות
+    var lastColumn = sheet.getLastColumn();
+    
+    if (lastColumn < 7) {
+      // הוספת כותרת "סטטוס טיפול" לתא G1
+      sheet.getRange(1, 7).setValue('סטטוס טיפול');
+      
+      // עיצוב הכותרת
+      var headerCell = sheet.getRange(1, 7);
+      headerCell.setBackground('#1e73be');
+      headerCell.setFontColor('#ffffff');
+      headerCell.setFontWeight('bold');
+      headerCell.setFontFamily('Heebo');
+      headerCell.setFontSize(12);
+      headerCell.setHorizontalAlignment('center');
+      headerCell.setBorder(true, true, true, true, null, null, '#000000', SpreadsheetApp.BorderStyle.SOLID);
+    }
+    
+    // יצירת רשימה נפתחת עבור עמודת הסטטוס
+    createStatusDropdown(sheet);
+    
+    // עיצוב מחדש של הגיליון
+    formatSheet(sheet);
+    
+    return {
+      status: 'success',
+      message: 'עמודת סטטוס נוספה בהצלחה'
+    };
+  } catch (error) {
+    Logger.log('Error in addStatusColumn: ' + error.toString());
+    return {
+      status: 'error',
+      message: error.toString()
+    };
+  }
+}
+
+// עדכון הפונקציה לביצוע כל פעולות העיצוב יחד
 function beautifySheet() {
   var result = formatExistingSheet();
   Logger.log(result.message);
   
   var dateResult = formatDateTimeColumn();
   Logger.log(dateResult.message);
+  
+  var statusResult = addStatusColumn();
+  Logger.log(statusResult.message);
   
   return {
     status: 'success',
