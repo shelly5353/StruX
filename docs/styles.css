@@ -593,10 +593,11 @@ body:not(.high-contrast):not(.gray-scale) .logo {
 
 .option-controls {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
     gap: 8px;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
+    width: 100%;
 }
 
 .option-controls button {
@@ -604,32 +605,84 @@ body:not(.high-contrast):not(.gray-scale) .logo {
     width: 100%;
 }
 
-/* סידור מיוחד לכפתורי גודל טקסט */
+/* Special layout for text size controls */
+.accessibility-group:has(#decreaseText) .option-controls {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+/* Set specific width for text size buttons */
 .option-controls #decreaseText,
 .option-controls #increaseText {
-    grid-column: auto;
-    width: 100%;
-    min-width: 80px;
-    height: 36px;
-    padding: 8px 14px;
-    font-size: 0.95rem;
+    width: 45px;
+    min-width: 45px;
+    max-width: 45px;
+    margin: 0;
 }
 
-/* סידור מיוחד לכפתור סמן */
-.option-controls #increaseCursor {
-    grid-column: span 3;
-    width: 100%;
-    height: 36px;
-    padding: 8px 14px;
-    font-size: 0.95rem;
-}
-
-/* סידור מיוחד לכפתורי ניגודיות וגווני אפור */
+/* All other buttons remain full width */
+.option-controls #increaseCursor,
 .option-controls #highContrast,
 .option-controls #grayScale,
 .option-controls #disableAnimations {
-    grid-column: span 3;
+    grid-column: 1 / -1;
+}
+
+/* סידור מיוחד לכפתורי גודל טקסט */
+.option-controls #decreaseText,
+.option-controls #increaseText,
+.option-controls #increaseCursor,
+.option-controls #highContrast,
+.option-controls #grayScale,
+.option-controls #disableAnimations {
     width: 100%;
+    height: 40px;
+    font-size: 1.1rem;
+    font-weight: normal;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    color: var(--text-color);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.option-controls #decreaseText:hover,
+.option-controls #increaseText:hover,
+.option-controls #increaseCursor:hover,
+.option-controls #highContrast:hover,
+.option-controls #grayScale:hover,
+.option-controls #disableAnimations:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    background: var(--light-bg);
+}
+
+.option-controls #decreaseText:disabled,
+.option-controls #increaseText:disabled,
+.option-controls #increaseCursor:disabled,
+.option-controls #highContrast:disabled,
+.option-controls #grayScale:disabled,
+.option-controls #disableAnimations:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.option-controls #decreaseText.active,
+.option-controls #increaseText.active,
+.option-controls #increaseCursor.active,
+.option-controls #highContrast.active,
+.option-controls #grayScale.active,
+.option-controls #disableAnimations.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
 }
 
 /* סידור מיוחד לכפתור איפוס */
@@ -699,9 +752,7 @@ body:not(.high-contrast):not(.gray-scale) .logo {
 
 /* צבעים וניגודיות - סידור מיוחד */
 .accessibility-group:has(#highContrast) .option-controls {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+    grid-template-columns: 1fr;
 }
 
 .accessibility-group:has(#highContrast) .option-controls .reset-btn {
@@ -3681,4 +3732,22 @@ html.high-contrast .shadow-lg {
         padding: 6px 0;
         font-size: 0.9rem;
     }
+}
+
+/* Text size controls container */
+.text-size-controls {
+    display: flex;
+    gap: 8px;
+    grid-column: 1 / -1;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+/* Set specific width for text size buttons */
+.option-controls #decreaseText,
+.option-controls #increaseText {
+    width: 45px;
+    min-width: 45px;
+    max-width: 45px;
+    margin: 0;
 }
