@@ -144,6 +144,7 @@ header {
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
+/* בסיס הלוגו */
 .logo {
     height: 60px;
     width: auto;
@@ -154,6 +155,58 @@ header {
     backface-visibility: hidden;
     position: relative;
     z-index: 1002;
+    filter: none !important;
+}
+
+/* מצבי נגישות */
+body.high-contrast {
+    filter: invert(100%) hue-rotate(180deg);
+}
+
+body.gray-scale {
+    filter: grayscale(100%);
+}
+
+/* טיפול בלוגו במצבי נגישות */
+body.high-contrast img:not(.logo) {
+    filter: invert(100%) hue-rotate(180deg);
+}
+
+body.gray-scale img:not(.logo) {
+    filter: grayscale(100%);
+}
+
+/* הגדרות ספציפיות ללוגו */
+.logo {
+    filter: none !important;
+}
+
+body.high-contrast .logo {
+    filter: none !important;
+}
+
+body.gray-scale .logo {
+    filter: none !important;
+}
+
+/* מוודא שאין פילטרים נוספים */
+.logo-container .logo,
+.header-container .logo,
+header .logo {
+    filter: none !important;
+}
+
+/* מבטל הגדרות קודמות */
+html.high-contrast .logo,
+body.high-contrast img.logo,
+body.high-contrast .logo,
+body.high-contrast [style*="background-image"] .logo {
+    filter: none !important;
+}
+
+/* מוודא שאין פילטרים בכל מצב */
+body:not(.high-contrast):not(.gray-scale) .logo {
+    filter: none !important;
 }
 
 .logo-text {
@@ -174,12 +227,19 @@ header {
     font-family: var(--body-font);
 }
 
-.toc-button {
+.buttons-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-right: 12px;
+}
+
+.toc-button, .accessibility-toggle {
+    width: 45px;
+    height: 45px;
     background: var(--gradient-primary);
     color: #ffffff;
     border: none;
-    width: 50px;
-    height: 50px;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
@@ -188,132 +248,841 @@ header {
     transition: var(--transition-base);
     padding: 0;
     position: relative;
-    margin-right: 15px;
     z-index: 1001;
-    margin-left: auto;
     box-shadow: var(--shadow-md);
-    overflow: hidden;
-    font-family: var(--button-font);
-    font-weight: 500;
-    font-size: 1.4rem;
-    line-height: 1;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-    letter-spacing: -0.5px;
 }
 
-.toc-button:hover {
+.toc-button:hover, .accessibility-toggle:hover {
     transform: translateY(-3px) scale(1.1);
     box-shadow: var(--shadow-lg);
 }
 
-.toc-button:hover .menu-icon {
-    transform: scale(1.1);
-}
-
-.toc-button:active {
+.toc-button:active, .accessibility-toggle:active {
     transform: translateY(1px);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.toc-button i {
+.toc-button i, .accessibility-toggle i {
+    display: inline-block;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: white;
+}
+
+/* Remove the old menu-icon styles since we're now using Font Awesome */
+.menu-icon {
     display: none;
 }
 
-.menu-icon {
+.accessibility-toggle i {
     display: inline-block;
-    font-family: Arial, sans-serif;
-    font-size: 26px;
-    font-weight: 600;
+    font-size: 1.6rem;
     line-height: 1;
-    color: white;
-    margin-top: -2px;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 .toc-modal {
-    display: none;
     position: fixed;
-    top: 80px;
+    top: 90px;
     right: 60px;
-    width: 250px;
-    background-color: #ffffff;
-    box-shadow: var(--shadow-lg);
+    width: 280px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 0;
+    transform: translateX(110%);
+    transition: var(--transition-smooth);
     z-index: 1001;
-    transform: translateX(100%);
-    transition: var(--transition-base);
-    border-radius: 15px;
-    overflow: hidden;
-    border: 1px solid rgba(0,0,0,0.1);
+    opacity: 0;
+    visibility: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    pointer-events: none;
 }
 
 .toc-modal.active {
-    display: block;
     transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
 }
 
 .toc-header {
-    background-color: var(--primary-color);
-    color: var(--white);
-    padding: 15px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 8px;
+    padding: 16px 20px 10px 20px;
+    border-bottom: 2px solid var(--light-bg);
+    position: relative;
 }
 
-.toc-header h3 {
+.toc-header::before {
+    content: 'ניווט באתר';
     margin: 0;
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    font-weight: 700;
+    font-family: var(--heading-font);
 }
 
 .toc-close-button {
-    background: none;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
     border: none;
-    color: var(--white);
-    font-size: 1.5rem;
+    color: #888;
+    font-size: 18px;
     cursor: pointer;
     padding: 5px;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: opacity 0.3s ease;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
 }
 
 .toc-close-button:hover {
-    opacity: 0.8;
+    color: var(--primary-color);
+    background: var(--light-bg);
+    transform: translateY(-50%) rotate(90deg);
+}
+
+.toc-close-button .icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
 }
 
 .toc-list {
-    padding: 20px;
-    max-height: 70vh;
+    padding: 0 16px 16px 16px;
+    max-height: calc(90vh - 180px);
     overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) #f0f0f0;
+}
+
+.toc-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.toc-list::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 3px;
+}
+
+.toc-list::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 3px;
 }
 
 .toc-list ul {
     padding: 0;
+    margin: 0;
     list-style: none;
 }
 
 .toc-list ul li {
-    margin-bottom: 5px;
+    margin-bottom: 6px;
 }
 
 .toc-list ul li a {
-    display: block;
-    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
     color: var(--text-color);
     text-decoration: none;
     font-weight: 500;
-    font-size: 18px;
-    transition: var(--transition-base);
+    font-size: 1rem;
+    font-family: var(--heading-font);
+    transition: all 0.3s ease;
     border-radius: 8px;
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid transparent;
 }
 
 .toc-list ul li a:hover {
     background: var(--light-bg);
     color: var(--primary-color);
     transform: translateX(5px);
+    border-color: rgba(31, 58, 147, 0.1);
+}
+
+.toc-list ul li a::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    margin-left: 8px;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.toc-list ul li a:hover::before {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+    .toc-modal {
+        top: 80px;
+        right: 20px;
+        width: calc(100% - 40px);
+        max-width: 320px;
+    }
+
+    .toc-header {
+        padding: 14px 20px;
+    }
+
+    .toc-header h3 {
+        font-size: 1.1rem;
+    }
+
+    .toc-list {
+        padding: 12px;
+    }
+
+    .toc-list ul li a {
+        padding: 10px 14px;
+        font-size: 0.95rem;
+    }
+}
+
+/* סרגל נגישות */
+.accessibility-bar {
+    position: relative;
+    z-index: 9990;
+    font-family: var(--body-font);
+    margin-right: 15px;
+}
+
+.accessibility-toggle {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-base);
+    position: relative;
+    z-index: 9995;
+}
+
+.accessibility-toggle:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: var(--shadow-lg);
+}
+
+.accessibility-toggle .icon {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+}
+
+.accessibility-panel {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 280px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 16px;
+    transform: translateX(110%);
+    transition: var(--transition-smooth);
+    z-index: 9990;
+    opacity: 0;
+    visibility: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.accessibility-bar.active .accessibility-panel {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.accessibility-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--light-bg);
+    position: relative;
+}
+
+.accessibility-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    font-weight: 700;
+    font-family: var(--heading-font);
+}
+
+.close-accessibility {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #888;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 5px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.close-accessibility:hover {
+    color: var(--primary-color);
+    background: var(--light-bg);
+    transform: translateY(-50%) rotate(90deg);
+}
+
+.close-accessibility .icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+.accessibility-content {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.accessibility-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+    background: var(--light-bg);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.accessibility-group:hover {
+    background: #e8eeff;
+}
+
+.option-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+    font-family: var(--heading-font);
+    margin-bottom: 4px;
+}
+
+.option-controls {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.option-controls button {
+    flex: 0 0 auto;
+    width: 100%;
+}
+
+/* סידור מיוחד לכפתורי גודל טקסט */
+.option-controls #decreaseText,
+.option-controls #increaseText {
+    grid-column: auto;
+    width: 100%;
+    min-width: 80px;
+    height: 36px;
+    padding: 8px 14px;
+    font-size: 0.95rem;
+}
+
+/* סידור מיוחד לכפתור סמן */
+.option-controls #increaseCursor {
+    grid-column: span 3;
+    width: 100%;
+    height: 36px;
+    padding: 8px 14px;
+    font-size: 0.95rem;
+}
+
+/* סידור מיוחד לכפתורי ניגודיות וגווני אפור */
+.option-controls #highContrast,
+.option-controls #grayScale,
+.option-controls #disableAnimations {
+    grid-column: span 3;
+    width: 100%;
+}
+
+/* סידור מיוחד לכפתור איפוס */
+.option-controls .reset-btn {
+    grid-column: span 3;
+    width: 80%;
+    margin: 4px auto 0;
+    justify-self: center;
+}
+
+/* הקראת טקסט - סידור מיוחד */
+.accessibility-group:has(#textToSpeech) .option-controls {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.accessibility-group:has(#textToSpeech) .option-controls button {
+    justify-self: center;
+    width: 100%;
+    min-width: unset;
+    height: 36px;
+}
+
+.accessibility-group:has(#textToSpeech) .option-controls #textToSpeech {
+    grid-column: 1 / -1;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.accessibility-group:has(#textToSpeech) .option-controls #decreaseSpeed,
+.accessibility-group:has(#textToSpeech) .option-controls #increaseSpeed {
+    width: 100%;
+    padding: 8px 0;
+}
+
+.accessibility-group:has(#textToSpeech) #speedDisplay {
+    text-align: center;
+    justify-self: center;
+    width: 100%;
+    padding: 8px 0;
+    background: #ffffff;
+    border-radius: 8px;
+    font-family: var(--heading-font);
+    font-size: 0.95rem;
+    color: var(--text-color);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* התאמה למסכים קטנים */
+@media (max-width: 768px) {
+    .accessibility-group:has(#textToSpeech) .option-controls {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+    }
+    
+    .accessibility-group:has(#textToSpeech) #speedDisplay {
+        padding: 6px 0;
+        font-size: 0.9rem;
+    }
+}
+
+/* צבעים וניגודיות - סידור מיוחד */
+.accessibility-group:has(#highContrast) .option-controls {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.accessibility-group:has(#highContrast) .option-controls .reset-btn {
+    grid-column: 1 / -1;
+    margin-top: 4px;
+}
+
+/* עיצוב כפתורים */
+.accessibility-btn {
+    padding: 8px 14px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    min-width: 45px;
+    height: 36px;
+    font-family: var(--heading-font);
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    width: 100%;
+}
+
+.accessibility-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.accessibility-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.accessibility-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.reset-btn {
+    background-color: #fff0f0;
+    color: #dc3545;
+    border-color: rgba(220, 53, 69, 0.2);
+    width: 100%;
+    margin-top: 5px;
+}
+
+.reset-btn:hover {
+    background-color: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
+
+#speedDisplay {
+    background: #ffffff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-family: var(--heading-font);
+    font-size: 0.95rem;
+    color: var(--text-color);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    min-width: 60px;
+    display: inline-block;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* התאמה למסכים קטנים */
+@media (max-width: 768px) {
+    .accessibility-panel {
+        width: 260px;
+        padding: 14px;
+        right: -10px;
+    }
+    
+    .accessibility-group {
+        padding: 8px;
+    }
+    
+    .accessibility-btn {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+        min-width: 40px;
+    }
+    
+    .option-title {
+        font-size: 0.9rem;
+    }
+    
+    #speedDisplay {
+        padding: 6px 10px;
+        min-width: 50px;
+        font-size: 0.9rem;
+    }
+}
+
+/* מצבי נגישות */
+body.text-large {
+    font-size: 1.2rem;
+}
+
+body.text-larger {
+    font-size: 1.4rem;
+}
+
+/* תיקון מצב ניגודיות גבוהה - גרסה משופרת */
+body.high-contrast {
+    filter: invert(100%) hue-rotate(180deg);
+}
+
+body.high-contrast .logo {
+    filter: invert(100%) hue-rotate(180deg) !important;
+}
+
+body.gray-scale {
+    filter: grayscale(100%);
+}
+
+body.gray-scale .logo {
+    filter: grayscale(100%) !important;
+}
+
+/* איפוס פילטרים */
+body:not(.high-contrast):not(.gray-scale) {
+    filter: none;
+}
+
+body:not(.high-contrast):not(.gray-scale) .logo {
+    filter: none !important;
+}
+
+/* מתקן את התמונות שהתהפכו בגלל הפילטר הכללי */
+body.high-contrast img,
+body.high-contrast video,
+body.high-contrast [style*="background-image"] {
+    filter: invert(100%) hue-rotate(180deg) !important;
+}
+
+/* מתקן את הצבעים של האייקונים */
+body.high-contrast .service-icon,
+body.high-contrast .benefit-icon,
+body.high-contrast .fa,
+body.high-contrast .fas,
+body.high-contrast .far,
+body.high-contrast .fab {
+    filter: invert(80%) sepia(50%) saturate(500%) hue-rotate(360deg) brightness(110%) !important;
+}
+
+/* מתקן את הצבעים של הכפתורים */
+body.high-contrast .btn,
+body.high-contrast .btn-hero,
+body.high-contrast .btn-light,
+body.high-contrast button:not(.accessibility-btn),
+body.high-contrast .submit-button {
+    filter: invert(20%) sepia(50%) saturate(500%) hue-rotate(180deg) !important;
+}
+
+/* מתקן את הצבעים של הכותרות */
+body.high-contrast h1,
+body.high-contrast h2,
+body.high-contrast h3,
+body.high-contrast h4,
+body.high-contrast h5,
+body.high-contrast h6,
+body.high-contrast .section-title {
+    filter: invert(80%) sepia(50%) saturate(500%) hue-rotate(360deg) brightness(110%) !important;
+}
+
+/* שומר על האנימציות */
+body.high-contrast * {
+    transition: all 0.3s ease !important;
+}
+
+/* מתקן את הצבעים של הקישורים */
+body.high-contrast a {
+    filter: invert(80%) sepia(50%) saturate(500%) hue-rotate(360deg) brightness(110%) !important;
+    text-decoration: underline !important;
+}
+
+/* מתקן את הצבעים של הטקסט המודגש */
+body.high-contrast strong,
+body.high-contrast b,
+body.high-contrast .highlight {
+    filter: invert(80%) sepia(50%) saturate(500%) hue-rotate(180deg) brightness(110%) !important;
+}
+
+/* כותרות */
+body.high-contrast h1,
+body.high-contrast h2,
+body.high-contrast h3,
+body.high-contrast h4,
+body.high-contrast h5,
+body.high-contrast h6,
+body.high-contrast .section-title {
+    color: #FFD700 !important;
+    text-shadow: none !important;
+}
+
+/* אייקונים */
+body.high-contrast .service-icon,
+body.high-contrast .benefit-icon,
+body.high-contrast .fa,
+body.high-contrast .fas,
+body.high-contrast .far,
+body.high-contrast .fab {
+    color: #FFFF00 !important;
+}
+
+/* כפתורים */
+body.high-contrast .btn,
+body.high-contrast .btn-hero,
+body.high-contrast .btn-light,
+body.high-contrast button:not(.accessibility-btn),
+body.high-contrast .submit-button {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    border: 2px solid #FFD700 !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+body.high-contrast .btn:hover,
+body.high-contrast .btn-hero:hover,
+body.high-contrast .btn-light:hover,
+body.high-contrast button:not(.accessibility-btn):hover,
+body.high-contrast .submit-button:hover {
+    background-color: #FFD700 !important;
+    color: #000000 !important;
+    transform: translateY(-3px) !important;
+}
+
+/* כרטיסים */
+body.high-contrast .service-card,
+body.high-contrast .benefit-card,
+body.high-contrast .carousel-card,
+body.high-contrast .company-card {
+    background-color: #1A1A1A !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFD700 !important;
+    box-shadow: none !important;
+}
+
+/* טקסט בכרטיסים */
+body.high-contrast .service-card p,
+body.high-contrast .benefit-card p,
+body.high-contrast .carousel-card p,
+body.high-contrast .company-description {
+    color: #FFFFFF !important;
+}
+
+/* רקעים */
+body.high-contrast .hero,
+body.high-contrast .services,
+body.high-contrast .benefits,
+body.high-contrast .transparency,
+body.high-contrast .contact,
+body.high-contrast footer {
+    background: #1A1A1A !important;
+    border-color: #FFD700 !important;
+}
+
+/* שדות טופס */
+body.high-contrast input,
+body.high-contrast textarea,
+body.high-contrast select {
+    background-color: #1A1A1A !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFD700 !important;
+}
+
+body.high-contrast input:focus,
+body.high-contrast textarea:focus,
+body.high-contrast select:focus {
+    outline: 2px solid #FFFF00 !important;
+}
+
+/* קישורים */
+body.high-contrast a {
+    color: #FFD700 !important;
+    text-decoration: underline !important;
+}
+
+body.high-contrast a:hover {
+    color: #FFFF00 !important;
+}
+
+/* תמונות */
+body.high-contrast img {
+    filter: contrast(1.2) !important;
+    opacity: 1 !important;
+}
+
+/* תיקון צבעי רקע לתמונות רקע */
+body.high-contrast [style*="background-image"] {
+    filter: contrast(1.2) !important;
+}
+
+/* סרגל נגישות */
+body.high-contrast .accessibility-panel {
+    background-color: #1A1A1A !important;
+    border: 2px solid #FFD700 !important;
+}
+
+body.high-contrast .accessibility-btn {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFD700 !important;
+}
+
+body.high-contrast .accessibility-btn.active {
+    background-color: #FFD700 !important;
+    color: #000000 !important;
+}
+
+/* טקסט מודגש */
+body.high-contrast strong,
+body.high-contrast b,
+body.high-contrast .highlight {
+    color: #00FFFF !important;
+}
+
+/* תפריט ניווט */
+body.high-contrast .toc-modal {
+    background-color: #000000 !important;
+    border: 2px solid #FFD700 !important;
+}
+
+body.high-contrast .toc-list a {
+    color: #FFFFFF !important;
+}
+
+body.high-contrast .toc-list a:hover {
+    background-color: #FFD700 !important;
+    color: #000000 !important;
+}
+
+/* פופאפ */
+body.high-contrast .popup-container {
+    background-color: #000000 !important;
+    border: 2px solid #FFD700 !important;
+}
+
+body.high-contrast .popup-title {
+    color: #FFD700 !important;
+}
+
+body.high-contrast .popup-text {
+    color: #FFFFFF !important;
+}
+
+/* מונע שינוי צבע בהנפשות */
+body.high-contrast * {
+    animation: none !important;
+    transition: none !important;
+}
+
+body.gray-scale {
+    filter: grayscale(100%);
+}
+
+/* התאמה למסכים קטנים */
+@media (max-width: 768px) {
+    .accessibility-bar {
+        top: 80px;
+        right: 10px;
+    }
+    .accessibility-toggle {
+        width: 45px;
+        height: 45px;
+        font-size: 1.6rem;
+    }
+    .accessibility-panel {
+        width: 260px;
+    }
 }
 
 /* Hero Section */
@@ -2742,4 +3511,174 @@ body::after {
 .company-card:hover {
     /* ביטול אפקט ריחוף של כל הכרטיס */
     transform: none;
+}
+
+.accessibility-group #speedDisplay {
+    font-family: var(--body-font);
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin: 0 8px;
+    min-width: 45px;
+    display: inline-block;
+    text-align: center;
+}
+
+body.high-contrast .accessibility-group #speedDisplay {
+    color: #FFFFFF !important;
+}
+
+/* הגדלת סמן */
+body.large-cursor * {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewport="0 0 32 32" style="fill:black;stroke:white;stroke-width:2"><circle cx="16" cy="16" r="14"/></svg>') 16 16, pointer !important;
+}
+
+body.large-cursor input,
+body.large-cursor textarea,
+body.large-cursor select {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewport="0 0 32 32" style="fill:black;stroke:white;stroke-width:2"><circle cx="16" cy="16" r="14"/></svg>') 16 16, text !important;
+}
+
+/* ביטול הנפשות */
+body.no-animations * {
+    animation: none !important;
+    transition: none !important;
+}
+
+body.no-animations .service-card:hover,
+body.no-animations .benefit-card:hover,
+body.no-animations .btn:hover,
+body.no-animations .accessibility-btn:hover,
+body.no-animations .toc-button:hover {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+body.no-animations .hero-image {
+    animation: none !important;
+}
+
+body.no-animations .popup-container {
+    transform: none !important;
+    transition: none !important;
+}
+
+body.no-animations .popup-icon {
+    animation: none !important;
+}
+
+body.no-animations .carousel-item {
+    transition: none !important;
+}
+
+body.no-animations .section-title::after {
+    animation: none !important;
+}
+
+body.no-animations .company-logo a:hover,
+body.no-animations .company-name a:hover {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+body.no-animations .backToTopBtn {
+    transition: none !important;
+}
+
+body.no-animations .error-message,
+body.no-animations .success-message {
+    animation: none !important;
+}
+
+body.no-animations .spinner {
+    animation: none !important;
+}
+
+body.no-animations .input-focused label {
+    transition: none !important;
+}
+
+body.no-animations .section-highlight {
+    animation: none !important;
+}
+
+body.no-animations .animate-title {
+    animation: none !important;
+}
+
+body.no-animations .animate-text {
+    animation: none !important;
+}
+
+body.no-animations .pulse-animation {
+    animation: none !important;
+}
+
+/* לוגו */
+body.high-contrast .logo {
+    filter: contrast(1.2) !important;
+    opacity: 1 !important;
+}
+
+/* סוף הגדרות ניגודיות */
+
+/* תיקון מצב ניגודיות גבוהה - גרסה משופרת */
+html.high-contrast {
+    filter: invert(100%) hue-rotate(180deg) !important;
+    background: #fff !important;
+}
+
+html.high-contrast body {
+    background: #fff !important;
+}
+
+/* מתקן את התמונות שהתהפכו בגלל הפילטר הכללי */
+html.high-contrast img:not(.logo),
+html.high-contrast video,
+html.high-contrast iframe,
+html.high-contrast [style*="background-image"],
+html.high-contrast .hero-image {
+    filter: invert(100%) hue-rotate(180deg) !important;
+}
+
+/* שומר על האנימציות */
+html.high-contrast * {
+    transition: all 0.3s ease !important;
+}
+
+/* מתקן את הצבעים של הכפתורים */
+html.high-contrast .btn:hover,
+html.high-contrast .btn-hero:hover,
+html.high-contrast .btn-light:hover,
+html.high-contrast button:not(.accessibility-btn):hover,
+html.high-contrast .submit-button:hover {
+    transform: translateY(-3px) !important;
+}
+
+/* מתקן את הצבעים של הקישורים */
+html.high-contrast a {
+    text-decoration: underline !important;
+}
+
+/* מתקן את הצבעים של הפופאפ */
+html.high-contrast .popup-overlay {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* מתקן את הצללים */
+html.high-contrast .shadow-sm,
+html.high-contrast .shadow-md,
+html.high-contrast .shadow-lg {
+    box-shadow: none !important;
+}
+
+/* התאמה למסכים קטנים */
+@media (max-width: 768px) {
+    .accessibility-group:has(#textToSpeech) .option-controls {
+        grid-template-columns: 1fr 1fr 80px 1fr;
+    }
+    
+    .accessibility-group:has(#textToSpeech) #speedDisplay {
+        padding: 6px 0;
+        font-size: 0.9rem;
+    }
 }
