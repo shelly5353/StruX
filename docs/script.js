@@ -53,6 +53,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const isExpanded = accessibilityToggle.getAttribute('aria-expanded') === 'true';
             accessibilityToggle.setAttribute('aria-expanded', !isExpanded);
             accessibilityPanel.setAttribute('aria-hidden', isExpanded);
+            
+            // Close navigation menu if it's open
+            if (tocModal && tocModal.classList.contains('active')) {
+                tocModal.classList.remove('active');
+            }
         });
 
         // Close accessibility panel
