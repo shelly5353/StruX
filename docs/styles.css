@@ -231,7 +231,9 @@ body:not(.high-contrast):not(.gray-scale) .logo {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-right: 12px;
+    margin-left: auto;
+    position: relative;
+    z-index: 1001;
 }
 
 .toc-button, .accessibility-toggle {
@@ -248,7 +250,6 @@ body:not(.high-contrast):not(.gray-scale) .logo {
     transition: var(--transition-base);
     padding: 0;
     position: relative;
-    z-index: 1001;
     box-shadow: var(--shadow-md);
 }
 
@@ -453,661 +454,26 @@ body:not(.high-contrast):not(.gray-scale) .logo {
     }
 }
 
-/* סרגל נגישות */
-.accessibility-bar {
-    position: relative;
-    z-index: 9990;
-    font-family: var(--body-font);
-    margin-right: 15px;
-}
-
-.accessibility-toggle {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: var(--gradient-primary);
-    color: white;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    cursor: pointer;
-    box-shadow: var(--shadow-md);
-    transition: var(--transition-base);
-    position: relative;
-    z-index: 9995;
-}
-
-.accessibility-toggle:hover {
-    transform: translateY(-3px) scale(1.1);
-    box-shadow: var(--shadow-lg);
-}
-
-.accessibility-toggle .icon {
-    width: 24px;
-    height: 24px;
-    fill: currentColor;
-}
-
-.accessibility-panel {
-    position: absolute;
-    top: 60px;
-    right: 0;
-    width: 280px;
-    background: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    padding: 16px;
-    transform: translateX(110%);
-    transition: var(--transition-smooth);
-    z-index: 9990;
-    opacity: 0;
-    visibility: hidden;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.accessibility-bar.active .accessibility-panel {
-    transform: translateX(0);
-    opacity: 1;
-    visibility: visible;
-}
-
-.accessibility-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--light-bg);
-    position: relative;
-}
-
-.accessibility-header h3 {
-    margin: 0;
-    font-size: 1.1rem;
-    color: var(--primary-color);
-    font-weight: 700;
-    font-family: var(--heading-font);
-}
-
+/* סרגל נגישות - להסיר את כל הקוד הבא */
+.accessibility-bar,
+.accessibility-toggle,
+.accessibility-panel,
+.accessibility-header,
+.accessibility-content,
+.accessibility-group,
+.accessibility-btn,
 .close-accessibility {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    background: transparent;
-    border: none;
-    color: #888;
-    font-size: 18px;
-    cursor: pointer;
-    padding: 5px;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-}
-
-.close-accessibility:hover {
-    color: var(--primary-color);
-    background: var(--light-bg);
-    transform: translateY(-50%) rotate(90deg);
-}
-
-.close-accessibility .icon {
-    width: 20px;
-    height: 20px;
-    fill: currentColor;
-}
-
-.accessibility-content {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
-.accessibility-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 10px;
-    background: var(--light-bg);
-    border-radius: 12px;
-    transition: all 0.3s ease;
-}
-
-.accessibility-group:hover {
-    background: #e8eeff;
-}
-
-.option-title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text-color);
-    font-family: var(--heading-font);
-    margin-bottom: 4px;
-}
-
-.option-controls {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 8px;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
-.option-controls button {
-    flex: 0 0 auto;
-    width: 100%;
-}
-
-/* Special layout for text size controls */
-.accessibility-group:has(#decreaseText) .option-controls {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-}
-
-/* Set specific width for text size buttons */
-.option-controls #decreaseText,
-.option-controls #increaseText {
-    width: 45px;
-    min-width: 45px;
-    max-width: 45px;
-    margin: 0;
-}
-
-/* All other buttons remain full width */
-.option-controls #increaseCursor,
-.option-controls #highContrast,
-.option-controls #grayScale,
-.option-controls #disableAnimations {
-    grid-column: 1 / -1;
-}
-
-/* סידור מיוחד לכפתורי גודל טקסט */
-.option-controls #decreaseText,
-.option-controls #increaseText,
-.option-controls #increaseCursor,
-.option-controls #highContrast,
-.option-controls #grayScale,
-.option-controls #disableAnimations {
-    width: 100%;
-    height: 40px;
-    font-size: 1.1rem;
-    font-weight: normal;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #ffffff;
-    color: var(--text-color);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.option-controls #decreaseText:hover,
-.option-controls #increaseText:hover,
-.option-controls #increaseCursor:hover,
-.option-controls #highContrast:hover,
-.option-controls #grayScale:hover,
-.option-controls #disableAnimations:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-    background: var(--light-bg);
-}
-
-.option-controls #decreaseText:disabled,
-.option-controls #increaseText:disabled,
-.option-controls #increaseCursor:disabled,
-.option-controls #highContrast:disabled,
-.option-controls #grayScale:disabled,
-.option-controls #disableAnimations:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-}
-
-.option-controls #decreaseText.active,
-.option-controls #increaseText.active,
-.option-controls #increaseCursor.active,
-.option-controls #highContrast.active,
-.option-controls #grayScale.active,
-.option-controls #disableAnimations.active {
-    background: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-}
-
-/* סידור מיוחד לכפתור איפוס */
-.option-controls .reset-btn {
-    grid-column: span 3;
-    width: 80%;
-    margin: 4px auto 0;
-    justify-self: center;
-}
-
-/* הקראת טקסט - סידור מיוחד */
-.accessibility-group:has(#textToSpeech) .option-controls {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin: 0 auto;
-}
-
-.accessibility-group:has(#textToSpeech) .option-controls button {
-    justify-self: center;
-    width: 100%;
-    min-width: unset;
-    height: 36px;
-}
-
-.accessibility-group:has(#textToSpeech) .option-controls #textToSpeech {
-    grid-column: 1 / -1;
-    width: 100%;
-    margin-bottom: 8px;
-}
-
-.accessibility-group:has(#textToSpeech) .option-controls #decreaseSpeed,
-.accessibility-group:has(#textToSpeech) .option-controls #increaseSpeed {
-    width: 100%;
-    padding: 8px 0;
-}
-
-.accessibility-group:has(#textToSpeech) #speedDisplay {
-    text-align: center;
-    justify-self: center;
-    width: 100%;
-    padding: 8px 0;
-    background: #ffffff;
-    border-radius: 8px;
-    font-family: var(--heading-font);
-    font-size: 0.95rem;
-    color: var(--text-color);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-/* התאמה למסכים קטנים */
-@media (max-width: 768px) {
-    .accessibility-group:has(#textToSpeech) .option-controls {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 6px;
-    }
-    
-    .accessibility-group:has(#textToSpeech) #speedDisplay {
-        padding: 6px 0;
-        font-size: 0.9rem;
-    }
-}
-
-/* צבעים וניגודיות - סידור מיוחד */
-.accessibility-group:has(#highContrast) .option-controls {
-    grid-template-columns: 1fr;
-}
-
-.accessibility-group:has(#highContrast) .option-controls .reset-btn {
-    grid-column: 1 / -1;
-    margin-top: 4px;
-}
-
-/* עיצוב כפתורים */
-.accessibility-btn {
-    padding: 8px 14px;
-    background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    color: var(--text-color);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.95rem;
-    min-width: 45px;
-    height: 36px;
-    font-family: var(--heading-font);
-    font-weight: 500;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    width: 100%;
-}
-
-.accessibility-btn:hover {
-    background: var(--primary-color);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.accessibility-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.accessibility-btn.active {
-    background: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-}
-
-.reset-btn {
-    background-color: #fff0f0;
-    color: #dc3545;
-    border-color: rgba(220, 53, 69, 0.2);
-    width: 100%;
-    margin-top: 5px;
-}
-
-.reset-btn:hover {
-    background-color: #dc3545;
-    color: white;
-    border-color: #dc3545;
-}
-
-#speedDisplay {
-    background: #ffffff;
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-family: var(--heading-font);
-    font-size: 0.95rem;
-    color: var(--text-color);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    min-width: 60px;
-    display: inline-block;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-/* התאמה למסכים קטנים */
-@media (max-width: 768px) {
-    .accessibility-panel {
-        width: 260px;
-        padding: 14px;
-        right: -10px;
-    }
-    
-    .accessibility-group {
-        padding: 8px;
-    }
-    
-    .accessibility-btn {
-        padding: 6px 12px;
-        font-size: 0.9rem;
-        min-width: 40px;
-    }
-    
-    .option-title {
-        font-size: 0.9rem;
-    }
-    
-    #speedDisplay {
-        padding: 6px 10px;
-        min-width: 50px;
-        font-size: 0.9rem;
-    }
-}
-
-/* מצבי נגישות */
-body.text-large {
-    font-size: 1.2rem;
-}
-
-body.text-larger {
-    font-size: 1.4rem;
-}
-
-/* תיקון מצב ניגודיות גבוהה - גרסה משופרת */
-body.high-contrast {
-    filter: invert(100%) hue-rotate(180deg);
-}
-
-body.high-contrast .logo {
-    filter: invert(100%) hue-rotate(180deg) !important;
-}
-
-body.gray-scale {
-    filter: grayscale(100%);
-}
-
-body.gray-scale .logo {
-    filter: grayscale(100%) !important;
-}
-
-/* איפוס פילטרים */
-body:not(.high-contrast):not(.gray-scale) {
-    filter: none;
-}
-
-body:not(.high-contrast):not(.gray-scale) .logo {
-    filter: none !important;
-}
-
-/* מתקן את התמונות שהתהפכו בגלל הפילטר הכללי */
-body.high-contrast img,
-body.high-contrast video,
-body.high-contrast [style*="background-image"] {
-    filter: invert(100%) hue-rotate(180deg) !important;
-}
-
-/* מתקן את הצבעים של האייקונים */
-body.high-contrast .service-icon,
-body.high-contrast .benefit-icon,
-body.high-contrast .fa,
-body.high-contrast .fas,
-body.high-contrast .far,
-body.high-contrast .fab {
-    filter: invert(80%) sepia(50%) saturate(500%) hue-rotate(360deg) brightness(110%) !important;
-}
-
-/* מתקן את הצבעים של הכפתורים */
-body.high-contrast .btn,
-body.high-contrast .btn-hero,
-body.high-contrast .btn-light,
-body.high-contrast button:not(.accessibility-btn),
-body.high-contrast .submit-button {
-    filter: invert(20%) sepia(50%) saturate(500%) hue-rotate(180deg) !important;
-}
-
-/* מתקן את הצבעים של הכותרות */
-body.high-contrast h1,
-body.high-contrast h2,
-body.high-contrast h3,
-body.high-contrast h4,
-body.high-contrast h5,
-body.high-contrast h6,
-body.high-contrast .section-title {
-    filter: invert(80%) sepia(50%) saturate(500%) hue-rotate(360deg) brightness(110%) !important;
-}
-
-/* שומר על האנימציות */
-body.high-contrast * {
-    transition: all 0.3s ease !important;
-}
-
-/* מתקן את הצבעים של הקישורים */
-body.high-contrast a {
-    filter: invert(80%) sepia(50%) saturate(500%) hue-rotate(360deg) brightness(110%) !important;
-    text-decoration: underline !important;
-}
-
-/* מתקן את הצבעים של הטקסט המודגש */
-body.high-contrast strong,
-body.high-contrast b,
-body.high-contrast .highlight {
-    filter: invert(80%) sepia(50%) saturate(500%) hue-rotate(180deg) brightness(110%) !important;
-}
-
-/* כותרות */
-body.high-contrast h1,
-body.high-contrast h2,
-body.high-contrast h3,
-body.high-contrast h4,
-body.high-contrast h5,
-body.high-contrast h6,
-body.high-contrast .section-title {
-    color: #FFD700 !important;
-    text-shadow: none !important;
-}
-
-/* אייקונים */
-body.high-contrast .service-icon,
-body.high-contrast .benefit-icon,
-body.high-contrast .fa,
-body.high-contrast .fas,
-body.high-contrast .far,
-body.high-contrast .fab {
-    color: #FFFF00 !important;
-}
-
-/* כפתורים */
-body.high-contrast .btn,
-body.high-contrast .btn-hero,
-body.high-contrast .btn-light,
-body.high-contrast button:not(.accessibility-btn),
-body.high-contrast .submit-button {
-    background-color: #FFFFFF !important;
-    color: #000000 !important;
-    border: 2px solid #FFD700 !important;
-    text-shadow: none !important;
-    box-shadow: none !important;
-}
-
-body.high-contrast .btn:hover,
-body.high-contrast .btn-hero:hover,
-body.high-contrast .btn-light:hover,
-body.high-contrast button:not(.accessibility-btn):hover,
-body.high-contrast .submit-button:hover {
-    background-color: #FFD700 !important;
-    color: #000000 !important;
-    transform: translateY(-3px) !important;
-}
-
-/* כרטיסים */
-body.high-contrast .service-card,
-body.high-contrast .benefit-card,
-body.high-contrast .carousel-card,
-body.high-contrast .company-card {
-    background-color: #1A1A1A !important;
-    color: #FFFFFF !important;
-    border: 2px solid #FFD700 !important;
-    box-shadow: none !important;
-}
-
-/* טקסט בכרטיסים */
-body.high-contrast .service-card p,
-body.high-contrast .benefit-card p,
-body.high-contrast .carousel-card p,
-body.high-contrast .company-description {
-    color: #FFFFFF !important;
-}
-
-/* רקעים */
-body.high-contrast .hero,
-body.high-contrast .services,
-body.high-contrast .benefits,
-body.high-contrast .transparency,
-body.high-contrast .contact,
-body.high-contrast footer {
-    background: #1A1A1A !important;
-    border-color: #FFD700 !important;
-}
-
-/* שדות טופס */
-body.high-contrast input,
-body.high-contrast textarea,
-body.high-contrast select {
-    background-color: #1A1A1A !important;
-    color: #FFFFFF !important;
-    border: 2px solid #FFD700 !important;
-}
-
-body.high-contrast input:focus,
-body.high-contrast textarea:focus,
-body.high-contrast select:focus {
-    outline: 2px solid #FFFF00 !important;
-}
-
-/* קישורים */
-body.high-contrast a {
-    color: #FFD700 !important;
-    text-decoration: underline !important;
-}
-
-body.high-contrast a:hover {
-    color: #FFFF00 !important;
-}
-
-/* תמונות */
-body.high-contrast img {
-    filter: contrast(1.2) !important;
-    opacity: 1 !important;
-}
-
-/* תיקון צבעי רקע לתמונות רקע */
-body.high-contrast [style*="background-image"] {
-    filter: contrast(1.2) !important;
-}
-
-/* סרגל נגישות */
-body.high-contrast .accessibility-panel {
-    background-color: #1A1A1A !important;
-    border: 2px solid #FFD700 !important;
-}
-
-body.high-contrast .accessibility-btn {
-    background-color: #000000 !important;
-    color: #FFFFFF !important;
-    border: 2px solid #FFD700 !important;
-}
-
-body.high-contrast .accessibility-btn.active {
-    background-color: #FFD700 !important;
-    color: #000000 !important;
-}
-
-/* טקסט מודגש */
-body.high-contrast strong,
-body.high-contrast b,
-body.high-contrast .highlight {
-    color: #00FFFF !important;
-}
-
-/* תפריט ניווט */
-body.high-contrast .toc-modal {
-    background-color: #000000 !important;
-    border: 2px solid #FFD700 !important;
-}
-
-body.high-contrast .toc-list a {
-    color: #FFFFFF !important;
-}
-
-body.high-contrast .toc-list a:hover {
-    background-color: #FFD700 !important;
-    color: #000000 !important;
-}
-
-/* פופאפ */
-body.high-contrast .popup-container {
-    background-color: #000000 !important;
-    border: 2px solid #FFD700 !important;
-}
-
-body.high-contrast .popup-title {
-    color: #FFD700 !important;
-}
-
-body.high-contrast .popup-text {
-    color: #FFFFFF !important;
+    display: none !important;
+}
+
+/* מצבי נגישות - להסיר את כל הקוד הבא */
+body.text-large,
+body.text-larger,
+body.high-contrast,
+body.gray-scale,
+body.large-cursor,
+body.no-animations {
+    all: unset !important;
 }
 
 /* מונע שינוי צבע בהנפשות */
@@ -1123,16 +489,83 @@ body.gray-scale {
 /* התאמה למסכים קטנים */
 @media (max-width: 768px) {
     .accessibility-bar {
-        top: 80px;
-        right: 10px;
+        position: relative;
+        z-index: 9990;
     }
+    
     .accessibility-toggle {
-        width: 45px;
-        height: 45px;
-        font-size: 1.6rem;
+        width: 40px;
+        height: 40px;
+        font-size: 1.4rem;
     }
+    
     .accessibility-panel {
-        width: 260px;
+        width: 280px;
+        padding: 14px;
+        right: 0;
+        top: 50px;
+    }
+    
+    .accessibility-group {
+        padding: 8px;
+    }
+    
+    .accessibility-btn {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+        min-width: 40px;
+        height: 36px;
+    }
+    
+    .option-title {
+        font-size: 0.9rem;
+    }
+    
+    #speedDisplay {
+        padding: 6px 10px;
+        min-width: 50px;
+        font-size: 0.9rem;
+    }
+
+    .buttons-container {
+        gap: 8px;
+        margin-right: 8px;
+    }
+
+    .toc-button, .accessibility-toggle {
+        width: 40px;
+        height: 40px;
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .accessibility-panel {
+        top: 70px;
+        right: 10px;
+        width: calc(100% - 20px);
+        max-width: 280px;
+        padding: 10px;
+    }
+
+    .accessibility-toggle {
+        width: 35px;
+        height: 35px;
+        font-size: 1.2rem;
+    }
+
+    .toc-button {
+        width: 35px;
+        height: 35px;
+    }
+
+    .toc-button i, .accessibility-toggle i {
+        font-size: 1.2rem;
+    }
+
+    .buttons-container {
+        gap: 6px;
+        margin-right: 6px;
     }
 }
 
@@ -2222,7 +1655,7 @@ footer {
     }
     
     .header-container {
-        padding: 10px 15px;
+        padding: 5px 15px;
     }
     
     .logo-container {
@@ -2460,6 +1893,204 @@ footer {
         line-height: 1.5;
         padding-left: 10px !important;
         padding-right: 10px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        margin-top: 60px; /* מרווח בטלפונים קטנים */
+        padding-top: 50px;
+    }
+    
+    .hero-image {
+        max-width: 200px;
+    }
+    
+    .hero-logo {
+        margin-bottom: 5px;
+    }
+    
+    .hero h1 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+    
+    .hero p {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
+    
+    .btn-hero {
+        font-size: 0.9rem;
+        padding: 10px 20px;
+    }
+    
+    .section-title {
+        font-size: 1.6rem;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+    }
+    
+    .company-tagline {
+        font-size: 0.7rem;
+    }
+    
+    .logo {
+        max-height: 40px; /* הגדלת הלוגו בטלפונים קטנים */
+    }
+    
+    header {
+        padding: 0;
+        height: auto;
+    }
+    
+    .header-container {
+        padding: 8px 10px;
+    }
+    
+    .services-grid {
+        gap: 15px;
+        padding: 0 10px;
+    }
+
+    .service-card,
+    .benefit-card {
+        min-height: 220px;
+        padding: 15px;
+        margin-bottom: 5px;
+    }
+    
+    .service-card img {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 10px;
+    }
+
+    .service-card h3,
+    .benefit-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+    
+    .service-card p,
+    .benefit-card p {
+        font-size: 14px;
+        line-height: 1.5;
+        margin: 0;
+        max-width: 100%;
+    }
+    
+    footer {
+        padding: 35px 0 25px;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+    }
+    
+    .footer-info {
+        width: 90%;
+        padding: 15px;
+        margin-bottom: 5px;
+    }
+    
+    .footer-logo {
+        width: 130px;
+        height: auto;
+    }
+    
+    .footer-contact {
+        width: 90%;
+        padding: 15px;
+        margin: 0 auto 25px;
+        text-align: center;
+        align-items: center;
+    }
+    
+    .footer-contact h3 {
+        margin-bottom: 12px;
+        font-size: 1.15rem;
+    }
+    
+    .footer-contact p {
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+        justify-content: center;
+        color: #ffffff;
+    }
+    
+    .footer-contact p i {
+        margin-right: 10px;
+        width: 20px;
+        font-size: 1rem;
+        color: #ffffff;
+    }
+
+    .social-links {
+        gap: 12px;
+        margin-top: 12px;
+    }
+    
+    .social-links a {
+        font-size: 1.4rem;
+        width: 35px;
+        height: 35px;
+        text-decoration: none;
+    }
+
+    .footer-bottom {
+        margin-top: 25px;
+        padding-top: 15px;
+    }
+    
+    .footer-bottom p {
+        font-size: 0.85rem;
+    }
+
+    .toc-button {
+        width: 30px;
+        height: 30px;
+        margin-right: 5px;
+    }
+
+    #backToTopBtn {
+        width: 35px;
+        height: 35px;
+        bottom: 10px;
+        right: 10px;
+        font-size: 0.9rem;
+    }
+
+    .carousel {
+        margin: 15px auto;
+        padding: 10px;
+    }
+    
+    .carousel-item {
+        padding: 8px;
+        height: 300px;
+    }
+    
+    .carousel-card {
+        padding: 15px 8px;
+        min-height: 260px;
+    }
+    
+    .carousel-title {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+    }
+    
+    .carousel-text {
+        font-size: 13px !important;
+        line-height: 1.4;
+        padding-left: 5px !important;
+        padding-right: 5px !important;
     }
 }
 
