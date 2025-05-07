@@ -39,16 +39,17 @@
 html {
     scroll-behavior: smooth;
     height: 100%;
-    overflow-y: scroll; /* תמיד מציג את סרגל הגלילה */
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
 }
 
 html, body {
     width: 100%;
     margin: 0;
     padding: 0;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: none;
+    overscroll-behavior-y: none; /* במקום auto */
     min-height: 100%;
+    position: relative;
 }
 
 body {
@@ -62,6 +63,7 @@ body {
     overflow-x: hidden;
     position: relative;
     padding-bottom: env(safe-area-inset-bottom, 20px); /* תמיכה במכשירים עם notch */
+    touch-action: pan-y; /* מוסיף תמיכה טובה יותר בגלילה אנכית */
 }
 
 /* מונע קפיצות בגלילה */
@@ -93,10 +95,10 @@ footer {
     }
 
     body {
-        min-height: -webkit-fill-available; /* תיקון לiOS */
+        min-height: -webkit-fill-available;
     }
 
-    /* שיפור ביצועי גלילה במובייל */
+    /* שיפור ביצועי גלילה לאלמנטים ספציפיים */
     .services-grid,
     .benefits-grid,
     .footer-content,
@@ -105,6 +107,7 @@ footer {
         -webkit-transform: translate3d(0,0,0);
         backface-visibility: hidden;
         perspective: 1000px;
+        will-change: transform;
     }
 }
 
@@ -1495,7 +1498,7 @@ footer {
 /* Carousel & Gallery */
 .carousel {
     margin: 30px auto;
-    max-width: 850px;
+    max-width: 900px;
     background: linear-gradient(135deg, #d4d4d4 0%, #a0a0a0 100%);
     border-radius: 15px;
     padding: 20px;
@@ -1517,38 +1520,76 @@ footer {
 }
 
 .carousel-item img {
-    max-width: 100%;
+    width: 100%;
     height: auto;
-    max-height: 80vh;
+    max-width: 900px;
+    max-height: 823px;
     object-fit: contain;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.carousel-card {
-    background: var(--white);
-    border-radius: 15px;
-    padding: 40px;
-    box-shadow: var(--shadow-lg);
-    text-align: center;
-    max-width: 900px;
-    margin: 0 auto;
-    min-height: 250px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+/* Mobile carousel adjustments */
+@media (max-width: 768px) {
+    .carousel {
+        margin: 20px auto;
+        padding: 15px;
+    }
+    
+    .carousel-item {
+        padding: 10px;
+        height: auto;
+        min-height: auto;
+    }
+    
+    .carousel-item img {
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+        max-height: none;
+        object-fit: contain;
+    }
 }
 
-.carousel-title {
-    color: var(--primary-color);
-    font-size: 2.2rem;
+/* Fix for all carousel types */
+#groupCompaniesCarousel,
+#galleryCarousel,
+#fieldCarousel {
+    overflow: visible !important;
+    padding-bottom: 60px;
     margin-bottom: 20px;
 }
 
-.carousel-text {
-    font-size: 22px !important;
-    line-height: 1.8;
-    text-align: center;
+#groupCompaniesCarousel .carousel-item,
+#galleryCarousel .carousel-item,
+#fieldCarousel .carousel-item {
+    height: auto;
+    min-height: auto;
+    padding: 10px;
+}
+
+#groupCompaniesCarousel .carousel-item img,
+#galleryCarousel .carousel-item img,
+#fieldCarousel .carousel-item img {
+    width: 100%;
+    height: auto;
+    max-width: 900px;
+    max-height: 823px;
+    object-fit: contain;
+}
+
+/* Additional fixes for very small screens */
+@media (max-width: 480px) {
+    .carousel-item {
+        padding: 5px;
+    }
+    
+    .carousel-item img {
+        width: 100%;
+        height: auto;
+        max-width: 100%;
+        max-height: none;
+    }
 }
 
 /* Carousel Controls */
@@ -3636,15 +3677,6 @@ html.high-contrast .shadow-lg {
 }
 
 /* Carousel navigation buttons - unified style for all screen sizes */
-.carousel {
-    position: relative;
-    overflow: visible;
-}
-
-.carousel-item {
-    position: relative;
-}
-
 .carousel-control-prev,
 .carousel-control-next {
     position: absolute;
@@ -3682,13 +3714,13 @@ html.high-contrast .shadow-lg {
     filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
 }
 
-/* Mobile adjustments - keep the dark background for better visibility */
+/* Mobile adjustments - remove dark background */
 @media (max-width: 768px) {
     .carousel-control-prev,
     .carousel-control-next {
         width: 35px;
         height: 35px;
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: transparent;
     }
 
     .carousel-control-prev {
@@ -3701,14 +3733,14 @@ html.high-contrast .shadow-lg {
 
     .carousel-control-prev:hover,
     .carousel-control-next:hover {
-        background-color: rgba(0, 0, 0, 0.7);
+        background-color: transparent;
     }
 
     .carousel-control-prev-icon,
     .carousel-control-next-icon {
         width: 20px;
         height: 20px;
-        filter: none;
+        filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
     }
 }
 
@@ -3848,3 +3880,58 @@ html.high-contrast .shadow-lg {
         font-size: 1rem;
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // טיפול בגלילה במובייל
+    if ('ontouchstart' in window) {
+        let touchStartY = 0;
+        let touchEndY = 0;
+        let lastScrollY = 0;
+        let ticking = false;
+        
+        // טיפול במגע
+        document.addEventListener('touchstart', function(e) {
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+        
+        document.addEventListener('touchmove', function(e) {
+            touchEndY = e.touches[0].clientY;
+            const touchDiff = touchStartY - touchEndY;
+            
+            // אם הגלילה מהירה מדי, נאט אותה
+            if (Math.abs(touchDiff) > 100) {
+                e.preventDefault();
+                const currentScroll = window.scrollY;
+                const targetScroll = currentScroll + (touchDiff * 0.5);
+                
+                window.scrollTo({
+                    top: targetScroll,
+                    behavior: 'smooth'
+                });
+            }
+        }, { passive: false });
+        
+        // טיפול בגלילה בסוף הדף
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    const currentScroll = window.scrollY;
+                    const windowHeight = window.innerHeight;
+                    const documentHeight = document.body.scrollHeight;
+                    
+                    // אם מגיעים לסוף העמוד ולא מנסים לגלול למעלה
+                    if ((windowHeight + currentScroll >= documentHeight - 5) && currentScroll > lastScrollY) {
+                        document.body.style.paddingBottom = '1px';
+                        setTimeout(function() {
+                            document.body.style.paddingBottom = '0';
+                        }, 200);
+                    }
+                    
+                    lastScrollY = currentScroll;
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+    }
+});
