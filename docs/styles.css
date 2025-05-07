@@ -35,14 +35,20 @@
     box-sizing: border-box;
 }
 
-html,
-body {
+/* Reset scroll behavior */
+html {
+    scroll-behavior: smooth;
+    height: 100%;
+    overflow-y: scroll; /* תמיד מציג את סרגל הגלילה */
+}
+
+html, body {
     width: 100%;
     margin: 0;
     padding: 0;
-    overscroll-behavior-y: auto;
     -webkit-overflow-scrolling: touch;
-    height: 100%;
+    overscroll-behavior: none;
+    min-height: 100%;
 }
 
 body {
@@ -51,18 +57,76 @@ body {
     line-height: 1.6;
     color: var(--text-color);
     direction: rtl;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
-    overflow-y: auto;
-    padding-bottom: 20px;
+    position: relative;
+    padding-bottom: env(safe-area-inset-bottom, 20px); /* תמיכה במכשירים עם notch */
 }
 
+/* מונע קפיצות בגלילה */
 main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+    flex: 1 0 auto;
+    min-height: calc(100vh - 100px); /* מבטיח שיש מספיק מקום לתוכן */
+}
+
+/* שיפור ביצועי גלילה */
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* מונע את הקפיצה בסוף הדף */
+footer {
+    flex-shrink: 0;
+    position: relative;
+    width: 100%;
+    margin-top: auto;
+}
+
+/* Fix mobile scrolling issues */
+@media (max-width: 768px) {
+    html, body {
+        position: relative;
+        overflow-x: hidden;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        min-height: -webkit-fill-available; /* תיקון לiOS */
+    }
+
+    /* שיפור ביצועי גלילה במובייל */
+    .services-grid,
+    .benefits-grid,
+    .footer-content,
+    .carousel-inner {
+        transform: translate3d(0,0,0);
+        -webkit-transform: translate3d(0,0,0);
+        backface-visibility: hidden;
+        perspective: 1000px;
+    }
+}
+
+/* מונע את הקפיצה בסוף הדף בכל המכשירים */
+@supports (-webkit-touch-callout: none) {
+    body {
+        min-height: -webkit-fill-available;
+    }
+}
+
+/* תיקון לגלילה חלקה */
+.smooth-scroll {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Fix iOS momentum scrolling */
+.toc-list,
+.form-container,
+.carousel-inner {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
 }
 
 h1,
@@ -1445,7 +1509,20 @@ footer {
 
 .carousel-item {
     padding: 20px;
-    height: 350px;
+    height: auto;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-item img {
+    max-width: 100%;
+    height: auto;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .carousel-card {
@@ -1495,15 +1572,95 @@ footer {
 
 .carousel-control-prev,
 .carousel-control-next {
-    width: 10%;
-    color: #fff;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+}
+
+.carousel-control-prev {
+    left: 10px;
+}
+
+.carousel-control-next {
+    right: 10px;
 }
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-    background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 50%;
-    padding: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+/* Mobile carousel adjustments */
+@media (max-width: 768px) {
+    .carousel {
+        position: relative;
+        overflow: visible;
+    }
+
+    .carousel-item {
+        position: relative;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 35px;
+        height: 35px;
+        background-color: rgba(0, 0, 0, 0.6);
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+    }
+
+    .carousel-control-prev {
+        left: 5px;
+    }
+
+    .carousel-control-next {
+        right: 5px;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Fix for all carousel types */
+    #groupCompaniesCarousel .carousel-control-prev,
+    #groupCompaniesCarousel .carousel-control-next,
+    #galleryCarousel .carousel-control-prev,
+    #galleryCarousel .carousel-control-next,
+    #fieldCarousel .carousel-control-prev,
+    #fieldCarousel .carousel-control-next {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+/* Additional fixes for very small screens */
+@media (max-width: 480px) {
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 30px;
+        height: 30px;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        width: 15px;
+        height: 15px;
+    }
 }
 
 /* Gallery */
@@ -1552,22 +1709,17 @@ footer {
 }
 
 .gallery-item .carousel-item {
-    height: 400px;
-    padding: 0;
-    overflow: visible;
-    position: relative;
+    height: auto;
+    min-height: 300px;
 }
 
 .gallery-item .carousel-item img {
+    max-width: 100%;
+    height: auto;
+    max-height: 80vh;
     object-fit: contain;
-    height: 100%;
-    width: 100%;
-    background-color: transparent;
     border-radius: 10px;
-    box-shadow: var(--shadow-md);
-    border: 2px solid var(--primary-color);
-    position: relative;
-    z-index: 1;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Gallery Controls */
@@ -2476,11 +2628,11 @@ select {
 /* כפתור חזרה למעלה */
 #backToTopBtn {
     position: fixed;
-    bottom: 25px;
-    right: 25px;
-    width: 50px;
-    height: 50px;
-    background-color: var(--primary-color);
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color);
     color: white;
     border: none;
     border-radius: 50%;
@@ -2489,46 +2641,59 @@ select {
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.3s, transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
     z-index: 1000;
-    -webkit-tap-highlight-color: transparent;
 }
 
-#backToTopBtn.visible {
-    opacity: 1;
-    transform: translateY(0);
+#whatsappBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 70px;
+    width: 40px;
+    height: 40px;
+    background: #25D366;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    text-decoration: none;
 }
 
-#backToTopBtn:hover {
-    background-color: var(--secondary-color);
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+#backToTopBtn:hover,
+#whatsappBtn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-#backToTopBtn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+#backToTopBtn:active,
+#whatsappBtn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 768px) {
-    #backToTopBtn {
-        width: 45px;
-        height: 45px;
-        bottom: 20px;
-        right: 20px;
-    }
-}
-
-@media (max-width: 576px) {
-    #backToTopBtn {
-        width: 40px;
-        height: 40px;
-        bottom: 15px;
-        right: 15px;
+    #backToTopBtn,
+    #whatsappBtn {
+        width: 35px;
+        height: 35px;
+        bottom: 10px;
         font-size: 1rem;
+    }
+    
+    #backToTopBtn {
+        right: 10px;
+    }
+    
+    #whatsappBtn {
+        right: 55px;
     }
 }
 
@@ -3381,4 +3546,305 @@ html.high-contrast .shadow-lg {
     min-width: 45px;
     max-width: 45px;
     margin: 0;
+}
+
+.red-large { color: red; font-size: 20px; }
+
+/* Mobile specific carousel adjustments */
+@media (max-width: 768px) {
+    .carousel-item {
+        padding: 10px;
+        min-height: auto;
+        height: auto;
+        max-height: none;
+    }
+
+    .carousel-item img {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        object-fit: contain;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Fix for all carousel types */
+    #groupCompaniesCarousel .carousel-item,
+    #galleryCarousel .carousel-item,
+    #fieldCarousel .carousel-item {
+        min-height: auto;
+        height: auto;
+        padding: 5px;
+    }
+
+    #groupCompaniesCarousel .carousel-item img,
+    #galleryCarousel .carousel-item img,
+    #fieldCarousel .carousel-item img {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        object-fit: contain;
+    }
+
+    /* Adjust carousel controls for better mobile experience */
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 40px;
+        height: 40px;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .carousel-control-prev {
+        left: 5px;
+    }
+
+    .carousel-control-next {
+        right: 5px;
+    }
+
+    /* Adjust indicators position */
+    .carousel-indicators {
+        bottom: -40px;
+    }
+
+    /* Container adjustments */
+    .carousel {
+        margin-bottom: 50px;
+        overflow: visible;
+    }
+}
+
+/* Additional fixes for very small screens */
+@media (max-width: 480px) {
+    .carousel-item {
+        padding: 5px;
+    }
+
+    .carousel-item img {
+        width: 100%;
+        height: auto;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/* Carousel navigation buttons - unified style for all screen sizes */
+.carousel {
+    position: relative;
+    overflow: visible;
+}
+
+.carousel-item {
+    position: relative;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    background-color: transparent;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.carousel-control-prev {
+    left: 20px;
+}
+
+.carousel-control-next {
+    right: 20px;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 1;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 25px;
+    height: 25px;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+}
+
+/* Mobile adjustments - keep the dark background for better visibility */
+@media (max-width: 768px) {
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 35px;
+        height: 35px;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .carousel-control-prev {
+        left: 10px;
+    }
+
+    .carousel-control-next {
+        right: 10px;
+    }
+
+    .carousel-control-prev:hover,
+    .carousel-control-next:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        width: 20px;
+        height: 20px;
+        filter: none;
+    }
+}
+
+/* Small screen adjustments */
+@media (max-width: 480px) {
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 30px;
+        height: 30px;
+    }
+
+    .carousel-control-prev {
+        left: 5px;
+    }
+
+    .carousel-control-next {
+        right: 5px;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        width: 15px;
+        height: 15px;
+    }
+}
+
+/* Fix for all carousel types */
+#groupCompaniesCarousel .carousel-control-prev,
+#groupCompaniesCarousel .carousel-control-next,
+#galleryCarousel .carousel-control-prev,
+#galleryCarousel .carousel-control-next,
+#fieldCarousel .carousel-control-prev,
+#fieldCarousel .carousel-control-next {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.whatsapp-button {
+    font-family: var(--button-font);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    background-color: #25D366;
+    color: #ffffff;
+    padding: 14px 32px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    will-change: transform, box-shadow;
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.whatsapp-button:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+    transform: translateX(-100%);
+    transition: transform 0.8s ease;
+    z-index: 1;
+}
+
+.whatsapp-button:hover:before {
+    transform: translateX(100%);
+}
+
+.whatsapp-button span {
+    position: relative;
+    z-index: 2;
+}
+
+.whatsapp-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
+    background: linear-gradient(45deg, #25D366, #128C7E);
+    color: #ffffff;
+}
+
+.whatsapp-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Fixed WhatsApp button */
+#whatsappBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 70px;
+    width: 40px;
+    height: 40px;
+    background: #25D366;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    text-decoration: none;
+}
+
+#whatsappBtn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+#whatsappBtn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    #whatsappBtn {
+        width: 35px;
+        height: 35px;
+        bottom: 10px;
+        font-size: 1rem;
+        right: 55px;
+    }
+
+    .whatsapp-button {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
 }
